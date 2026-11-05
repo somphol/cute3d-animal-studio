@@ -10,9 +10,9 @@
 | Model | **DeepSeek V4.1 Flash** (`deepseek-v4.1-flash`, provider `opencode-go`) |
 | Session | `ses_e55af5b0bffejTt8i56ugdjBHf` |
 | Date | 4–5 November 2026 (America/Los_Angeles) |
-| Elapsed | **9h 51m 16s** wall clock (35,476 s), including pauses between releases |
+| Elapsed | **10h 14m 31s** wall clock (36,871 s), including pauses between releases |
 | First release | **30m 15s** (1,815 s) for v1.0.0 |
-| Tokens | **124,044,598 cumulative** |
+| Tokens | **161,917,932 cumulative** |
 
 The session spans three releases with pauses between them. v1.0.0 built the studio, four pets,
 animation, audio, bilingual UI, export, tests, docs, Pages and the skill in 30m 15s. v1.1.0 added the
@@ -23,12 +23,12 @@ token total is dominated by cache reads, which are repeated prompt context rathe
 
 | Token counter | Count |
 | --- | --- |
-| Input | 1,368,617 |
-| Output | 240,409 |
-| Reasoning | 189,423 |
-| Cache read | 122,244,480 |
+| Input | 1,923,108 |
+| Output | 258,891 |
+| Reasoning | 216,312 |
+| Cache read | 159,517,952 |
 | Cache write | 1,669 |
-| **Total** | **124,044,598** |
+| **Total** | **161,917,932** |
 
 `costUSD` is 0 on the flat-rate plan. The authoritative, machine-readable record is
 [`../state.json`](../state.json); it also lists line counts, tests and every artifact.
