@@ -10,8 +10,8 @@
 | Model | **DeepSeek V4.1 Flash** (`deepseek-v4.1-flash`, provider `opencode-go`) |
 | Session | `ses_e55af5b0bffejTt8i56ugdjBHf` |
 | Date | 4–5 November 2026 (America/Los_Angeles) |
-| Elapsed | **26m 51s** (1,611 s), captured at the end of the session |
-| Tokens | **13,870,378 total** |
+| Elapsed | **28m 57s** (1,737 s), captured at the end of the session |
+| Tokens | **16,508,799 total** |
 
 The full session was one continuous build: specification, scene, four rigs, animation, audio, UI,
 tests, documentation, assets, deployment and the reusable skill. No pre-existing template or project
@@ -20,12 +20,12 @@ new output.
 
 | Token counter | Count |
 | --- | --- |
-| Input | 56,758 |
-| Output | 117,103 |
-| Reasoning | 47,616 |
-| Cache read | 13,647,232 |
+| Input | 59,575 |
+| Output | 121,434 |
+| Reasoning | 51,433 |
+| Cache read | 16,274,688 |
 | Cache write | 1,669 |
-| **Total** | **13,870,378** |
+| **Total** | **16,508,799** |
 
 `costUSD` is 0 on the flat-rate plan. The authoritative, machine-readable record is
 [`../state.json`](../state.json); it also lists line counts, tests and every artifact.

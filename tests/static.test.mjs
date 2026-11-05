@@ -60,6 +60,9 @@ test('section: page shell', async (t) => {
     const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
     assert.equal(new Set(ids).size, ids.length);
   });
+  await t.test('character dropdown lists all four pets', () => {
+    assert.equal((html.match(/<option value="(bear|bunny|penguin|shiba)"/g) || []).length, 4);
+  });
   await t.test('every button declares its type', () => {
     for (const tag of html.match(/<button\b[^>]*>/g) || []) {
       assert.match(tag, /type="(button|submit|reset)"/, tag);

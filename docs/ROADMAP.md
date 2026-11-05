@@ -13,7 +13,7 @@
 - Full EN/TH UI, parity-tested, persisted
 - Local presets (max 10), share links, 2048² transparent PNG
 - Reduced motion, keyboard shortcuts, skip link, aria states
-- 19 engine + 75 static + 23 browser + 19 in-page checks
+- 19 engine + 76 static + 23 browser + 19 in-page checks
 - Docs, screenshots, OG card, GitHub Pages deployment
 
 ## Next — 1.1

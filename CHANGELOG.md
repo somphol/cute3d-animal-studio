@@ -22,7 +22,7 @@ uses semantic versioning.
 - Local studio persistence, ten sanitized presets, and share links that encode the whole look.
 - 2048² transparent PNG snapshot with a dedicated square camera and hidden studio props.
 - Responsive layout with a mobile customizer sheet, keyboard shortcuts and reduced-motion support.
-- Verification: 19 engine, 75 repository, 23 browser and 19 in-page checks; zero console errors.
+- Verification: 19 engine, 76 repository, 23 browser and 19 in-page checks; zero console errors.
 - Documentation set, reproduction guide, generated screenshots and a 1200×630 OG card.
 - GitHub Pages deployment and a reusable OpenCode skill.
 

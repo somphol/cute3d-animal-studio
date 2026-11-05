@@ -17,7 +17,7 @@ Live: <https://somphol.github.io/cute3d-animal-studio/>
 ```bash
 python3 -m http.server 4173        # or: npm start
 node --test tests/engine.test.mjs  # 19 checks, no browser
-node --test tests/static.test.mjs  # 75 checks, no browser
+node --test tests/static.test.mjs  # 76 checks, no browser
 node tests/browser.test.mjs        # 23 checks, headless Chrome via CDP
 npm run verify                     # engine + static + browser
 node scripts/screenshot.mjs        # regenerate every PNG in assets/

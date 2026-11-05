@@ -53,7 +53,7 @@ root. Requirements:
 
 ## Release checklist
 
-- [ ] `npm run verify` passes (19 engine, 75 static, 23 browser)
+- [ ] `npm run verify` passes (19 engine, 76 static, 23 browser)
 - [ ] `?selftest` shows 19/19 on the deployed URL
 - [ ] `state.json` line counts and usage are current
 - [ ] README test-count table matches reality

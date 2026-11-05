@@ -130,9 +130,19 @@ try {
   });
 
   await record('character buttons expose aria-pressed', async () => {
+    await evaluate(`(() => {
+      const select = document.querySelector('#animal-select');
+      select.value = 'bunny';
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    })()`);
+    await sleep(400);
+    const viaSelect = await snapshotState();
+    assert.equal(viaSelect.animal, 'bunny');
     await click('[data-animal="penguin"]');
     const pressed = await evaluate("[...document.querySelectorAll('[data-animal]')].filter(b => b.getAttribute('aria-pressed') === 'true').map(b => b.dataset.animal).join(',')");
     assert.equal(pressed, 'penguin');
+    const synced = await evaluate("document.querySelector('#animal-select').value");
+    assert.equal(synced, 'penguin');
   });
 
   await record('expressions animate the eyes', async () => {

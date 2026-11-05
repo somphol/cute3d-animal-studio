@@ -6,7 +6,7 @@ files, no textures, no audio files — just Three.js and a few thousand lines of
 [![Live studio](https://img.shields.io/badge/live-somphol.github.io%2Fcute3d--animal--studio-ff8fae)](https://somphol.github.io/cute3d-animal-studio/)
 [![No dependencies](https://img.shields.io/badge/runtime%20deps-Three.js%20CDN%20only-b9a5e8)](https://threejs.org)
 [![License](https://img.shields.io/badge/license-MIT-8fd3bf)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-19%20engine%20%C2%B7%2075%20static%20%C2%B7%2023%20browser-6bc4a6)](docs/TESTING.md)
+[![Tests](https://img.shields.io/badge/tests-19%20engine%20%C2%B7%2076%20static%20%C2%B7%2023%20browser-6bc4a6)](docs/TESTING.md)
 
 ![Cute3D studio with the Chibi Bear](assets/screenshot-studio.png)
 
@@ -81,13 +81,13 @@ are more reliable over HTTP.
 | Lighting | Warm key with 2048² shadows, cool fill, white rim, hemisphere sky/ground, contact shadow |
 | Characters | 19–29 meshes each, shared low-segment primitives, per-rig material set |
 | Animation | Damped expression blending, deterministic blink seeds, breathing belly, ear/tail rigs, reaction physics |
-| Customizer | 4 characters · 4 expressions · 3 colours · 5 palettes · 3 accessories · reset |
+| Customizer | character dropdown + cards · 4 expressions · 3 colours · 5 palettes · 3 accessories · reset |
 | Audio | Six sound patterns, lazy AudioContext, master gain + compressor, persistent mute |
 | i18n | 93 EN keys and 93 TH keys, parity-tested; `<html lang>` and meta description update live |
 | Persistence | Studio state, language, presets (max 10) and sound preference |
 | Export | 2048² transparent PNG; filename `cute3d-<animal>-<YYYY-MM-DD>.png` |
 | Share | `?a=…&c=…&x=…&o=…&l=…`, sanitized on read |
-| Verification | 19 engine checks, 75 static checks, 23 browser checks, 19 in-page checks |
+| Verification | 19 engine checks, 76 static checks, 23 browser checks, 19 in-page checks |
 | Accessibility | Skip link, focus rings, aria-pressed toggles, reduced-motion mode, keyboard shortcuts |
 
 ## Verification
@@ -102,7 +102,7 @@ npm run shots         # regenerate assets/ from a live render
 | Layer | Command | Expected |
 | --- | --- | --- |
 | Pure engine | `node --test tests/engine.test.mjs` | 19/19 |
-| Repository | `node --test tests/static.test.mjs` | 75/75 |
+| Repository | `node --test tests/static.test.mjs` | 76/76 |
 | Browser | `node tests/browser.test.mjs` | 23/23, zero console errors |
 | In-page | `/?selftest` | 19/19 |
 | Live copy | `TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs` | 23/23 |
@@ -154,7 +154,7 @@ headless tests. The Three.js CDN is required on first load; after that the page 
 
 ## Credits
 
-Built in a single session with **OpenCode** and **DeepSeek V4.1 Flash** — 26m 51s and 13.87M tokens
+Built in a single session with **OpenCode** and **DeepSeek V4.1 Flash** — 28m 57s and 16.51M tokens
 (mostly cache reads). Three.js is the only runtime library. The machine-readable record is
 [state.json](state.json); the full breakdown and credits are in [docs/CREDITS.md](docs/CREDITS.md).
 

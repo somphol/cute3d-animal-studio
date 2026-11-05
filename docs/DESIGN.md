@@ -81,7 +81,7 @@ custom palette instead of staying black.
 
 Six sections, ordered by how often a visitor will use them:
 
-1. **Characters** — 2×2 cards with emoji, name and one-word trait.
+1. **Characters** — a native dropdown for quick switching plus 2×2 cards with emoji, name and trait.
 2. **Expression** — 4 chips, active chip lifts and saturates.
 3. **Colours** — 3 rows (fur/belly/blush) with native colour input, hex readout and five palette
    swatches in a conic-gradient ring.
