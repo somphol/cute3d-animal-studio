@@ -28,8 +28,10 @@ A static character studio that generates every mesh, every expression and every 
 - **Procedural life** — breathing, floating, blinking (including occasional double blinks), ear
   wiggles, tail wags, penguin waddle and a squash-and-stretch jump-and-spin reaction.
 - **A strand fur studio** — Smooth, Soft and Plush coats layered from procedural shells plus up to
-  60,000 GPU strands. Adjust length, density, curl, clumping and breeze; strands move in a vertex shader
+  60,000 GPU strands. Adjust length, density, curl, clumping and wind; strands move in a vertex shader
   and lean away from the cursor.
+- **A movable wind fan** — drag the procedural fan around the stage; wind direction follows it and the
+  koala’s long-fur shells bend, flatten and lift with the gust.
 - **Three lighting moods** — warm Studio, Cloud Sky with drifting procedural clouds, and Cozy Desk with a
   wooden table, mug, plant, books and golden light.
 - **Species postures** — bear sitting, bunny alert, penguin leaning into a waddle, shiba seated with
@@ -173,7 +175,7 @@ headless tests. The Three.js CDN is required on first load; after that the page 
 ## Credits
 
 Built with **OpenCode** and **DeepSeek V4.1 Flash**. v1.0.0 shipped in 30m 15s; the v1.1.0 coat expansion and v1.2.0 fur, lighting and posture pass followed in the same
-session after pauses, reaching 161.92M cumulative tokens
+session after pauses, reaching 188.71M cumulative tokens
 (mostly cache reads). Three.js is the only runtime library. The machine-readable record is
 [state.json](state.json); the full breakdown is in [docs/CREDITS.md](docs/CREDITS.md).
 

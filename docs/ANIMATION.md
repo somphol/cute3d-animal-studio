@@ -143,3 +143,12 @@ feet that stay visually on the pedestal/desk, rather than a rigid group sliding 
 `cursor`. The vertex shader bends each ribbon by height squared, so roots stay anchored and tips move.
 Reduced motion does not disable the fur entirely; the breeze default is low and the slider can be set
 to zero.
+
+
+## Fan-driven fur wind
+
+`WIND` uniforms carry time and speed; `updateShellWind` converts the fan→pet world vector into each coat
+zone’s local space. The coat vertex shader displaces shells by `layerNorm²`, adds a gusting sine term,
+flattens windward fur against the body and applies a stiffness/arc correction. Dragging the fan updates
+its angle and direction; the blade assembly spins with the wind slider. Pointer position drives a
+separate radial touch disturbance.

@@ -220,6 +220,14 @@ try {
     await sleep(300);
     const studio = await evaluate("document.body.dataset.lighting");
     assert.equal(studio, 'studio');
+
+    await evaluate('window.__cute3d.setFanAngle(0.2)');
+    await sleep(150);
+    const rightFan = await evaluate('window.__cute3d.fanPosition()');
+    await evaluate('window.__cute3d.setFanAngle(3.4)');
+    await sleep(150);
+    const leftFan = await evaluate('window.__cute3d.fanPosition()');
+    assert.ok(rightFan[0] > 0 && leftFan[0] < 0, `fan did not move: ${rightFan} / ${leftFan}`);
     await evaluate(`(() => {
       const density = document.querySelector('#fur-density');
       density.value = '0.7';

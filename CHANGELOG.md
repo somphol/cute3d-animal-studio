@@ -3,6 +3,22 @@
 All notable changes to Cute3D are documented here. The format follows Keep a Changelog and the project
 uses semantic versioning.
 
+## [1.3.0] — 2026-11-05
+
+### Added
+
+- **Movable wind fan:** a procedural pedestal fan that can be dragged around the stage. The fan defines
+  the wind vector; blades spin with the wind slider.
+- **Wind-driven shell fur:** koala fur shells bend by layer², gust, flatten on the windward side, and
+  use an arc/stiffness correction so the coat does not stretch.
+- **Cursor disturbance:** pointer movement pushes nearby fur away from the touch point.
+- `fanAngle` persistence and the ability to set/test the fan direction through the debug API.
+
+### Changed
+
+- Wind slider label clarified; fan hidden from transparent snapshots.
+- Release version 1.3.0.
+
 ## [1.2.0] — 2026-11-05
 
 ### Added

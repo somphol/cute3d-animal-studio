@@ -132,3 +132,19 @@ Solid cone strands alone read as wire; camera-facing particles read as dust; sma
 fragmented. Layered shells with a procedural strand alpha give the soft silhouette, while the shader
 strand layer adds directional fibre and wind motion. Together they survive the transparent PNG export
 without sorting artifacts.
+
+
+## Wind fan and shell displacement
+
+A procedural pedestal fan sits on the stage. Drag it around the pet; the wind direction is recomputed as
+the vector from the fan head to the character centre. The koala’s long-fur shell materials receive a
+per-zone local wind vector (world direction rotated into the shell’s object space).
+
+- Outer shell layers displace most: `h = layerNorm²`.
+- Turbulence adds a low-frequency gust; the wind slider sets the base speed.
+- Arc preservation pulls displaced tips back toward the skin, so the coat bends instead of stretching.
+- Pointer movement supplies a local radial disturbance to the fur.
+- The fan is hidden in transparent snapshots; the fur remains.
+
+This is a shell-based wind response, not per-strand CPU physics: stable, reversible and cheap enough for
+a static page.

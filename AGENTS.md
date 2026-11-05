@@ -84,6 +84,8 @@ The model contract is small and strict:
   replace either with CPU strand physics, particles or cards without visual proof.
 - **The Google prompt is inspiration, not a spec.** We did not add a literal 60k CPU simulation or copy
   its copy; the app keeps its own cozy pastel identity and performance budget.
+- **The fan is the wind source.** `updateShellWind` maps the fan→pet vector into each coat zone; keep
+  `state.fanAngle` and `updateFanPose` in sync. Do not hard-code a global wind direction.
 - **Postures run before coats.** If you pose a rig after coats, shells and strands detach.
 - **Belly patches sit forward.** They are spheres at `z ≈ 0.55` so they read outside the body
   silhouette. Moving them back makes them invisible and has been fixed twice.
