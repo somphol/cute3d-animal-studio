@@ -30,6 +30,7 @@ const SHOTS = [
   'assets/og-card.png', 'assets/screenshot-studio.png', 'assets/screenshot-bunny.png',
   'assets/screenshot-penguin.png', 'assets/screenshot-shiba.png', 'assets/screenshot-thai.png',
   'assets/screenshot-koala.png', 'assets/screenshot-conure.png', 'assets/screenshot-fold.png',
+  'assets/screenshot-sky.png', 'assets/screenshot-desk.png',
   'assets/screenshot-mobile.png', 'assets/snapshot-transparent.png',
 ];
 

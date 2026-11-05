@@ -44,11 +44,12 @@ const shoot = async (name) => {
   console.log(`✓ assets/${name}`);
 };
 
-const stage = async (animal, expression, accessories, lang = 'en', coat = 'plush') => {
+const stage = async (animal, expression, accessories, lang = 'en', coat = 'plush', lighting = 'studio') => {
   await evaluate(`
     window.__cute3d.setLang('${lang}');
     window.__cute3d.setAnimal('${animal}');
     window.__cute3d.setCoat('${coat}');
+    window.__cute3d.setLighting('${lighting}');
     window.__cute3d.setExpression('${expression}');
     window.__cute3d.setAccessory('bowtie', ${accessories});
     window.__cute3d.setAccessory('partyHat', ${accessories});
@@ -81,12 +82,18 @@ await shoot('screenshot-fold.png');
 await stage('shiba', 'sleepy', true, 'th');
 await shoot('screenshot-thai.png');
 
-await stage('koala', 'happy', false, 'en');
+await stage('koala', 'happy', true, 'en', 'plush', 'sky');
+await shoot('screenshot-sky.png');
+
+await stage('fold', 'sleepy', false, 'en', 'plush', 'desk');
+await shoot('screenshot-desk.png');
+
+await stage('koala', 'happy', false, 'en', 'plush', 'studio');
 const snapshot = await evaluate('window.__cute3d.snapshotDataUrl()');
 writeFileSync(join(ASSETS, 'snapshot-transparent.png'), Buffer.from(snapshot.split(',')[1], 'base64'));
 console.log('✓ assets/snapshot-transparent.png');
 
-await stage('koala', 'happy', true, 'en');
+await stage('koala', 'happy', true, 'en', 'plush', 'studio');
 
 const card = await evaluate(`(async () => {
   const url = window.__cute3d.snapshotDataUrl();

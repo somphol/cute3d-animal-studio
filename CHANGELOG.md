@@ -3,6 +3,30 @@
 All notable changes to Cute3D are documented here. The format follows Keep a Changelog and the project
 uses semantic versioning.
 
+## [1.2.0] — 2026-11-05
+
+### Added
+
+- **Species postures:** seated bear, alert bunny, leaning penguin, shiba on haunches, koala reaching up,
+  conure on a wooden perch and a Scottish Fold loaf.
+- **GPU strand fur:** up to 60,000 tapered ribbon strands per character, layered outside the shells.
+  Vertex-shader breeze, curl, clumping, length and cursor push; feet stay planted during idle.
+- **Fur studio controls:** length, density, curl, clumping and breeze sliders, persisted and shared.
+- **Lighting moods:** Studio, Cloud Sky (drifting procedural clouds) and Cozy Desk (wood table, mug,
+  plant, books, warm exposure), with CSS backdrop variants.
+- **Cuteness pass:** +8% heads, +12% eyes, second catchlights, rounder bodies, warmer marshmallow palettes.
+
+### Changed
+
+- Coat shells reduced to 4 Soft / 8 Plush layers so the strand layer reads; texture disposal fixed.
+- Browser suite 25 checks; in-page 20. Release version 1.2.0.
+
+### Fixed
+
+- Feet counter-translate the idle bob instead of floating off the ground.
+- Conure perch sits under the feet instead of crossing the body.
+- Fold arm shadows no longer draw an H on the chest.
+
 ## [1.1.0] — 2026-11-05
 
 ### Added

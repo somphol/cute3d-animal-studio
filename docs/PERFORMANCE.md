@@ -9,7 +9,7 @@
 | CSS transferred | < 40 KB | ~28 KB | same |
 | Runtime assets | 1 SVG icon, 0 models/textures/audio | — | — |
 | Draw calls | < 60 | 36–47 | 36–47 |
-| Meshes per rig | 19–50 | bear 25 | — |
+| Meshes per rig | 19–52 | bear 25 | — |
 | Frame budget | 16.6 ms | 2–4 ms GPU/CPU | 5–8 ms |
 | Snapshot | < 400 ms at 2048² | 120–220 ms | 250–500 ms |
 | Memory after seven switches | no growth | flat after disposal | flat |
@@ -60,3 +60,16 @@ The in-page self-test renders a 512² snapshot; watch its duration in the Perfor
 The stage uses `height: 100dvh`, a bottom sheet for controls, and a portrait camera at z 9.8. The
 renderer resizes on `ResizeObserver` and orientation change (debounced 120 ms). No hover-only
 interaction is required.
+
+## Strand budget
+
+The fur layer is GPU-only: one instanced ribbon geometry, at most 60,000 instances (30,000 on Soft),
+split into ~6 draw calls. There is no per-strand CPU simulation; wind, curl, clumping, length and cursor
+push are vertex-shader uniforms. Default density is 70%, ~42k strands at Plush.
+
+- Build cost: sampling + instancing 60k roots is a one-off ~100–250 ms on desktop; switches reuse the
+  same geometry.
+- Frame cost: one extra draw call per coat zone, no per-frame matrix updates.
+- Memory: ~4 MB of instance matrices at full density.
+- Reducing density updates `InstancedMesh.count`; it does not rebuild.
+- Smooth removes both shells and strands.

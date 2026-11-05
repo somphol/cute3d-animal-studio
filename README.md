@@ -5,7 +5,7 @@
 [![Live studio](https://img.shields.io/badge/live-somphol.github.io%2Fcute3d--animal--studio-ff8fae)](https://somphol.github.io/cute3d-animal-studio/)
 [![No dependencies](https://img.shields.io/badge/runtime%20deps-Three.js%20CDN%20only-b9a5e8)](https://threejs.org)
 [![License](https://img.shields.io/badge/license-MIT-8fd3bf)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-19%20engine%20%C2%B7%2080%20static%20%C2%B7%2024%20browser-6bc4a6)](docs/TESTING.md)
+[![Tests](https://img.shields.io/badge/tests-19%20engine%20%C2%B7%2082%20static%20%C2%B7%2025%20browser-6bc4a6)](docs/TESTING.md)
 
 ![Cute3D studio with the Chibi Bear](assets/screenshot-studio.png)
 
@@ -27,9 +27,13 @@ A static character studio that generates every mesh, every expression and every 
   a pastel clay pedestal and damped orbit controls.
 - **Procedural life** — breathing, floating, blinking (including occasional double blinks), ear
   wiggles, tail wags, penguin waddle and a squash-and-stretch jump-and-spin reaction.
-- **A plush coat system** — Smooth, Soft and Plush levels built from layered procedural fur/feather
-  shells with canvas-generated strand textures, bump relief and a soft silhouette. New: realistic koala
-  ears, layered conure wings and folded Scottish Fold ears.
+- **A strand fur studio** — Smooth, Soft and Plush coats layered from procedural shells plus up to
+  60,000 GPU strands. Adjust length, density, curl, clumping and breeze; strands move in a vertex shader
+  and lean away from the cursor.
+- **Three lighting moods** — warm Studio, Cloud Sky with drifting procedural clouds, and Cozy Desk with a
+  wooden table, mug, plant, books and golden light.
+- **Species postures** — bear sitting, bunny alert, penguin leaning into a waddle, shiba seated with
+  haunches, koala reaching up, conure on a perch, and a Scottish Fold loaf.
 - **A full customizer** — seven characters, four expressions, three live colour pickers, five curated
   palettes, three code-built accessories.
 - **Synthesized audio** — Web Audio oscillators produce boings, chimes, pops and soft blink ticks.
@@ -45,6 +49,9 @@ A static character studio that generates every mesh, every expression and every 
 | Koala, plush | Sun Conure | Scottish Fold |
 | --- | --- | --- |
 | ![Koala](assets/screenshot-koala.png) | ![Sun Conure](assets/screenshot-conure.png) | ![Scottish Fold](assets/screenshot-fold.png) |
+
+![Cloud Sky lighting](assets/screenshot-sky.png)
+![Cozy Desk lighting](assets/screenshot-desk.png)
 
 ## Quick start
 
@@ -85,23 +92,26 @@ are more reliable over HTTP.
 | --- | --- |
 | Renderer | WebGLRenderer, alpha, antialias, PCFSoftShadowMap, ACESFilmic, sRGB output, DPR capped at 2 |
 | Lighting | Warm key with 2048² shadows, cool fill, white rim, hemisphere sky/ground, contact shadow |
-| Characters | 19–50 meshes each, shared low-segment primitives, per-rig material set |
-| Animation | Damped expression blending, deterministic blink seeds, breathing belly, ear/tail rigs, reaction physics |
+| Characters | 19–52 meshes each, shared low-segment primitives, per-rig material set |
+| Animation | Damped expression blending, deterministic blink seeds, breathing belly, ear/tail rigs, reaction physics, planted feet |
 | Customizer | character dropdown + cards · 4 expressions · 3 colours · 5 palettes · 3 accessories · reset |
 | Audio | Six sound patterns, lazy AudioContext, master gain + compressor, persistent mute |
-| i18n | 113 EN keys and 113 TH keys, parity-tested; `<html lang>` and meta description update live |
+| i18n | 130 EN keys and 130 TH keys, parity-tested; `<html lang>` and meta description update live |
 | Persistence | Studio state, language, presets (max 10) and sound preference |
 | Export | 2048² transparent PNG; filename `cute3d-<animal>-<YYYY-MM-DD>.png` |
 | Share | `?a=…&c=…&x=…&o=…&l=…`, sanitized on read |
-| Verification | 19 engine checks, 80 static checks, 24 browser checks, 20 in-page checks |
-| Coats | 3 levels · up to 60 shells · procedural alpha + bump textures · zero assets |
+| Verification | 19 engine checks, 82 static checks, 25 browser checks, 20 in-page checks |
+| Coats | 3 levels · 8 shell layers · up to 60k GPU strands · curl/clump/breeze · zero assets |
+| Fur studio | Length, density, curl, clumping and breeze sliders; shared uniforms; density changes instance count only |
+| Lighting | Studio / Cloud Sky / Cozy Desk: lights, exposure, pedestal, clouds, desk props and CSS backdrop |
+| Postures | Seven species-specific stances, posed before the coat is built |
 | Accessibility | Skip link, focus rings, aria-pressed toggles, reduced-motion mode, keyboard shortcuts |
 
 ## Verification
 
 ```bash
 npm test              # engine + repository (no browser)
-npm run test:browser  # real headless Chrome, 24 checks
+npm run test:browser  # real headless Chrome, 25 checks
 npm run verify        # everything
 npm run shots         # regenerate assets/ from a live render
 ```
@@ -109,10 +119,10 @@ npm run shots         # regenerate assets/ from a live render
 | Layer | Command | Expected |
 | --- | --- | --- |
 | Pure engine | `node --test tests/engine.test.mjs` | 19/19 |
-| Repository | `node --test tests/static.test.mjs` | 80/80 |
-| Browser | `node tests/browser.test.mjs` | 24/24, zero console errors |
+| Repository | `node --test tests/static.test.mjs` | 82/82 |
+| Browser | `node tests/browser.test.mjs` | 25/25, zero console errors |
 | In-page | `/?selftest` | 20/20 |
-| Live copy | `TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs` | 24/24 |
+| Live copy | `TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs` | 25/25 |
 
 Screenshots are regenerated from the real app, not mocked:
 
@@ -128,7 +138,7 @@ Screenshots are regenerated from the real app, not mocked:
 ├── style.css                  # design tokens, glass panel, HUD, responsive sheet
 ├── script.js                  # ENGINE + I18N blocks, seven rigs, coat shells, animation, audio, UI
 ├── manifest.webmanifest       # installable metadata
-├── assets/                    # SVG icon, eleven generated PNGs (OG card + stills)
+├── assets/                    # SVG icon, fourteen generated PNGs (OG card + stills)
 ├── docs/                      # architecture, reproduction, design, testing, release…
 ├── scripts/
 │   ├── serve.mjs              # zero-dependency static server
@@ -162,8 +172,8 @@ headless tests. The Three.js CDN is required on first load; after that the page 
 
 ## Credits
 
-Built with **OpenCode** and **DeepSeek V4.1 Flash**. v1.0.0 shipped in 30m 15s; the v1.1.0 coat and
-three-animal expansion followed in the same session after a pause, reaching 64.03M cumulative tokens
+Built with **OpenCode** and **DeepSeek V4.1 Flash**. v1.0.0 shipped in 30m 15s; the v1.1.0 coat expansion and v1.2.0 fur, lighting and posture pass followed in the same
+session after pauses, reaching 124.04M cumulative tokens
 (mostly cache reads). Three.js is the only runtime library. The machine-readable record is
 [state.json](state.json); the full breakdown is in [docs/CREDITS.md](docs/CREDITS.md).
 

@@ -10,24 +10,25 @@
 | Model | **DeepSeek V4.1 Flash** (`deepseek-v4.1-flash`, provider `opencode-go`) |
 | Session | `ses_e55af5b0bffejTt8i56ugdjBHf` |
 | Date | 4–5 November 2026 (America/Los_Angeles) |
-| Elapsed | **8h 54m 34s** wall clock (32,074 s), including a pause between releases |
+| Elapsed | **9h 51m 16s** wall clock (35,476 s), including pauses between releases |
 | First release | **30m 15s** (1,815 s) for v1.0.0 |
-| Tokens | **64,025,542 cumulative** |
+| Tokens | **124,044,598 cumulative** |
 
-The session spans two releases with a long pause between them. v1.0.0 built the studio, four pets,
+The session spans three releases with pauses between them. v1.0.0 built the studio, four pets,
 animation, audio, bilingual UI, export, tests, docs, Pages and the skill in 30m 15s. v1.1.0 added the
-koala, sun conure and Scottish Fold plus the Smooth/Soft/Plush coat system, refreshed every asset and
-doc, and re-verified the live site. No pre-existing template or project was copied. The cumulative
+koala, sun conure and Scottish Fold plus the Smooth/Soft/Plush coat system. v1.2.0 added the cuteness
+pass, species postures, GPU strand fur with wind/cursor physics, five fur sliders and three lighting
+moods. Every asset and doc was refreshed and the live site re-verified. No pre-existing template or project was copied. The cumulative
 token total is dominated by cache reads, which are repeated prompt context rather than new output.
 
 | Token counter | Count |
 | --- | --- |
-| Input | 742,854 |
-| Output | 191,675 |
-| Reasoning | 128,192 |
-| Cache read | 62,961,152 |
+| Input | 1,368,617 |
+| Output | 240,409 |
+| Reasoning | 189,423 |
+| Cache read | 122,244,480 |
 | Cache write | 1,669 |
-| **Total** | **64,025,542** |
+| **Total** | **124,044,598** |
 
 `costUSD` is 0 on the flat-rate plan. The authoritative, machine-readable record is
 [`../state.json`](../state.json); it also lists line counts, tests and every artifact.

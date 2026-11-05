@@ -1,6 +1,6 @@
 # Roadmap
 
-## Shipped — 1.1.0
+## Shipped — 1.2.0
 
 - Seven original procedural animals with distinct silhouettes (bear, bunny, penguin, shiba, koala, conure, fold)
 - Procedural fur/feather shell system with Smooth / Soft / Plush levels, masks and bump relief
@@ -14,10 +14,11 @@
 - Full EN/TH UI, parity-tested, persisted
 - Local presets (max 10), share links, 2048² transparent PNG
 - Reduced motion, keyboard shortcuts, skip link, aria states
-- 19 engine + 80 static + 24 browser + 20 in-page checks
+- 19 engine + 82 static + 25 browser + 20 in-page checks
+- GPU strand fur with wind/cursor physics, five fur sliders, three lighting moods, species postures
 - Docs, screenshots, OG card, GitHub Pages deployment
 
-## Next — 1.2
+## Next — 1.3
 
 - [ ] Offscreen `WebGLRenderTarget` snapshot, removing `preserveDrawingBuffer`
 - [ ] Per-animal hidden text description for screen readers, updated on change

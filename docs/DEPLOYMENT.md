@@ -15,7 +15,7 @@ The site is a static tree on `main` and Pages serves the repository root.
 TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs
 ```
 
-Expected: 24/24 and zero console errors.
+Expected: 25/25 and zero console errors.
 
 ## Cache behaviour
 
@@ -53,14 +53,14 @@ root. Requirements:
 
 ## Release checklist
 
-- [ ] `npm run verify` passes (19 engine, 80 static, 24 browser)
+- [ ] `npm run verify` passes (19 engine, 82 static, 25 browser)
 - [ ] `?selftest` shows 20/20 on the deployed URL
 - [ ] `state.json` line counts and usage are current
 - [ ] README test-count table matches reality
 - [ ] OG card and screenshots regenerated if visuals changed
 - [ ] `AGENTS.md` still describes the current architecture
 - [ ] `robots.txt` and `sitemap.xml` use the live URL
-- [ ] live browser suite passes 24/24
+- [ ] live browser suite passes 25/25
 - [ ] skill copy mirrored to the catalog (see `docs/CREDITS.md`)
 
 ## Rollback

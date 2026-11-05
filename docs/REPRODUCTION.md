@@ -113,17 +113,17 @@ Expression table (`eyeOpen`, `headTilt`, `earAmp`, `tailAmp`, `floatAmp`, `cheek
 
 ## 5. Animals
 
-Build in this order: bear, bunny, penguin, shiba, koala, conure, fold. All stand on y = 0. All faces point +Z. Base mesh counts are 25 / 27 / 19 / 26 / 23 / 50 / 32; they must stay distinct (the self-test checks this).
+Build in this order: bear, bunny, penguin, shiba, koala, conure, fold. All stand on y = 0. All faces point +Z. Base mesh counts are 27 / 29 / 21 / 28 / 25 / 52 / 34; they must stay distinct (the self-test checks this).
 
 | Animal | Body | Head (y) | Ears | Eyes (z) | Tail | Distinct mesh count |
 | --- | --- | --- | --- | --- | --- | --- |
-| Bear | sphere scale (0.92, 0.90, 0.80) at y 0.98 | 2.02 | two sphere pivots ±0.58, y 0.36 | ±0.31, z 0.70 | sphere at z −0.62 | 25 |
-| Bunny | (0.82, 0.94, 0.74) at 0.94 | 1.96 | capsules, pivot ±0.34, y 0.48 | ±0.26, z 0.62 | 3-sphere fluff at z −0.58 | 27 |
-| Penguin | (0.88, 0.98, 0.84) at 1.02 | 2.06 | flipper capsules ±0.92, y 1.18 | ±0.21, z 0.72 | cone at z −0.70 | 19 |
-| Shiba | (0.86, 0.86, 0.80) at 0.96 | 2.00 | 4-sided cones ±0.44, y 0.48 | ±0.27, z 0.62 | torus curl at z −0.55 | 26 |
-| Koala | (0.92, 1.00, 0.82) at 1.00 | 2.06 | huge spheres ±0.70, outer + cream inner | ±0.29, z 0.66 | small sphere at z −0.70 | 23 |
-| Sun Conure | (0.80, 1.00, 0.72) at 1.00 | 2.02 | layered feather wings at ±0.69 | under white eye patches, z 0.62 | 6 + 3 blue-green feathers | 50 |
-| Scottish Fold | (0.86, 0.94, 0.82) at 0.99 | 2.00 | folded flaps at ±0.44, z 0.50 | ±0.28, z 0.63 | torus curl at z −0.60 | 32 |
+| Bear | sphere scale (0.92, 0.90, 0.80) at y 0.98 | 2.02 | two sphere pivots ±0.58, y 0.36 | ±0.31, z 0.70 | sphere at z −0.62 | 27 |
+| Bunny | (0.82, 0.94, 0.74) at 0.94 | 1.96 | capsules, pivot ±0.34, y 0.48 | ±0.26, z 0.62 | 3-sphere fluff at z −0.58 | 29 |
+| Penguin | (0.88, 0.98, 0.84) at 1.02 | 2.06 | flipper capsules ±0.92, y 1.18 | ±0.21, z 0.72 | cone at z −0.70 | 21 |
+| Shiba | (0.86, 0.86, 0.80) at 0.96 | 2.00 | 4-sided cones ±0.44, y 0.48 | ±0.27, z 0.62 | torus curl at z −0.55 | 28 |
+| Koala | (0.92, 1.00, 0.82) at 1.00 | 2.06 | huge spheres ±0.70, outer + cream inner | ±0.29, z 0.66 | small sphere at z −0.70 | 25 |
+| Sun Conure | (0.80, 1.00, 0.72) at 1.00 | 2.02 | layered feather wings at ±0.69 | under white eye patches, z 0.62 | 6 + 3 blue-green feathers | 52 |
+| Scottish Fold | (0.86, 0.94, 0.82) at 0.99 | 2.00 | folded flaps ±0.44, z 0.50 | ±0.28, z 0.63 | torus curl at z −0.60 | 34 |
 
 Critical depths for the shipped proportions:
 
@@ -210,6 +210,21 @@ Implement `StudioAudio` with lazy context creation, one master gain, a compresso
 from the engine. Add a 12 ms attack and exponential release per note. Mute via master gain, never by
 recreating the context.
 
+## 9b. Strand fur, postures and lighting
+
+After the rig and shells:
+
+1. **Postures** — adjust body/head/limb transforms per species; store `base.headRotX/Z`, `earBaseX` and
+   `feet.baseY`. Bear sits, bunny is alert, penguin leans, shiba sits on haunches, koala reaches up,
+   conure perches, fold loafs.
+2. **Strands** — sample roots on `mesh.scale * 1.16`; build up to 60k tapered ribbon instances. Put
+   phase in the vertex shader from the root position, and drive breeze/curl/clump/length/cursor from
+   `STRAND_UNIFORMS`. Density changes `InstancedMesh.count`, not geometry.
+3. **Fur UI** — Sliders for length, density, curl, clumping, breeze; state key `fur`, share `u=`.
+4. **Lighting** — studio / sky / desk; change lights, exposure, props and `body[data-lighting]`.
+   Add procedural clouds for sky and a wooden desk/mug/plant/books for desk.
+5. **Ground feet** — lower each foot by the idle bob unless a reaction is active.
+
 ## 10. Verification
 
 Write all four layers before declaring done:
@@ -218,7 +233,7 @@ Write all four layers before declaring done:
   round-trip, filename safety, size clamp, dictionary parity, coat levels);
 - static: 80 checks (files, HTML shell, i18n coverage, no assets/trackers/trademarks, markers,
   storage namespace, snapshot contract, accessibility, metadata, state.json line counts);
-- browser: 24 checks (canvas, seven rigs, coat levels, expressions, colours, accessories, language, presets,
+- browser: 25 checks (canvas, seven rigs, coat levels, expressions, colours, accessories, language, presets,
   reaction, raycast tap, transparency, download, share, keyboard, reload, mobile sheet, reduced
   motion, in-page self-test, zero console errors);
 - in-page: 20 checks at `/?selftest`.
@@ -241,7 +256,7 @@ Write all four layers before declaring done:
 1. Run `npm run verify`, then `node scripts/screenshot.mjs`.
 2. Update `state.json` (tokens, elapsed, line counts) and any test counts in README.
 3. Commit, push to `main`, enable Pages (root). Wait for the Pages build.
-4. Run the browser suite against the live URL until 24/24.
+4. Run the browser suite against the live URL until 25/25.
 5. Add the skill to `~/Projects/opencode-skills` and run `node sync.mjs`.
 6. Keep `AGENTS.md` current in the same push.
 

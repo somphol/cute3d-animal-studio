@@ -121,6 +121,22 @@ Fur and feathers are **layered shell meshes** generated after the rig is built:
 
 Full detail and tuning rules are in [COAT.md](COAT.md).
 
+## Rendering layers
+
+1. Opaque base meshes and eyes.
+2. Opaque alpha-tested coat shells (4 Soft / 8 Plush per zone).
+3. Transparent GPU strand ribbons (up to 60k, one InstancedMesh per zone) with vertex-shader wind.
+4. Transparent sparkles and props.
+
+Strands use `depthWrite: false` and render after shells, so they add fibre over the plush body rather
+than being buried. `STRAND_UNIFORMS` is shared by every strand material.
+
+## Lighting presets
+
+`applyLighting('studio'|'sky'|'desk')` changes hemisphere/key/fill/rim colors, tone-mapping exposure,
+pedestal visibility, the cloud group and the cozy desk group, plus `body[data-lighting]` for the CSS
+backdrop. The preset is stored in state and share links.
+
 ## State model
 
 ```js
@@ -129,7 +145,10 @@ Full detail and tuning rules are in [COAT.md](COAT.md).
   expression: 'happy',
   lang: 'en',
   sound: true,
-  colors: { bear: { main, belly, blush }, bunny: {…}, penguin: {…}, shiba: {…} },
+  coat: 'soft',
+  lighting: 'studio',
+  fur: { length: 1, density: 0.7, curl: 0.35, clump: 0.4, breeze: 0.3 },
+  colors: { bear: { main, belly, blush }, … },
   accessories: { bowtie: false, partyHat: false, glasses: false }
 }
 ```

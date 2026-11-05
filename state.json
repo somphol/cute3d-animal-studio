@@ -1,13 +1,13 @@
 {
   "project": "Cute3D: Procedural Code-Only Animal Studio",
-  "release": "1.1.0",
+  "release": "1.2.0",
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
-    "capturedAt": "2026-11-05T15:00:48.215Z",
-    "elapsedSeconds": 32074,
-    "elapsed": "8h 54m 34s",
-    "note": "The session spans two releases with a long pause between them. v1.0.0 (four pets) was completed in 30m 15s; v1.1.0 added three animals and the procedural coat system, refreshed all docs, assets and the skill, and re-verified the live site. Wall-clock elapsed includes the pause; token totals are cumulative and dominated by cache reads (repeated prompt context)."
+    "capturedAt": "2026-11-05T15:57:29.828Z",
+    "elapsedSeconds": 35476,
+    "elapsed": "9h 51m 16s",
+    "note": "The session spans two releases with a long pause between them. v1.0.0 (four pets) was completed in 30m 15s; v1.1.0 added three animals and the procedural coat system; v1.2.0 added the cuteness pass, species postures, GPU strand fur with wind/cursor physics, fur sliders and three lighting moods. Wall-clock elapsed includes the pause; token totals are cumulative and dominated by cache reads (repeated prompt context)."
   },
   "model": {
     "name": "DeepSeek V4.1 Flash",
@@ -19,12 +19,12 @@
     "url": "https://opencode.ai"
   },
   "usage": {
-    "inputTokens": 742854,
-    "outputTokens": 191675,
-    "reasoningTokens": 128192,
-    "cacheReadTokens": 62961152,
+    "inputTokens": 1368617,
+    "outputTokens": 240409,
+    "reasoningTokens": 189423,
+    "cacheReadTokens": 122244480,
     "cacheWriteTokens": 1669,
-    "totalTokens": 64025542,
+    "totalTokens": 124044598,
     "costUSD": 0,
     "note": "Read from the OpenCode session database (session_v2). totalTokens is the sum of the five counters; cache reads are repeated prompt context and dominate. costUSD is 0 on the flat-rate plan."
   },
@@ -38,12 +38,12 @@
       "note": "Initial release: four pets, bilingual UI, audio, snapshot, tests, docs, Pages, skill."
     },
     {
-      "version": "1.1.0",
-      "capturedAt": "2026-11-05T15:00:48.215Z",
-      "elapsed": "8h 54m 34s",
-      "elapsedSeconds": 32074,
-      "totalTokens": 64025542,
-      "note": "Three new animals (koala, sun conure, Scottish Fold) and the Smooth/Soft/Plush coat system."
+      "version": "1.2.0",
+      "capturedAt": "2026-11-05T15:57:29.828Z",
+      "elapsed": "9h 51m 16s",
+      "elapsedSeconds": 35476,
+      "totalTokens": 124044598,
+      "note": "Cuteness pass, species postures, GPU strand fur with wind/cursor physics, fur sliders and Studio/Cloud Sky/Cozy Desk lighting."
     }
   ],
   "artifacts": {
@@ -53,10 +53,10 @@
       "script.js"
     ],
     "lineCounts": {
-      "index.html": 370,
-      "style.css": 1625,
-      "script.js": 2993,
-      "total": 4988
+      "index.html": 415,
+      "style.css": 1771,
+      "script.js": 3715,
+      "total": 5901
     },
     "supportingFiles": [
       "README.md",
@@ -113,45 +113,52 @@
     ],
     "tests": {
       "engine": 19,
-      "static": 80,
-      "browser": 24,
+      "static": 82,
+      "browser": 25,
       "inPage": 20
     },
     "animals": {
       "bear": {
         "name": "Mochi",
-        "meshes": 25,
-        "coat": "fur"
+        "meshes": 27,
+        "coat": "fur",
+        "posture": "sit"
       },
       "bunny": {
         "name": "Pip",
-        "meshes": 27,
-        "coat": "fur"
+        "meshes": 29,
+        "coat": "fur",
+        "posture": "alert"
       },
       "penguin": {
         "name": "Pebble",
-        "meshes": 19,
-        "coat": "down"
+        "meshes": 21,
+        "coat": "down",
+        "posture": "lean"
       },
       "shiba": {
         "name": "Sunny",
-        "meshes": 26,
-        "coat": "fur"
+        "meshes": 28,
+        "coat": "fur",
+        "posture": "sit"
       },
       "koala": {
         "name": "Kumo",
-        "meshes": 23,
-        "coat": "plush fur"
+        "meshes": 25,
+        "coat": "plush fur",
+        "posture": "cling"
       },
       "conure": {
         "name": "Sol",
-        "meshes": 50,
-        "coat": "feathers"
+        "meshes": 52,
+        "coat": "feathers",
+        "posture": "perch"
       },
       "fold": {
         "name": "Biscuit",
-        "meshes": 32,
-        "coat": "plush"
+        "meshes": 34,
+        "coat": "plush",
+        "posture": "loaf"
       }
     },
     "screenshots": [

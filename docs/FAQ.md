@@ -6,13 +6,21 @@ binary assets are the SVG favicon and the PNG screenshots/OG card used for the r
 preview. The app itself draws the animals from spheres, capsules, cones and torus arcs.
 
 **How are the animals made?**
-Each is a `THREE.Group` of 19–50 meshes with a shared material set. Body, head, ears, eyes, muzzle,
+Each is a `THREE.Group` of 19–52 meshes with a shared material set. Body, head, ears, eyes, muzzle,
 cheeks, limbs and tail are primitives. Accessories are separate groups attached to head/neck anchors.
 See [ARCHITECTURE.md](ARCHITECTURE.md) and [REPRODUCTION.md](REPRODUCTION.md).
 
 **Can I use it commercially?**
 The code is MIT. The character designs are original to this project. You may use, modify and sell
 derivatives; attribution is appreciated but not required. Do not add third-party characters.
+
+**How does the fur work?**
+Layered alpha-tested shells give the plush body; up to 60,000 GPU ribbons add visible fibre. A vertex
+shader moves the tips with breeze, curl, clumping and the cursor. The five sliders are saved and shared.
+
+**What are the lighting moods?**
+Studio, Cloud Sky (drifting clouds) and Cozy Desk (table, mug, plant, books, warm light). Each changes
+lights, exposure, 3D props and the CSS backdrop together.
 
 **Why seven animals and not more?**
 Seven gives a broad selector without diluting the craft: four classics plus a koala, a sun conure and

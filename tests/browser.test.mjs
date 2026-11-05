@@ -172,6 +172,64 @@ try {
     assert.ok(soft > 0 && soft < plush, `soft ${soft} vs plush ${plush}`);
   });
 
+  await record('fur sliders and lighting presets respond', async () => {
+    await click('[data-coat="plush"]');
+    await sleep(400);
+    await evaluate(`(() => {
+      const input = document.querySelector('#fur-density');
+      input.value = '0.4';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    })()`);
+    await sleep(300);
+    const low = await evaluate('window.__cute3d.furStrands()');
+    await evaluate(`(() => {
+      const input = document.querySelector('#fur-density');
+      input.value = '1';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    })()`);
+    await sleep(300);
+    const high = await evaluate('window.__cute3d.furStrands()');
+    assert.ok(high > low && high >= 30000, `density did not grow strands: ${low} -> ${high}`);
+    const stored = await evaluate("JSON.parse(localStorage.getItem('cute3d:state:v1')).fur.density");
+    assert.equal(stored, 1);
+
+    await evaluate(`(() => {
+      const input = document.querySelector('#fur-length');
+      input.value = '1.5';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    })()`);
+    await sleep(200);
+    const length = await evaluate('window.__cute3d.state.fur.length');
+    assert.equal(length, 1.5);
+
+    const rect = JSON.parse(await evaluate("JSON.stringify(document.querySelector('#stage canvas').getBoundingClientRect())"));
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: Math.round(rect.left + rect.width / 2), y: Math.round(rect.top + rect.height / 2) });
+    await sleep(200);
+    const cursor = await evaluate('window.__cute3d.furUniforms().cursor');
+    assert.ok(Math.abs(cursor[0]) < 50 && Math.abs(cursor[1]) < 50, `cursor not projected: ${cursor}`);
+
+    await click('[data-lighting="sky"]');
+    await sleep(400);
+    const sky = await evaluate("JSON.stringify({ mode: document.body.dataset.lighting, clouds: document.body.dataset.lighting === 'sky' })");
+    assert.deepEqual(JSON.parse(sky), { mode: 'sky', clouds: true });
+    await click('[data-lighting="desk"]');
+    await sleep(400);
+    const desk = await evaluate("document.body.dataset.lighting");
+    assert.equal(desk, 'desk');
+    await click('[data-lighting="studio"]');
+    await sleep(300);
+    const studio = await evaluate("document.body.dataset.lighting");
+    assert.equal(studio, 'studio');
+    await evaluate(`(() => {
+      const density = document.querySelector('#fur-density');
+      density.value = '0.7';
+      density.dispatchEvent(new Event('input', { bubbles: true }));
+      const length = document.querySelector('#fur-length');
+      length.value = '1';
+      length.dispatchEvent(new Event('input', { bubbles: true }));
+    })()`);
+  });
+
   await record('palette applies three colours at once', async () => {
     await click('[data-palette="sunset"]');
     const data = await state();

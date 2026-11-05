@@ -87,14 +87,15 @@ custom palette instead of staying black.
 
 Six sections, ordered by how often a visitor will use them:
 
-1. **Characters** — a native dropdown for quick switching plus 2×2 cards with emoji, name and trait.
-2. **Expression** — 4 chips, active chip lifts and saturates.
-3. **Colours** — 3 rows (fur/belly/blush) with native colour input, hex readout and five palette
-   swatches in a conic-gradient ring.
-4. **Accessories** — full-width toggle rows with a sliding pill.
-5. **Coat detail** — Smooth / Soft / Plush with a live fibre count.
-6. **Studio tools** — snapshot (primary rose), save preset, copy link, sound; preset list below.
-7. **Footer** — credits and the "no models, no textures, no audio" line.
+1. **Characters** — a native dropdown plus cards with emoji, name and trait.
+2. **Expression** — four chips.
+3. **Fur studio** — Smooth / Soft / Plush, a live strand count, and five sliders (length, density, curl,
+   clumping, breeze).
+4. **Scene** — Studio / Cloud Sky / Cozy Desk.
+5. **Colours** — fur/belly/blush native pickers, hex readout and five palettes.
+6. **Accessories** — full-width toggle rows.
+7. **Studio tools** — snapshot, save preset, copy link, sound; preset list below.
+8. **Footer** — credits and the no-assets line.
 
 Native `<input type="color">` is used on purpose: it is accessible, localized by the OS and needs no
 custom picker code. The hex readout is monospaced to signal precision.
@@ -124,3 +125,24 @@ the product.
 - No gradient text or glass on text-heavy areas where contrast would drop.
 - No fake 3D-looking CSS mockups; the hero is the actual render.
 - No modal onboarding, cookie banner, newsletter prompt or "sign in".
+
+## Cuteness pass
+
+The v1.2 pass widened heads by 8%, enlarged eyes by 12%, added a second catchlight per eye, rounded the
+body, softened the cheek blush and shifted every default palette toward warm marshmallow tones. The
+goal is a toy you want to pick up, not a nature-documentary render.
+
+Species posture is part of the silhouette: a seated bear, alert bunny, leaning penguin, seated shiba,
+reaching koala, perched conure and loafing Scottish Fold read differently even as thumbnails.
+
+## Lighting moods
+
+Three presets change the entire studio mood without changing geometry:
+
+- **Studio** — the original warm clay set.
+- **Cloud Sky** — a blue sky wash with four procedural cloud clusters drifting behind the pet.
+- **Cozy Desk** — a round wooden table with a mug, plant and books; warm amber light and a darker
+  vignette.
+
+The preset is saved, shared and included in presets. It is not a color theme; it changes lights,
+exposure, 3D props and the CSS backdrop together.

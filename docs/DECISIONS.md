@@ -108,7 +108,23 @@ system rather than adding special-case scene code.
 animal has one signature feature (koala ears, conure wings/tail, folded ears) while sharing eyes,
 blush and muzzle grammar.
 
-## ADR-017 — Verification is part of the product
+## ADR-018 — Shells plus shader strands
+
+**Decision:** Keep the soft shell coat and add a separate GPU strand layer (up to 60k ribbons) for
+visible fibre and wind/cursor physics. All motion is vertex-shader work; there is no CPU simulation.
+**Why:** Shells alone read as plush but not furry; strands alone read as wire or dust. Together they
+give a soft body and directional fibre at a predictable cost.
+**Do not:** Add per-strand CPU physics, rebuild strand geometry on every density change, or remove the
+shell masks.
+
+## ADR-019 — Species posture is part of the model
+
+**Decision:** Pose each animal at build time (sit, alert, lean, perch, loaf) instead of animating a
+generic standing rig.
+**Why:** Silhouette is the strongest cuteness cue. Posture runs before coat generation so fur follows
+the limbs, and base rotations feed the idle animation rather than being overwritten.
+
+## ADR-020 — Verification is part of the product
 
 **Decision:** Four layers, a self-test route, regenerated screenshots and a state file.
 **Why:** A visual toy is easy to break silently. The tests cover the contracts that are hard to see:

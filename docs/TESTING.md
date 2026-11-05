@@ -67,25 +67,26 @@ The suite checks:
 3. all seven characters switch and have distinct mesh counts;
 4. `aria-pressed` follows the active animal;
 5. the coat toggle builds shells, removes them and scales the fibre count;
-6. sleepy closes the eyes and happy reopens them;
-7. a palette applies all three colours;
-8. a colour-input event recolours the live material and hex label;
-9. all three accessories build and toggle;
-10. the language switch translates names and panel, persists the key;
-11. presets save to `localStorage` and the DOM;
-12. preset apply switches animal and restores the look;
-13. presets clear;
-14. React starts a jump and settles after 0.92 s;
-15. a real mouse tap on the canvas triggers the raycast reaction;
-16. a snapshot is 1024², transparent in the corner, opaque in the centre;
-17. the snapshot button downloads a correctly named file;
-18. the share URL encodes current state and decodes back;
-19. keyboard `2` switches to the bunny;
-20. state survives a reload;
-21. the mobile sheet opens and closes with correct `aria-expanded`;
-22. reduced motion still renders;
-23. the in-page self-test passes 20/20;
-24. there are zero console errors.
+6. fur sliders change the strand count and persist; lighting presets switch moods;
+7. sleepy closes the eyes and happy reopens them;
+8. a palette applies all three colours;
+9. a colour-input event recolours the live material and hex label;
+10. all three accessories build and toggle;
+11. the language switch translates names and panel, persists the key;
+12. presets save to `localStorage` and the DOM;
+13. preset apply switches animal and restores the look;
+14. presets clear;
+15. React starts a jump and settles after 0.92 s;
+16. a real mouse tap on the canvas triggers the raycast reaction;
+17. a snapshot is 1024², transparent in the corner, opaque in the centre;
+18. the snapshot button downloads a correctly named file;
+19. the share URL encodes current state and decodes back;
+20. keyboard `2` switches to the bunny;
+21. state survives a reload;
+22. the mobile sheet opens and closes with correct `aria-expanded`;
+23. reduced motion still renders;
+24. the in-page self-test passes 20/20;
+25. there are zero console errors.
 
 ### Live run
 

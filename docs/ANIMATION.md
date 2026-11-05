@@ -105,3 +105,41 @@ random outward velocity and 0.7–1.1 s life, gravity −1.6, and are disabled u
 - Float amplitude × 0.3; sparkles hidden; damp faster.
 - CSS animations and transitions collapse to 0.001 ms.
 - The app still supports every interaction; nothing depends on motion to be discoverable.
+
+## Species postures
+
+Each character is posed at build time, before the coat shells are generated, so fur follows the limbs.
+The neutral idle still breaths and floats, but the stance stays species-specific.
+
+| Animal | Posture | What moves |
+| --- | --- | --- |
+| Bear | sits with legs forward, paws on lap | head lift, gentle breathing |
+| Bunny | alert periscope, ears swept back, paws tucked | ear twitch, blink |
+| Penguin | forward lean, wide feet, flippers out | waddle sway, flipper bounce |
+| Shiba | seated haunches, front legs straight, tail curled | head tilt, tail wag |
+| Koala | upright cling, arms raised, legs tucked | slow blink, head sway |
+| Sun Conure | perched on a wooden branch, feet together | body lean, tail, wing tuck |
+| Scottish Fold | cat loaf, paws forward, tail wrapped | slow breathing, sleepy blink |
+
+`applyPosture()` adjusts body/head/limb positions, stores `headRotX/Z`, `earBaseX` and `feet.baseY`,
+then the frame loop adds expression tilt to those bases instead of replacing them.
+
+## Grounded feet
+
+The body floats on a sine wave. To keep the contact feet planted, every foot stores its rest Y at build
+time. During idle:
+
+```js
+foot.position.y = foot.userData.baseY - bob;
+```
+
+During a reaction the correction is skipped so the whole pet jumps. The result is a breathing body with
+feet that stay visually on the pedestal/desk, rather than a rigid group sliding up and down.
+
+## Strand wind
+
+`STRAND_UNIFORMS` is shared by every strand material: `time`, `breeze`, `length`, `curl`, `clump`,
+`cursor`. Each frame updates `time`; pointer moves raycast onto a plane through the character and update
+`cursor`. The vertex shader bends each ribbon by height squared, so roots stay anchored and tips move.
+Reduced motion does not disable the fur entirely; the breeze default is low and the slider can be set
+to zero.

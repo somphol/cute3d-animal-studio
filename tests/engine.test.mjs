@@ -16,6 +16,8 @@ test('seven animals, four expressions, three accessories', () => {
   assert.equal(engine.COLOR_KEYS.length, 3);
   assert.deepEqual(engine.COAT_LEVELS, ['off', 'soft', 'plush']);
   assert.equal(engine.DEFAULT_COAT, 'soft');
+  assert.deepEqual(engine.LIGHTING_PRESETS, ['studio', 'sky', 'desk']);
+  assert.equal(engine.DEFAULT_LIGHTING, 'studio');
 });
 
 test('every animal has a complete default palette', () => {
@@ -139,12 +141,17 @@ test('share state round-trips every field', () => {
     colors: { main: '#112233', belly: '#445566', blush: '#778899' },
     accessories: { bowtie: true, partyHat: false, glasses: true },
     coat: 'plush',
+    lighting: 'desk',
+    fur: { length: 1.5, density: 0.9, curl: 0.7, clump: 0.2, breeze: 0.8 },
   });
   const decoded = engine.decodeShareState(`?${encoded}`);
   assert.equal(decoded.animal, 'shiba');
   assert.equal(decoded.expression, 'curious');
   assert.equal(decoded.lang, 'th');
   assert.equal(decoded.coat, 'plush');
+  assert.equal(decoded.lighting, 'desk');
+  assert.equal(decoded.fur.length, 1.5);
+  assert.equal(decoded.fur.density, 0.9);
   assert.deepEqual(decoded.colors, { main: '#112233', belly: '#445566', blush: '#778899' });
   assert.deepEqual(decoded.accessories, { bowtie: true, partyHat: false, glasses: true });
   assert.equal(decoded.valid, true);
@@ -190,6 +197,11 @@ test('small helpers behave', () => {
   assert.equal(engine.hashString('bear'), engine.hashString('bear'));
   assert.equal(engine.sanitizeCoat('plush'), 'plush');
   assert.equal(engine.sanitizeCoat('nope'), 'soft');
+  assert.equal(engine.sanitizeLighting('desk'), 'desk');
+  assert.equal(engine.sanitizeLighting('moon'), 'studio');
+  assert.deepEqual(engine.sanitizeFur({ length: 99, density: 0, curl: 2, clump: -1, breeze: 'x' }), {
+    length: 1.8, density: 0.1, curl: 1, clump: 0, breeze: 0.3,
+  });
   assert.notEqual(engine.hashString('bear'), engine.hashString('bunny'));
 });
 
