@@ -1,0 +1,139 @@
+{
+  "project": "Cute3D: Procedural Code-Only Animal Studio",
+  "release": "1.0.0",
+  "session": {
+    "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
+    "startedAt": "2026-11-05T06:06:14.304Z",
+    "capturedAt": "2026-11-05T06:27:07.773Z",
+    "elapsedSeconds": 1253,
+    "elapsed": "20m 53s",
+    "note": "One continuous OpenCode session: specification, scene, four procedural rigs, animation, synthesized audio, bilingual UI, snapshot export, four verification layers, screenshots, documentation, GitHub Pages deployment and a reusable skill. Token totals are dominated by cache reads (repeated prompt context), not new output."
+  },
+  "model": {
+    "name": "DeepSeek V4.1 Flash",
+    "id": "deepseek-v4.1-flash",
+    "provider": "opencode-go"
+  },
+  "agent": {
+    "tool": "OpenCode",
+    "url": "https://opencode.ai"
+  },
+  "usage": {
+    "inputTokens": 46856,
+    "outputTokens": 102912,
+    "reasoningTokens": 40620,
+    "cacheReadTokens": 6920448,
+    "cacheWriteTokens": 1669,
+    "totalTokens": 7112505,
+    "costUSD": 0,
+    "note": "Read from the OpenCode session database (session_v2). totalTokens is the sum of the five counters; cache reads are repeated prompt context and dominate. costUSD is 0 on the flat-rate plan."
+  },
+  "artifacts": {
+    "sourceFiles": [
+      "index.html",
+      "style.css",
+      "script.js"
+    ],
+    "lineCounts": {
+      "index.html": 319,
+      "style.css": 1520,
+      "script.js": 2228,
+      "total": 4067
+    },
+    "supportingFiles": [
+      "README.md",
+      "AGENTS.md",
+      "CHANGELOG.md",
+      "CONTRIBUTING.md",
+      "CODE_OF_CONDUCT.md",
+      "SECURITY.md",
+      "SUPPORT.md",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md",
+      "state.json",
+      "manifest.webmanifest",
+      "robots.txt",
+      "sitemap.xml",
+      "404.html",
+      ".nojekyll",
+      ".editorconfig",
+      ".gitignore",
+      "package.json",
+      ".github/workflows/verify.yml",
+      "docs/README.md",
+      "docs/ARCHITECTURE.md",
+      "docs/REPRODUCTION.md",
+      "docs/DESIGN.md",
+      "docs/ANIMATION.md",
+      "docs/AUDIO.md",
+      "docs/TESTING.md",
+      "docs/DEPLOYMENT.md",
+      "docs/DECISIONS.md",
+      "docs/ACCESSIBILITY.md",
+      "docs/PERFORMANCE.md",
+      "docs/PRIVACY.md",
+      "docs/FAQ.md",
+      "docs/ROADMAP.md",
+      "docs/CREDITS.md",
+      "scripts/serve.mjs",
+      "scripts/screenshot.mjs",
+      "tests/engine.test.mjs",
+      "tests/static.test.mjs",
+      "tests/browser.test.mjs",
+      "tests/lib/harness.mjs",
+      "tests/lib/fixtures.mjs",
+      "assets/favicon.svg",
+      "assets/og-card.png",
+      "assets/screenshot-studio.png",
+      "assets/screenshot-bunny.png",
+      "assets/screenshot-penguin.png",
+      "assets/screenshot-shiba.png",
+      "assets/screenshot-thai.png",
+      "assets/screenshot-mobile.png",
+      "assets/snapshot-transparent.png"
+    ],
+    "tests": {
+      "engine": 19,
+      "static": 27,
+      "browser": 23,
+      "inPage": 19
+    },
+    "animals": {
+      "bear": {
+        "name": "Mochi",
+        "meshes": 25
+      },
+      "bunny": {
+        "name": "Pip",
+        "meshes": 27
+      },
+      "penguin": {
+        "name": "Pebble",
+        "meshes": 19
+      },
+      "shiba": {
+        "name": "Sunny",
+        "meshes": 29
+      }
+    },
+    "screenshots": [
+      "assets/og-card.png",
+      "assets/screenshot-studio.png",
+      "assets/screenshot-bunny.png",
+      "assets/screenshot-penguin.png",
+      "assets/screenshot-shiba.png",
+      "assets/screenshot-thai.png",
+      "assets/screenshot-mobile.png",
+      "assets/snapshot-transparent.png"
+    ],
+    "skill": {
+      "id": "cute3d-animal-studio",
+      "local": "~/.config/opencode/skills/cute3d-animal-studio",
+      "catalog": "https://github.com/somphol/opencode-skills"
+    }
+  },
+  "credits": [
+    "Built with OpenCode (https://opencode.ai) and DeepSeek V4.1 Flash.",
+    "Three.js 0.169.0 (MIT) is the only runtime dependency."
+  ]
+}

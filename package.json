@@ -1,0 +1,36 @@
+{
+  "name": "cute3d-animal-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Four original procedural 3D animals, built entirely from Three.js primitives. Bilingual studio with live colours, accessories, procedural audio and transparent PNG snapshots.",
+  "license": "MIT",
+  "author": "Somphol Boonjing",
+  "homepage": "https://somphol.github.io/cute3d-animal-studio/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/somphol/cute3d-animal-studio.git"
+  },
+  "keywords": [
+    "three.js",
+    "procedural",
+    "3d",
+    "character",
+    "webgl",
+    "bilingual",
+    "code-only"
+  ],
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test tests/engine.test.mjs tests/static.test.mjs",
+    "test:engine": "node --test tests/engine.test.mjs",
+    "test:static": "node --test tests/static.test.mjs",
+    "test:browser": "node tests/browser.test.mjs",
+    "test:all": "node --test tests/engine.test.mjs tests/static.test.mjs && node tests/browser.test.mjs",
+    "verify": "node --test tests/engine.test.mjs tests/static.test.mjs && node tests/browser.test.mjs",
+    "shots": "node scripts/screenshot.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
