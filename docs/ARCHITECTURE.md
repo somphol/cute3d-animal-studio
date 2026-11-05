@@ -35,7 +35,7 @@ state (localStorage + defaults + URL share)
   → lights, pedestal, shadow disc, decorative props
   → materials + geometry helpers
   → accessory builders
-  → four animal builders
+  → seven animal builders
   → rig helpers (buildAnimal, applyColors, applyAccessories, disposeRig)
   → ResizeObserver + camera framing
   → UI sync + event wiring
@@ -107,6 +107,19 @@ type Rig = {
 
 Recolouring updates `rig.materials` in place. Materials are **not** shared between rigs; accessory
 materials and shared geometries are marked `userData.shared` so `disposeRig` skips them.
+
+## Coat system
+
+Fur and feathers are **layered shell meshes** generated after the rig is built:
+
+- `COAT_CONFIG` declares zones by mesh name and colour role.
+- `applyCoat(rig, level)` clones each zone 5 (soft) or 10 (plush) times, scales the clone outward and
+  assigns a procedural alpha/bump material.
+- Object-space GLSL masks keep the face, inner ears and belly clear.
+- `rig.fluff` holds the shells; `rig.fluffMaterials` maps roles to materials for live recolouring.
+- `state.coat` is `off | soft | plush`, persisted, included in presets and shared as `f=`.
+
+Full detail and tuning rules are in [COAT.md](COAT.md).
 
 ## State model
 

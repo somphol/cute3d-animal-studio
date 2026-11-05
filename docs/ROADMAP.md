@@ -1,8 +1,9 @@
 # Roadmap
 
-## Shipped — 1.0.0
+## Shipped — 1.1.0
 
-- Four original procedural animals with distinct silhouettes
+- Seven original procedural animals with distinct silhouettes (bear, bunny, penguin, shiba, koala, conure, fold)
+- Procedural fur/feather shell system with Smooth / Soft / Plush levels, masks and bump relief
 - PCF soft-shadow studio, pedestal and decorative props
 - Idle breathing, float, blink (incl. double blink), ear/tail motion, penguin waddle
 - Jump-and-spin reaction with sparkles and a synthesized boing
@@ -13,10 +14,10 @@
 - Full EN/TH UI, parity-tested, persisted
 - Local presets (max 10), share links, 2048² transparent PNG
 - Reduced motion, keyboard shortcuts, skip link, aria states
-- 19 engine + 76 static + 23 browser + 19 in-page checks
+- 19 engine + 80 static + 24 browser + 20 in-page checks
 - Docs, screenshots, OG card, GitHub Pages deployment
 
-## Next — 1.1
+## Next — 1.2
 
 - [ ] Offscreen `WebGLRenderTarget` snapshot, removing `preserveDrawingBuffer`
 - [ ] Per-animal hidden text description for screen readers, updated on change
@@ -25,7 +26,7 @@
 - [ ] Remember the last camera orbit in `sessionStorage`
 - [ ] Rotate/zoom keyboard controls for the canvas
 
-## Later — 1.2+
+## Later — 1.3+
 
 - [ ] Fifth character (a round frog) built from the same primitive kit
 - [ ] Accessory colour variants without adding files

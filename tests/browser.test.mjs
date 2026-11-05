@@ -116,16 +116,16 @@ try {
     assert.match(label, /Mochi/);
   });
 
-  await record('all four characters switch from the panel', async () => {
+  await record('all seven characters switch from the panel', async () => {
     const counts = [];
-    for (const animal of ['bear', 'bunny', 'penguin', 'shiba']) {
+    for (const animal of ['bear', 'bunny', 'penguin', 'shiba', 'koala', 'conure', 'fold']) {
       await click(`[data-animal="${animal}"]`);
       const data = await snapshotState();
       assert.equal(data.animal, animal);
       assert.equal(data.rigAnimal, animal);
       counts.push(data.meshCount);
     }
-    assert.equal(new Set(counts).size, 4, `mesh counts not distinct: ${counts}`);
+    assert.equal(new Set(counts).size, 7, `mesh counts not distinct: ${counts}`);
     return counts.join(',');
   });
 
@@ -155,6 +155,21 @@ try {
     await sleep(500);
     const open = await evaluate('window.__cute3d.getRig().eyes[0].scale.y');
     assert.ok(open > base * 0.6, 'eye did not reopen');
+  });
+
+  await record('coat levels add and remove fur shells', async () => {
+    await click('[data-coat="plush"]');
+    await sleep(500);
+    const plush = await evaluate('window.__cute3d.strandCount()');
+    assert.ok(plush > 1000, `too few fibres: ${plush}`);
+    await click('[data-coat="off"]');
+    await sleep(300);
+    const off = await evaluate('window.__cute3d.strandCount()');
+    assert.equal(off, 0);
+    await click('[data-coat="soft"]');
+    await sleep(300);
+    const soft = await evaluate('window.__cute3d.strandCount()');
+    assert.ok(soft > 0 && soft < plush, `soft ${soft} vs plush ${plush}`);
   });
 
   await record('palette applies three colours at once', async () => {

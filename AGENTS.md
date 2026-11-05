@@ -4,7 +4,7 @@ Read this before changing anything. It is the one-minute handoff.
 
 ## What it is
 
-A static, zero-asset Three.js character studio. Four original animals are assembled at runtime from
+A static, zero-asset Three.js character studio. Seven original animals — including a koala, sun conure and Scottish Fold — are assembled at runtime from
 spheres, capsules, cones and torus arcs; every sound is synthesized with Web Audio. It ships an
 English/Thai UI, live colour/accessory customization, local presets, share links and a transparent
 2048 px PNG export. It is **not** a model viewer, a game, or a backend product — there is no server,
@@ -17,8 +17,8 @@ Live: <https://somphol.github.io/cute3d-animal-studio/>
 ```bash
 python3 -m http.server 4173        # or: npm start
 node --test tests/engine.test.mjs  # 19 checks, no browser
-node --test tests/static.test.mjs  # 76 checks, no browser
-node tests/browser.test.mjs        # 23 checks, headless Chrome via CDP
+node --test tests/static.test.mjs  # 80 checks, no browser
+node tests/browser.test.mjs        # 24 checks, headless Chrome via CDP
 npm run verify                     # engine + static + browser
 node scripts/screenshot.mjs        # regenerate every PNG in assets/
 TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs
@@ -37,11 +37,20 @@ Three source files, no build step, no npm runtime dependencies.
    - `/* ENGINE:START */ … END */` — pure functions. **No DOM, no THREE, no imports.** Node slices
      this block with `new Function` (in tests only).
    - `/* I18N:START */ … END */` — EN/TH dictionaries, parity-tested.
-   - `/* APP:START */ … END */` — imports Three.js, builds the scene, rigs, loop and UI.
+   - `/* APP:START */ … END */` — imports Three.js, builds the scene, seven rigs, coat shells, loop and UI.
 
 Construction order in `APP`: state store → i18n helpers → audio → renderer/scene/camera/controls →
-lights/pedestal/props → materials/helpers → accessories → four builders → rig helpers → resize → app
+lights/pedestal/props → materials/helpers → accessories → seven builders → coat shells → rig helpers → resize → app
 state/UI → animation loop → self-test → boot.
+
+Coat contract:
+
+- `COAT_CONFIG` maps mesh names to zones; `applyCoat(rig, 'off'|'soft'|'plush')` builds or removes
+  shell clones.
+- Shells are opaque with alpha test, use canvas-generated strand + bump textures, and inject object-space
+  masks so the face (`z > 0.58`), ear centres (`z > 0.35`) and belly oval stay clear.
+- `rig.fluff` holds the shells, `rig.fluffMaterials` maps roles for live recolouring. Never dispose
+  shared geometry.
 
 The model contract is small and strict:
 
@@ -58,6 +67,8 @@ The model contract is small and strict:
   The only remote dependency is the pinned Three.js CDN in the import map.
 - **Original characters only.** Do not reskin or imitate third-party mascots; `tests/static.test.mjs`
   scans for protected names, but that scan is a guard, not a licence.
+- **Coat is shell-based.** Cone strands, particles and small cards were rejected; they read as wire,
+  dust and paper. Do not replace the shell system without visual proof.
 - **Belly patches sit forward.** They are spheres at `z ≈ 0.55` so they read outside the body
   silhouette. Moving them back makes them invisible and has been fixed twice.
 - **Penguin eyes sit forward** (`z = 0.72`) because the face patch extends to `z ≈ 0.71`.
@@ -70,8 +81,8 @@ The model contract is small and strict:
 - **The engine block must stay import-free.** `new Function` cannot resolve `THREE` or `document`.
 - **Three.js is pinned.** Upgrading changes shadow/tone-mapping behaviour; re-run browser tests and
   regenerate screenshots after any bump.
-- **Keep the test counts honest.** If a check is removed, update the README table; never edit a claim
-  to match a failing suite.
+- **Keep the test counts honest.** Current gates: 19 engine, 80 repository, 24 browser, 20 in-page.
+  If a check is removed, update the README table; never edit a claim to match a failing suite.
 
 ## Known issues
 
@@ -82,6 +93,10 @@ The model contract is small and strict:
   but frequently mistaken for missing content.
 - Safari may require a user gesture before AudioContext starts; the first click does that.
 - Presets are capped at 10 per browser profile and are not synchronized between devices.
+- Plush adds ~50–100 transparent-alpha shell meshes. It is capped at 10 layers for mobile GPU safety;
+  do not raise it without measuring.
+- The koala/conure/fold coats are tuned for the default palettes; extreme custom colours still work but
+  the silhouette contrast changes.
 - The static test suite expects `state.json` line counts to match the source; regenerate the state file
   after editing `index.html`, `style.css` or `script.js`.
 

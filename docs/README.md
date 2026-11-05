@@ -9,6 +9,7 @@ task.
 | [REPRODUCTION](REPRODUCTION.md) | rebuild the project from scratch, or hand it to another agent |
 | [DESIGN](DESIGN.md) | change colours, typography, layout or character proportions |
 | [ANIMATION](ANIMATION.md) | tune idle motion, blinks, expressions or the reaction |
+| [COAT](COAT.md) | understand or tune the fur and feather shell system |
 | [AUDIO](AUDIO.md) | change synthesized sounds or the audio graph |
 | [TESTING](TESTING.md) | run, extend or debug the four verification layers |
 | [DEPLOYMENT](DEPLOYMENT.md) | publish, update or roll back the live site |

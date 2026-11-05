@@ -90,7 +90,25 @@ look broken; the panel is sized for Thai's longer strings.
 **Why:** These are universal toy conventions. No third-party silhouettes, palettes or names are used.
 **Do not:** Add "cute" references to known mascots in code, docs or marketing.
 
-## ADR-014 — Verification is part of the product
+## ADR-015 — Fur and feathers are layered shells
+
+**Decision:** Build coats by cloning each fur zone 5 or 10 times, scaling outward, and applying a
+canvas-generated strand alpha plus bump map. Mask the face, inner ears and belly in object space.
+**Why:** Solid strands read as wire, particles as dust and small alpha cards as paper shards. Shells
+give a soft silhouette with opaque, sortable draw calls and no external textures.
+**Cost:** ~50–100 extra draw calls at Plush and a modest switch cost.
+**Do not:** Reintroduce cone strands as the primary coat. Add new species through `COAT_CONFIG`, not by
+hard-coding hair in a builder.
+
+## ADR-016 — Seven characters, one primitive language
+
+**Decision:** Add Koala, Sun Conure and Scottish Fold by extending the same rig contract and palette
+system rather than adding special-case scene code.
+**Why:** The selector, recolouring, accessories, expressions and tests all work unchanged. Each new
+animal has one signature feature (koala ears, conure wings/tail, folded ears) while sharing eyes,
+blush and muzzle grammar.
+
+## ADR-017 — Verification is part of the product
 
 **Decision:** Four layers, a self-test route, regenerated screenshots and a state file.
 **Why:** A visual toy is easy to break silently. The tests cover the contracts that are hard to see:

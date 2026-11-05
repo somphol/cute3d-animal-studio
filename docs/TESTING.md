@@ -5,9 +5,9 @@ Four independent layers, all runnable offline except the CDN fetch Three.js need
 | Layer | Command | Count | What it proves |
 | --- | --- | --- | --- |
 | Engine | `node --test tests/engine.test.mjs` | 19 | Math, palettes, validation, share format, dictionary parity |
-| Repository | `node --test tests/static.test.mjs` | 76 checks | Files, HTML shell, i18n coverage, IP hygiene, metadata, state |
-| Browser | `node tests/browser.test.mjs` | 23 | Real WebGL, rigs, interaction, persistence, export, mobile |
-| In-page | `/?selftest` | 19 | The deployed build can inspect itself |
+| Repository | `node --test tests/static.test.mjs` | 80 checks | Files, HTML shell, i18n coverage, IP hygiene, metadata, state |
+| Browser | `node tests/browser.test.mjs` | 24 | Real WebGL, rigs, coat levels, interaction, persistence, export, mobile |
+| In-page | `/?selftest` | 20 | The deployed build can inspect itself |
 
 Run everything:
 
@@ -64,27 +64,28 @@ The suite checks:
 
 1. canvas exists with a sensible size, loading overlay gone;
 2. default bear with > 25 meshes;
-3. all four characters switch and have distinct mesh counts;
+3. all seven characters switch and have distinct mesh counts;
 4. `aria-pressed` follows the active animal;
-5. sleepy closes the eyes and happy reopens them;
-6. a palette applies all three colours;
-7. a colour-input event recolours the live material and hex label;
-8. all three accessories build and toggle;
-9. the language switch translates names and panel, persists the key;
-10. presets save to `localStorage` and the DOM;
-11. preset apply switches animal and restores the look;
-12. presets clear;
-13. React starts a jump and settles after 0.92 s;
-14. a real mouse tap on the canvas triggers the raycast reaction;
-15. a snapshot is 1024², transparent in the corner, opaque in the centre;
-16. the snapshot button downloads a correctly named file;
-17. the share URL encodes current state and decodes back;
-18. keyboard `2` switches to the bunny;
-19. state survives a reload;
-20. the mobile sheet opens and closes with correct `aria-expanded`;
-21. reduced motion still renders;
-22. the in-page self-test passes 19/19;
-23. there are zero console errors.
+5. the coat toggle builds shells, removes them and scales the fibre count;
+6. sleepy closes the eyes and happy reopens them;
+7. a palette applies all three colours;
+8. a colour-input event recolours the live material and hex label;
+9. all three accessories build and toggle;
+10. the language switch translates names and panel, persists the key;
+11. presets save to `localStorage` and the DOM;
+12. preset apply switches animal and restores the look;
+13. presets clear;
+14. React starts a jump and settles after 0.92 s;
+15. a real mouse tap on the canvas triggers the raycast reaction;
+16. a snapshot is 1024², transparent in the corner, opaque in the centre;
+17. the snapshot button downloads a correctly named file;
+18. the share URL encodes current state and decodes back;
+19. keyboard `2` switches to the bunny;
+20. state survives a reload;
+21. the mobile sheet opens and closes with correct `aria-expanded`;
+22. reduced motion still renders;
+23. the in-page self-test passes 20/20;
+24. there are zero console errors.
 
 ### Live run
 
@@ -92,17 +93,17 @@ The suite checks:
 TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs
 ```
 
-The same 23 checks must pass against Pages. Transparent snapshot and download checks work there too.
+The same 24 checks must pass against Pages. Transparent snapshot and download checks work there too.
 
 ## In-page self-test
 
-`/?selftest` builds all four rigs, renders a 512² snapshot, validates dictionary parity, sanitisation
-and share round-trips, then prints a 19-row report and sets `window.__selftest`.
+`/?selftest` builds all seven rigs, renders a 512² snapshot, validates dictionary parity, sanitisation
+and share round-trips, then prints a 20-row report and sets `window.__selftest`.
 
 ```
 {
-  passed: 19,
-  total: 19,
+  passed: 20,
+  total: 20,
   results: [{ name, ok, detail }],
   at: "2026-11-04T…"
 }

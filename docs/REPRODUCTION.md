@@ -7,7 +7,7 @@ are the same ones used for the original build.
 ## 0. Brief
 
 Build a static 3D web app called **Cute3D: Procedural Code-Only Animal Studio** with vanilla HTML,
-CSS, ES modules and Three.js from a CDN. Four original animals are assembled from primitives. The app
+CSS, ES modules and Three.js from a CDN. Seven original animals are assembled from primitives. The app
 must include idle animations, click reactions, expressions, live colours, three accessories,
 synthesized audio, EN/TH UI, localStorage presets, share links and transparent PNG snapshots. No
 downloaded 3D models, textures, audio files, fonts or icon packs.
@@ -113,14 +113,17 @@ Expression table (`eyeOpen`, `headTilt`, `earAmp`, `tailAmp`, `floatAmp`, `cheek
 
 ## 5. Animals
 
-Build in this order: bear, bunny, penguin, shiba. All stand on y = 0. All faces point +Z.
+Build in this order: bear, bunny, penguin, shiba, koala, conure, fold. All stand on y = 0. All faces point +Z. Base mesh counts are 25 / 27 / 19 / 26 / 23 / 50 / 32; they must stay distinct (the self-test checks this).
 
 | Animal | Body | Head (y) | Ears | Eyes (z) | Tail | Distinct mesh count |
 | --- | --- | --- | --- | --- | --- | --- |
 | Bear | sphere scale (0.92, 0.90, 0.80) at y 0.98 | 2.02 | two sphere pivots ±0.58, y 0.36 | ±0.31, z 0.70 | sphere at z −0.62 | 25 |
 | Bunny | (0.82, 0.94, 0.74) at 0.94 | 1.96 | capsules, pivot ±0.34, y 0.48 | ±0.26, z 0.62 | 3-sphere fluff at z −0.58 | 27 |
 | Penguin | (0.88, 0.98, 0.84) at 1.02 | 2.06 | flipper capsules ±0.92, y 1.18 | ±0.21, z 0.72 | cone at z −0.70 | 19 |
-| Shiba | (0.86, 0.86, 0.80) at 0.96 | 2.00 | 4-sided cones ±0.44, y 0.48 | ±0.27, z 0.62 | torus curl at z −0.55 | 29 |
+| Shiba | (0.86, 0.86, 0.80) at 0.96 | 2.00 | 4-sided cones ±0.44, y 0.48 | ±0.27, z 0.62 | torus curl at z −0.55 | 26 |
+| Koala | (0.92, 1.00, 0.82) at 1.00 | 2.06 | huge spheres ±0.70, outer + cream inner | ±0.29, z 0.66 | small sphere at z −0.70 | 23 |
+| Sun Conure | (0.80, 1.00, 0.72) at 1.00 | 2.02 | layered feather wings at ±0.69 | under white eye patches, z 0.62 | 6 + 3 blue-green feathers | 50 |
+| Scottish Fold | (0.86, 0.94, 0.82) at 0.99 | 2.00 | folded flaps at ±0.44, z 0.50 | ±0.28, z 0.63 | torus curl at z −0.60 | 32 |
 
 Critical depths for the shipped proportions:
 
@@ -137,6 +140,38 @@ Accessories:
   group scale 1.1, local z 0.10;
 - party hat: cone r 0.3 h 0.78, gold torus trim, mint pompom; rotated `(-0.12, 0, 0.16)`;
 - glasses: two torus rings r 0.155 tube 0.022, bridge and temple arms, dark material.
+
+### New animal notes
+
+- **Koala** — a broad dark nose (0.24 × 0.18 × 0.14) at z 0.80, a cream muzzle, huge outer ears with cream
+  inner discs, and a small tail. Its coat uses long silver shells and ear masks that reveal the inner ear.
+- **Sun Conure** — yellow head/body (`#f7c948`), orange chest (`#ff9c2f`), cream eye patches, charcoal
+  triangular beak, green layered wings with lime coverts, and green-to-blue tail feathers. Wing/tail
+  feathers use the shared `featherGeometry(base, tip)` leaf builder; the low tail fan is angled down so
+  blue tips can peek below the body. Coat zones are feather shells on body, chest and crown.
+- **Scottish Fold** — silver plush body, cream chest, eight whisker cylinders, tiny pink nose, and folded
+  ear flaps on the forehead (`z ≈ 0.5`, flattened in Z, tilted forward) with pink inner ears.
+
+## 5b. Coat system
+
+Fur and feathers are **layered shells**, not strands:
+
+1. For each coat zone (body, belly, head, ears, cheeks, tail) clone the source mesh 5 (Soft) or 10
+   (Plush) times.
+2. Scale each clone from `1.004` to `1.004 + thickness` (fur 0.085, feathers 0.045).
+3. Give each shell a canvas-generated strand alpha texture (`makeShellAlphaTexture`) and a matching bump
+   map. Three fur variants and two feather variants are generated once and UV-offset per layer.
+4. Raise `alphaTest` on outer layers (0.22 → 0.48) so they thin out into a fuzzy silhouette.
+5. Inject a GLSL discard mask per zone: face `z > 0.58`, ears `z > 0.35`, body an oval window matching
+   the belly patch.
+6. Colour the shells by role and refresh them in `applyColors`.
+
+Store shells in `rig.fluff` and role materials in `rig.fluffMaterials`. `disposeCoat` removes them and
+disposes materials; shared geometry is never disposed. The UI exposes Smooth / Soft / Plush and the
+state key is `coat`, shared as `f=`.
+
+Do **not** replace this with solid cone strands, particles or cards — all three were prototyped and
+read as wire, dust or paper shards.
 
 ## 6. Animation
 
@@ -180,13 +215,13 @@ recreating the context.
 Write all four layers before declaring done:
 
 - engine: 19 checks (palettes, colour parsing, blink envelope, poses, preset sanitising, share
-  round-trip, filename safety, size clamp, dictionary parity);
-- static: 76 checks (files, HTML shell, i18n coverage, no assets/trackers/trademarks, markers,
+  round-trip, filename safety, size clamp, dictionary parity, coat levels);
+- static: 80 checks (files, HTML shell, i18n coverage, no assets/trackers/trademarks, markers,
   storage namespace, snapshot contract, accessibility, metadata, state.json line counts);
-- browser: 23 checks (canvas, four rigs, expressions, colours, accessories, language, presets,
+- browser: 24 checks (canvas, seven rigs, coat levels, expressions, colours, accessories, language, presets,
   reaction, raycast tap, transparency, download, share, keyboard, reload, mobile sheet, reduced
   motion, in-page self-test, zero console errors);
-- in-page: 19 checks at `/?selftest`.
+- in-page: 20 checks at `/?selftest`.
 
 ## 11. Common failures and their fixes
 
@@ -206,7 +241,7 @@ Write all four layers before declaring done:
 1. Run `npm run verify`, then `node scripts/screenshot.mjs`.
 2. Update `state.json` (tokens, elapsed, line counts) and any test counts in README.
 3. Commit, push to `main`, enable Pages (root). Wait for the Pages build.
-4. Run the browser suite against the live URL until 23/23.
+4. Run the browser suite against the live URL until 24/24.
 5. Add the skill to `~/Projects/opencode-skills` and run `node sync.mjs`.
 6. Keep `AGENTS.md` current in the same push.
 

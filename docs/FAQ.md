@@ -6,7 +6,7 @@ binary assets are the SVG favicon and the PNG screenshots/OG card used for the r
 preview. The app itself draws the animals from spheres, capsules, cones and torus arcs.
 
 **How are the animals made?**
-Each is a `THREE.Group` of 19–29 meshes with a shared material set. Body, head, ears, eyes, muzzle,
+Each is a `THREE.Group` of 19–50 meshes with a shared material set. Body, head, ears, eyes, muzzle,
 cheeks, limbs and tail are primitives. Accessories are separate groups attached to head/neck anchors.
 See [ARCHITECTURE.md](ARCHITECTURE.md) and [REPRODUCTION.md](REPRODUCTION.md).
 
@@ -14,10 +14,10 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) and [REPRODUCTION.md](REPRODUCTION.md).
 The code is MIT. The character designs are original to this project. You may use, modify and sell
 derivatives; attribution is appreciated but not required. Do not add third-party characters.
 
-**Why four animals and not more?**
-Four gives a complete selector without diluting the craft. Adding a fifth requires a builder, a
-palette, dictionary entries, a mesh count and a test update; the pattern is documented so it is
-straightforward.
+**Why seven animals and not more?**
+Seven gives a broad selector without diluting the craft: four classics plus a koala, a sun conure and
+a Scottish Fold. Adding another requires a builder, a palette, coat zones, dictionary entries, a mesh
+count and a test update; the pattern is documented in [REPRODUCTION.md](REPRODUCTION.md).
 
 **Does it work offline?**
 After the Three.js CDN files are cached, yes, but there is no service worker. A future version could

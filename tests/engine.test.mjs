@@ -9,11 +9,13 @@ import { loadEngine, loadI18n } from './lib/fixtures.mjs';
 const engine = loadEngine();
 const i18n = loadI18n();
 
-test('four animals, four expressions, three accessories', () => {
-  assert.deepEqual(engine.ANIMALS, ['bear', 'bunny', 'penguin', 'shiba']);
+test('seven animals, four expressions, three accessories', () => {
+  assert.deepEqual(engine.ANIMALS, ['bear', 'bunny', 'penguin', 'shiba', 'koala', 'conure', 'fold']);
   assert.equal(engine.EXPRESSIONS.length, 4);
   assert.deepEqual(engine.ACCESSORIES, ['bowtie', 'partyHat', 'glasses']);
   assert.equal(engine.COLOR_KEYS.length, 3);
+  assert.deepEqual(engine.COAT_LEVELS, ['off', 'soft', 'plush']);
+  assert.equal(engine.DEFAULT_COAT, 'soft');
 });
 
 test('every animal has a complete default palette', () => {
@@ -99,6 +101,7 @@ test('preset sanitiser rejects invalid animals and keeps one good record', () =>
   assert.equal(presets[0].colors.main, engine.DEFAULT_COLORS.bear.main);
   assert.equal(presets[0].accessories.bowtie, true);
   assert.equal(presets[0].expression, 'happy');
+  assert.equal(presets[0].coat, 'soft');
   assert.match(presets[0].id, /^[a-z0-9-]{6,48}$/);
 });
 
@@ -135,11 +138,13 @@ test('share state round-trips every field', () => {
     lang: 'th',
     colors: { main: '#112233', belly: '#445566', blush: '#778899' },
     accessories: { bowtie: true, partyHat: false, glasses: true },
+    coat: 'plush',
   });
   const decoded = engine.decodeShareState(`?${encoded}`);
   assert.equal(decoded.animal, 'shiba');
   assert.equal(decoded.expression, 'curious');
   assert.equal(decoded.lang, 'th');
+  assert.equal(decoded.coat, 'plush');
   assert.deepEqual(decoded.colors, { main: '#112233', belly: '#445566', blush: '#778899' });
   assert.deepEqual(decoded.accessories, { bowtie: true, partyHat: false, glasses: true });
   assert.equal(decoded.valid, true);
@@ -183,6 +188,8 @@ test('small helpers behave', () => {
   assert.equal(engine.formatMeshLabel(0), '0');
   assert.equal(engine.formatMeshLabel(36.4), '36');
   assert.equal(engine.hashString('bear'), engine.hashString('bear'));
+  assert.equal(engine.sanitizeCoat('plush'), 'plush');
+  assert.equal(engine.sanitizeCoat('nope'), 'soft');
   assert.notEqual(engine.hashString('bear'), engine.hashString('bunny'));
 });
 

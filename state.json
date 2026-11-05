@@ -1,13 +1,13 @@
 {
   "project": "Cute3D: Procedural Code-Only Animal Studio",
-  "release": "1.0.0",
+  "release": "1.1.0",
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
-    "capturedAt": "2026-11-05T06:36:29.626Z",
-    "elapsedSeconds": 1815,
-    "elapsed": "30m 15s",
-    "note": "One continuous OpenCode session: specification, scene, four procedural rigs, animation, synthesized audio, bilingual UI, snapshot export, four verification layers, screenshots, documentation, GitHub Pages deployment and a reusable skill. Token totals are dominated by cache reads (repeated prompt context), not new output."
+    "capturedAt": "2026-11-05T14:57:49.664Z",
+    "elapsedSeconds": 31895,
+    "elapsed": "8h 51m 35s",
+    "note": "The session spans two releases with a long pause between them. v1.0.0 (four pets) was completed in 30m 15s; v1.1.0 added three animals and the procedural coat system, refreshed all docs, assets and the skill, and re-verified the live site. Wall-clock elapsed includes the pause; token totals are cumulative and dominated by cache reads (repeated prompt context)."
   },
   "model": {
     "name": "DeepSeek V4.1 Flash",
@@ -19,15 +19,33 @@
     "url": "https://opencode.ai"
   },
   "usage": {
-    "inputTokens": 61597,
-    "outputTokens": 122999,
-    "reasoningTokens": 52274,
-    "cacheReadTokens": 17627648,
+    "inputTokens": 737117,
+    "outputTokens": 188132,
+    "reasoningTokens": 126033,
+    "cacheReadTokens": 55112576,
     "cacheWriteTokens": 1669,
-    "totalTokens": 17866187,
+    "totalTokens": 56165527,
     "costUSD": 0,
     "note": "Read from the OpenCode session database (session_v2). totalTokens is the sum of the five counters; cache reads are repeated prompt context and dominate. costUSD is 0 on the flat-rate plan."
   },
+  "milestones": [
+    {
+      "version": "1.0.0",
+      "capturedAt": "2026-11-05T06:36:29.000Z",
+      "elapsed": "30m 15s",
+      "elapsedSeconds": 1815,
+      "totalTokens": 17866187,
+      "note": "Initial release: four pets, bilingual UI, audio, snapshot, tests, docs, Pages, skill."
+    },
+    {
+      "version": "1.1.0",
+      "capturedAt": "2026-11-05T14:57:49.664Z",
+      "elapsed": "8h 51m 35s",
+      "elapsedSeconds": 31895,
+      "totalTokens": 56165527,
+      "note": "Three new animals (koala, sun conure, Scottish Fold) and the Smooth/Soft/Plush coat system."
+    }
+  ],
   "artifacts": {
     "sourceFiles": [
       "index.html",
@@ -35,10 +53,10 @@
       "script.js"
     ],
     "lineCounts": {
-      "index.html": 329,
-      "style.css": 1570,
-      "script.js": 2235,
-      "total": 4134
+      "index.html": 370,
+      "style.css": 1625,
+      "script.js": 2993,
+      "total": 4988
     },
     "supportingFiles": [
       "README.md",
@@ -66,6 +84,7 @@
       "docs/DESIGN.md",
       "docs/ANIMATION.md",
       "docs/AUDIO.md",
+      "docs/COAT.md",
       "docs/TESTING.md",
       "docs/DEPLOYMENT.md",
       "docs/DECISIONS.md",
@@ -94,26 +113,45 @@
     ],
     "tests": {
       "engine": 19,
-      "static": 76,
-      "browser": 23,
-      "inPage": 19
+      "static": 80,
+      "browser": 24,
+      "inPage": 20
     },
     "animals": {
       "bear": {
         "name": "Mochi",
-        "meshes": 25
+        "meshes": 25,
+        "coat": "fur"
       },
       "bunny": {
         "name": "Pip",
-        "meshes": 27
+        "meshes": 27,
+        "coat": "fur"
       },
       "penguin": {
         "name": "Pebble",
-        "meshes": 19
+        "meshes": 19,
+        "coat": "down"
       },
       "shiba": {
         "name": "Sunny",
-        "meshes": 29
+        "meshes": 26,
+        "coat": "fur"
+      },
+      "koala": {
+        "name": "Kumo",
+        "meshes": 23,
+        "coat": "plush fur"
+      },
+      "conure": {
+        "name": "Sol",
+        "meshes": 50,
+        "coat": "feathers"
+      },
+      "fold": {
+        "name": "Biscuit",
+        "meshes": 32,
+        "coat": "plush"
       }
     },
     "screenshots": [

@@ -44,10 +44,11 @@ const shoot = async (name) => {
   console.log(`✓ assets/${name}`);
 };
 
-const stage = async (animal, expression, accessories, lang = 'en') => {
+const stage = async (animal, expression, accessories, lang = 'en', coat = 'plush') => {
   await evaluate(`
     window.__cute3d.setLang('${lang}');
     window.__cute3d.setAnimal('${animal}');
+    window.__cute3d.setCoat('${coat}');
     window.__cute3d.setExpression('${expression}');
     window.__cute3d.setAccessory('bowtie', ${accessories});
     window.__cute3d.setAccessory('partyHat', ${accessories});
@@ -68,14 +69,24 @@ await shoot('screenshot-penguin.png');
 await stage('shiba', 'happy', false);
 await shoot('screenshot-shiba.png');
 
+await stage('koala', 'happy', false);
+await shoot('screenshot-koala.png');
+
+await stage('conure', 'curious', true);
+await shoot('screenshot-conure.png');
+
+await stage('fold', 'sleepy', false);
+await shoot('screenshot-fold.png');
+
 await stage('shiba', 'sleepy', true, 'th');
 await shoot('screenshot-thai.png');
 
+await stage('koala', 'happy', false, 'en');
 const snapshot = await evaluate('window.__cute3d.snapshotDataUrl()');
 writeFileSync(join(ASSETS, 'snapshot-transparent.png'), Buffer.from(snapshot.split(',')[1], 'base64'));
 console.log('✓ assets/snapshot-transparent.png');
 
-await stage('bear', 'happy', true, 'en');
+await stage('koala', 'happy', true, 'en');
 
 const card = await evaluate(`(async () => {
   const url = window.__cute3d.snapshotDataUrl();
@@ -137,14 +148,14 @@ const card = await evaluate(`(async () => {
 
   ctx.fillStyle = '#352a2e';
   ctx.font = '800 34px "Avenir Next Rounded", "Nunito", "Trebuchet MS", sans-serif';
-  ctx.fillText('Four cute pets. Zero model files.', 80, 312);
+  ctx.fillText('Seven pets. Real coats. Zero files.', 80, 312);
 
   ctx.fillStyle = '#6c5c61';
   ctx.font = '600 22px "Avenir Next Rounded", "Nunito", "Trebuchet MS", sans-serif';
-  ctx.fillText('Orbit the studio, change colours, add accessories,', 80, 356);
-  ctx.fillText('save presets and download a transparent PNG.', 80, 390);
+  ctx.fillText('Soft fur and layered feathers, generated in code.', 80, 356);
+  ctx.fillText('Orbit, customize, save presets and export a transparent PNG.', 80, 390);
 
-  const chips = ['4 original pets', 'EN / TH', 'Web Audio'];
+  const chips = ['7 original pets', 'Fur + feathers', 'EN / TH'];
   let x = 80;
   ctx.font = '800 18px "Avenir Next Rounded", "Nunito", "Trebuchet MS", sans-serif';
   for (const chip of chips) {
@@ -181,7 +192,7 @@ console.log('✓ assets/og-card.png');
 await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 2, mobile: true });
 await cdp.send('Page.navigate', { url: `${server.url}/` });
 await cdp.waitFor('Boolean(window.__cute3d && window.__cute3d.ready)', { timeout: 30000 });
-await evaluate("window.__cute3d.setAnimal('penguin'); window.__cute3d.setAccessory('partyHat', true); window.__cute3d.setLang('en');");
+await evaluate("window.__cute3d.setAnimal('conure'); window.__cute3d.setCoat('plush'); window.__cute3d.setAccessory('partyHat', true); window.__cute3d.setLang('en');");
 await sleep(1400);
 await shoot('screenshot-mobile.png');
 

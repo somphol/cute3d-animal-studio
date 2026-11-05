@@ -22,13 +22,14 @@ const DOC_FILES = [
   'README.md', 'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md',
   'SECURITY.md', 'SUPPORT.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'state.json',
   'docs/README.md', 'docs/ARCHITECTURE.md', 'docs/REPRODUCTION.md', 'docs/DESIGN.md',
-  'docs/ANIMATION.md', 'docs/AUDIO.md', 'docs/TESTING.md', 'docs/DEPLOYMENT.md',
+  'docs/ANIMATION.md', 'docs/AUDIO.md', 'docs/COAT.md', 'docs/TESTING.md', 'docs/DEPLOYMENT.md',
   'docs/DECISIONS.md', 'docs/ACCESSIBILITY.md', 'docs/PERFORMANCE.md', 'docs/PRIVACY.md',
   'docs/FAQ.md', 'docs/ROADMAP.md', 'docs/CREDITS.md',
 ];
 const SHOTS = [
   'assets/og-card.png', 'assets/screenshot-studio.png', 'assets/screenshot-bunny.png',
   'assets/screenshot-penguin.png', 'assets/screenshot-shiba.png', 'assets/screenshot-thai.png',
+  'assets/screenshot-koala.png', 'assets/screenshot-conure.png', 'assets/screenshot-fold.png',
   'assets/screenshot-mobile.png', 'assets/snapshot-transparent.png',
 ];
 
@@ -61,7 +62,7 @@ test('section: page shell', async (t) => {
     assert.equal(new Set(ids).size, ids.length);
   });
   await t.test('character dropdown lists all four pets', () => {
-    assert.equal((html.match(/<option value="(bear|bunny|penguin|shiba)"/g) || []).length, 4);
+    assert.equal((html.match(/<option value="(bear|bunny|penguin|shiba|koala|conure|fold)"/g) || []).length, 7);
   });
   await t.test('every button declares its type', () => {
     for (const tag of html.match(/<button\b[^>]*>/g) || []) {

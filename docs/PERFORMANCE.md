@@ -9,10 +9,10 @@
 | CSS transferred | < 40 KB | ~28 KB | same |
 | Runtime assets | 1 SVG icon, 0 models/textures/audio | — | — |
 | Draw calls | < 60 | 36–47 | 36–47 |
-| Meshes per rig | 19–29 | bear 25 | — |
+| Meshes per rig | 19–50 | bear 25 | — |
 | Frame budget | 16.6 ms | 2–4 ms GPU/CPU | 5–8 ms |
 | Snapshot | < 400 ms at 2048² | 120–220 ms | 250–500 ms |
-| Memory after four switches | no growth | flat after disposal | flat |
+| Memory after seven switches | no growth | flat after disposal | flat |
 
 The only network requests after HTML/CSS/JS are Three.js and the OrbitControls addon from jsDelivr.
 
@@ -41,7 +41,7 @@ The only network requests after HTML/CSS/JS are Three.js and the OrbitControls a
   offscreen `WebGLRenderTarget` at 2048² without touching the visible canvas.
 - `backdrop-filter` on the panel and pet card is composited every frame on some browsers. On very weak
   GPUs, disabling the blur would help; the fallback is still legible.
-- All four rigs are not kept in memory: only the active one exists. Rebuilding takes < 5 ms.
+- Only the active rig is kept in memory; rebuilding plus its coat takes < 40 ms.
 
 ## Measurement
 

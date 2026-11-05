@@ -3,6 +3,32 @@
 All notable changes to Cute3D are documented here. The format follows Keep a Changelog and the project
 uses semantic versioning.
 
+## [1.1.0] — 2026-11-05
+
+### Added
+
+- Three new original characters: **Kumo the Koala**, **Sol the Sun Conure** and **Biscuit the Scottish
+  Fold**, each with a distinct silhouette, palette, coat recipe and signature feature.
+- A **Coat detail** toggle with Smooth / Soft / Plush levels, persisted, included in presets and share
+  links (`f=`). Plush can add up to 60 fur/feather shells per character.
+- Procedural fur and feather shells with canvas-generated strand alpha textures, bump relief, face/ear/
+  belly masks and a live fibre count. Zero asset files.
+- New signature geometry: koala ears with cream inner ear, layered conure wings with lime coverts and a
+  blue-green tail fan, and folded Scottish Fold ears with whiskers.
+- `docs/COAT.md`, three new character stills, refreshed existing stills and an updated OG card.
+
+### Changed
+
+- Character selector, presets, share state and selftest now cover seven animals.
+- Verification: 19 engine, 80 repository, 24 browser and 20 in-page checks; README/docs updated.
+- Release version 1.1.0.
+
+### Fixed
+
+- Fur does not cover the face, inner ears or cream belly (object-space shader masks).
+- Coat materials recolour live with the fur/belly/blush pickers.
+- Shared fur geometry and accessory materials survive rig switches.
+
 ## [1.0.0] — 2026-11-04
 
 ### Added

@@ -58,16 +58,22 @@ backdrop is entirely CSS and never appears in snapshots.
 
 The stage is always at least 380 px tall on desktop and fills the remaining height on mobile.
 
+## Coat design
+
+Fur and feathers are layered shells with a procedural strand alpha and bump map. Plush scales them
+outward for a soft silhouette; Smooth removes them entirely. The textures are drawn on a canvas at
+runtime, so the no-asset rule still holds. See [COAT.md](COAT.md).
+
 ## Character design
 
-All four are built from the same primitive vocabulary, which makes them feel like one family:
+All seven are built from the same primitive vocabulary, which makes them feel like one family:
 
-| Cue | Bear | Bunny | Penguin | Shiba |
-| --- | --- | --- | --- | --- |
-| Silhouette | round, low | tall ears, pear body | egg, flippers | compact, pointed ears |
-| Signature | panda eye patches | buck teeth + fluff tail | white face disc + gold beak | curled tail + cream brows |
-| Ear rig | sphere pivots | long capsules | flipper pivots | 4-sided cones |
-| Eyes | large glossy | medium | medium, high | medium, wide-set |
+| Cue | Bear | Bunny | Penguin | Shiba | Koala | Sun Conure | Scottish Fold |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Silhouette | round, low | tall ears, pear body | egg, flippers | compact, pointed ears | big ears, round | perched, compact | round, low |
+| Signature | panda eye patches | buck teeth + fluff tail | white face disc + gold beak | curled tail + cream brows | huge ears + broad nose | yellow-orange + green wings + blue tail | folded flap ears + whiskers |
+| Ear rig | sphere pivots | long capsules | flipper pivots | 4-sided cones | large sphere pivots | wing pivots | folded sphere flaps |
+| Eyes | large glossy | medium | medium, high | medium, wide-set | small, sleepy | white eye patches | large, round |
 
 Faces use the same recipe everywhere: dark glossy sphere + tiny white glint, a cream muzzle/face
 patch, a small nose, a torus-arc smile, and blush discs. This is deliberately generic and original —
@@ -86,8 +92,9 @@ Six sections, ordered by how often a visitor will use them:
 3. **Colours** — 3 rows (fur/belly/blush) with native colour input, hex readout and five palette
    swatches in a conic-gradient ring.
 4. **Accessories** — full-width toggle rows with a sliding pill.
-5. **Studio tools** — snapshot (primary rose), save preset, copy link, sound; preset list below.
-6. **Footer** — credits and the "no models, no textures, no audio" line.
+5. **Coat detail** — Smooth / Soft / Plush with a live fibre count.
+6. **Studio tools** — snapshot (primary rose), save preset, copy link, sound; preset list below.
+7. **Footer** — credits and the "no models, no textures, no audio" line.
 
 Native `<input type="color">` is used on purpose: it is accessible, localized by the OS and needs no
 custom picker code. The hex readout is monospaced to signal precision.

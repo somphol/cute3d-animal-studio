@@ -10,22 +10,24 @@
 | Model | **DeepSeek V4.1 Flash** (`deepseek-v4.1-flash`, provider `opencode-go`) |
 | Session | `ses_e55af5b0bffejTt8i56ugdjBHf` |
 | Date | 4–5 November 2026 (America/Los_Angeles) |
-| Elapsed | **30m 15s** (1,815 s), captured at the end of the session |
-| Tokens | **16,508,799 total** |
+| Elapsed | **8h 51m 35s** wall clock (31,895 s), including a pause between releases |
+| First release | **30m 15s** (1,815 s) for v1.0.0 |
+| Tokens | **56,165,527 cumulative** |
 
-The full session was one continuous build: specification, scene, four rigs, animation, audio, UI,
-tests, documentation, assets, deployment and the reusable skill. No pre-existing template or project
-was copied. The token total is dominated by cache reads, which are repeated prompt context rather than
-new output.
+The session spans two releases with a long pause between them. v1.0.0 built the studio, four pets,
+animation, audio, bilingual UI, export, tests, docs, Pages and the skill in 30m 15s. v1.1.0 added the
+koala, sun conure and Scottish Fold plus the Smooth/Soft/Plush coat system, refreshed every asset and
+doc, and re-verified the live site. No pre-existing template or project was copied. The cumulative
+token total is dominated by cache reads, which are repeated prompt context rather than new output.
 
 | Token counter | Count |
 | --- | --- |
-| Input | 61,597 |
-| Output | 122,999 |
-| Reasoning | 52,274 |
-| Cache read | 17,627,648 |
+| Input | 737,117 |
+| Output | 188,132 |
+| Reasoning | 126,033 |
+| Cache read | 55,112,576 |
 | Cache write | 1,669 |
-| **Total** | **17,866,187** |
+| **Total** | **56,165,527** |
 
 `costUSD` is 0 on the flat-rate plan. The authoritative, machine-readable record is
 [`../state.json`](../state.json); it also lists line counts, tests and every artifact.
@@ -50,7 +52,7 @@ Noto Sans Thai / Sukhumvit Set / Thonburi for Thai. Nothing is downloaded.
 
 ## Design originality
 
-All four characters, their names, proportions, palettes, accessories and the studio art direction were
+All seven characters, their names, proportions, palettes, accessories and the studio art direction were
 created for this project. The design language — button eyes, blush, rounded muzzles, a pastel clay
 studio — is generic toy vocabulary, not a reference to any existing mascot or franchise. The static
 test suite includes a blocklist for protected character names as a guard.
