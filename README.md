@@ -124,7 +124,7 @@ Screenshots are regenerated from the real app, not mocked:
 
 ```
 .
-├── index.html                 # shell, import map, panel markup (64 i18n hooks)
+├── index.html                 # shell, import map, panel markup (76 i18n hooks)
 ├── style.css                  # design tokens, glass panel, HUD, responsive sheet
 ├── script.js                  # ENGINE + I18N blocks, seven rigs, coat shells, animation, audio, UI
 ├── manifest.webmanifest       # installable metadata

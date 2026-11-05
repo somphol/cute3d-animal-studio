@@ -31,7 +31,7 @@ and a temporary profile so macOS never prompts.
 
 Three source files, no build step, no npm runtime dependencies.
 
-1. `index.html` — shell, import map (Three.js pinned to `0.169.0`), 64 translation hooks, panel markup.
+1. `index.html` — shell, import map (Three.js pinned to `0.169.0`), 76 translation hooks, panel markup.
 2. `style.css` — tokens and layout; the 3D canvas is transparent, the pastel backdrop is CSS.
 3. `script.js` — three marked regions:
    - `/* ENGINE:START */ … END */` — pure functions. **No DOM, no THREE, no imports.** Node slices
