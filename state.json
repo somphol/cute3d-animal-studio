@@ -4,9 +4,9 @@
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
-    "capturedAt": "2026-11-05T14:57:49.664Z",
-    "elapsedSeconds": 31895,
-    "elapsed": "8h 51m 35s",
+    "capturedAt": "2026-11-05T15:00:48.215Z",
+    "elapsedSeconds": 32074,
+    "elapsed": "8h 54m 34s",
     "note": "The session spans two releases with a long pause between them. v1.0.0 (four pets) was completed in 30m 15s; v1.1.0 added three animals and the procedural coat system, refreshed all docs, assets and the skill, and re-verified the live site. Wall-clock elapsed includes the pause; token totals are cumulative and dominated by cache reads (repeated prompt context)."
   },
   "model": {
@@ -19,12 +19,12 @@
     "url": "https://opencode.ai"
   },
   "usage": {
-    "inputTokens": 737117,
-    "outputTokens": 188132,
-    "reasoningTokens": 126033,
-    "cacheReadTokens": 55112576,
+    "inputTokens": 742854,
+    "outputTokens": 191675,
+    "reasoningTokens": 128192,
+    "cacheReadTokens": 62961152,
     "cacheWriteTokens": 1669,
-    "totalTokens": 56165527,
+    "totalTokens": 64025542,
     "costUSD": 0,
     "note": "Read from the OpenCode session database (session_v2). totalTokens is the sum of the five counters; cache reads are repeated prompt context and dominate. costUSD is 0 on the flat-rate plan."
   },
@@ -39,10 +39,10 @@
     },
     {
       "version": "1.1.0",
-      "capturedAt": "2026-11-05T14:57:49.664Z",
-      "elapsed": "8h 51m 35s",
-      "elapsedSeconds": 31895,
-      "totalTokens": 56165527,
+      "capturedAt": "2026-11-05T15:00:48.215Z",
+      "elapsed": "8h 54m 34s",
+      "elapsedSeconds": 32074,
+      "totalTokens": 64025542,
       "note": "Three new animals (koala, sun conure, Scottish Fold) and the Smooth/Soft/Plush coat system."
     }
   ],

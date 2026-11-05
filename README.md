@@ -163,7 +163,7 @@ headless tests. The Three.js CDN is required on first load; after that the page 
 ## Credits
 
 Built with **OpenCode** and **DeepSeek V4.1 Flash**. v1.0.0 shipped in 30m 15s; the v1.1.0 coat and
-three-animal expansion followed in the same session after a pause, reaching 56.17M cumulative tokens
+three-animal expansion followed in the same session after a pause, reaching 64.03M cumulative tokens
 (mostly cache reads). Three.js is the only runtime library. The machine-readable record is
 [state.json](state.json); the full breakdown is in [docs/CREDITS.md](docs/CREDITS.md).
 
