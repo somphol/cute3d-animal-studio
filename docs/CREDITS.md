@@ -12,7 +12,7 @@
 | Date | 4–5 November 2026 (America/Los_Angeles) |
 | Elapsed | **8h 54m 34s** wall clock (32,074 s), including a pause between releases |
 | First release | **30m 15s** (1,815 s) for v1.0.0 |
-| Tokens | **56,165,527 cumulative** |
+| Tokens | **64,025,542 cumulative** |
 
 The session spans two releases with a long pause between them. v1.0.0 built the studio, four pets,
 animation, audio, bilingual UI, export, tests, docs, Pages and the skill in 30m 15s. v1.1.0 added the
