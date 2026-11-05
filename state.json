@@ -4,9 +4,9 @@
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
-    "capturedAt": "2026-11-05T06:31:57.372Z",
-    "elapsedSeconds": 1543,
-    "elapsed": "25m 43s",
+    "capturedAt": "2026-11-05T06:33:05.580Z",
+    "elapsedSeconds": 1611,
+    "elapsed": "26m 51s",
     "note": "One continuous OpenCode session: specification, scene, four procedural rigs, animation, synthesized audio, bilingual UI, snapshot export, four verification layers, screenshots, documentation, GitHub Pages deployment and a reusable skill. Token totals are dominated by cache reads (repeated prompt context), not new output."
   },
   "model": {
@@ -19,12 +19,12 @@
     "url": "https://opencode.ai"
   },
   "usage": {
-    "inputTokens": 55619,
-    "outputTokens": 116435,
-    "reasoningTokens": 46811,
-    "cacheReadTokens": 12586368,
+    "inputTokens": 56758,
+    "outputTokens": 117103,
+    "reasoningTokens": 47616,
+    "cacheReadTokens": 13647232,
     "cacheWriteTokens": 1669,
-    "totalTokens": 12806902,
+    "totalTokens": 13870378,
     "costUSD": 0,
     "note": "Read from the OpenCode session database (session_v2). totalTokens is the sum of the five counters; cache reads are repeated prompt context and dominate. costUSD is 0 on the flat-rate plan."
   },

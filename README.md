@@ -154,9 +154,9 @@ headless tests. The Three.js CDN is required on first load; after that the page 
 
 ## Credits
 
-Built in a single session with **OpenCode** and **DeepSeek V4.1 Flash**. Three.js is the only runtime
-library. Exact elapsed time and token usage are recorded in [state.json](state.json) and discussed in
-[docs/CREDITS.md](docs/CREDITS.md).
+Built in a single session with **OpenCode** and **DeepSeek V4.1 Flash** — 26m 51s and 13.87M tokens
+(mostly cache reads). Three.js is the only runtime library. The machine-readable record is
+[state.json](state.json); the full breakdown and credits are in [docs/CREDITS.md](docs/CREDITS.md).
 
 ## Licence
 
