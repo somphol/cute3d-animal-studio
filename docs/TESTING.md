@@ -5,8 +5,8 @@ Four independent layers, all runnable offline except the CDN fetch Three.js need
 | Layer | Command | Count | What it proves |
 | --- | --- | --- | --- |
 | Engine | `node --test tests/engine.test.mjs` | 19 | Math, palettes, validation, share format, dictionary parity |
-| Repository | `node --test tests/static.test.mjs` | 80 checks | Files, HTML shell, i18n coverage, IP hygiene, metadata, state |
-| Browser | `node tests/browser.test.mjs` | 24 | Real WebGL, rigs, coat levels, interaction, persistence, export, mobile |
+| Repository | `node --test tests/static.test.mjs` | 82 checks | Files, HTML shell, i18n coverage, IP hygiene, metadata, state |
+| Browser | `node tests/browser.test.mjs` | 25 | Real WebGL, seven rigs, coats/fur, lighting moods, interaction, persistence, export, mobile |
 | In-page | `/?selftest` | 20 | The deployed build can inspect itself |
 
 Run everything:
@@ -94,7 +94,7 @@ The suite checks:
 TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs
 ```
 
-The same 24 checks must pass against Pages. Transparent snapshot and download checks work there too.
+The same 25 checks must pass against Pages. Transparent snapshot and download checks work there too.
 
 ## In-page self-test
 

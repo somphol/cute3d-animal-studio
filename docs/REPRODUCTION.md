@@ -231,7 +231,7 @@ Write all four layers before declaring done:
 
 - engine: 19 checks (palettes, colour parsing, blink envelope, poses, preset sanitising, share
   round-trip, filename safety, size clamp, dictionary parity, coat levels);
-- static: 80 checks (files, HTML shell, i18n coverage, no assets/trackers/trademarks, markers,
+- static: 82 checks (files, HTML shell, i18n coverage, no assets/trackers/trademarks, markers,
   storage namespace, snapshot contract, accessibility, metadata, state.json line counts);
 - browser: 25 checks (canvas, seven rigs, coat levels, expressions, colours, accessories, language, presets,
   reaction, raycast tap, transparency, download, share, keyboard, reload, mobile sheet, reduced
