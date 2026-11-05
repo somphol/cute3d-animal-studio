@@ -79,7 +79,7 @@ are more reliable over HTTP.
 | --- | --- |
 | Renderer | WebGLRenderer, alpha, antialias, PCFSoftShadowMap, ACESFilmic, sRGB output, DPR capped at 2 |
 | Lighting | Warm key with 2048² shadows, cool fill, white rim, hemisphere sky/ground, contact shadow |
-| Characters | 25–29 meshes each, shared low-segment primitives, per-rig material set |
+| Characters | 19–29 meshes each, shared low-segment primitives, per-rig material set |
 | Animation | Damped expression blending, deterministic blink seeds, breathing belly, ear/tail rigs, reaction physics |
 | Customizer | 4 characters · 4 expressions · 3 colours · 5 palettes · 3 accessories · reset |
 | Audio | Six sound patterns, lazy AudioContext, master gain + compressor, persistent mute |
