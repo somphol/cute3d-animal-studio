@@ -1,6 +1,6 @@
 {
   "name": "cute3d-animal-studio",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "description": "Seven original procedural 3D animals with plush fur and layered feathers, built entirely from Three.js primitives. Bilingual studio with GPU strand fur, species postures, three lighting moods, live colours, procedural audio and transparent PNG snapshots.",

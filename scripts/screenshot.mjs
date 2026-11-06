@@ -44,11 +44,12 @@ const shoot = async (name) => {
   console.log(`✓ assets/${name}`);
 };
 
-const stage = async (animal, expression, accessories, lang = 'en', coat = 'plush', lighting = 'studio') => {
+const stage = async (animal, expression, accessories, lang = 'en', coat = 'plush', lighting = 'studio', outer = 'pelt') => {
   await evaluate(`
     window.__cute3d.setLang('${lang}');
     window.__cute3d.setAnimal('${animal}');
     window.__cute3d.setCoat('${coat}');
+    if (window.__cute3d.setOuter) window.__cute3d.setOuter('${outer}');
     window.__cute3d.setLighting('${lighting}');
     window.__cute3d.setExpression('${expression}');
     window.__cute3d.setAccessory('bowtie', ${accessories});
@@ -73,8 +74,11 @@ await shoot('screenshot-shiba.png');
 await stage('koala', 'happy', false);
 await shoot('screenshot-koala.png');
 
-await stage('koala', 'happy', false, 'en', 'vfx');
+await stage('koala', 'happy', false, 'en', 'plush', 'studio', 'vfx');
 await shoot('screenshot-koala-vfx.png');
+
+await stage('koala', 'happy', false, 'en', 'plush', 'studio', 'velvet');
+await shoot('screenshot-koala-velvet.png');
 
 await stage('conure', 'curious', true);
 await shoot('screenshot-conure.png');

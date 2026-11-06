@@ -1,84 +1,91 @@
 # Coat system: fur and feathers
 
-The studio ships two coat modes on top of the smooth base models. Everything is generated at runtime;
-there are no texture files, model files, or downloaded assets.
+The studio ships a **two-row** fur studio on top of the smooth base models. Everything is generated at
+runtime; there are no texture files, model files, or downloaded assets.
 
-## Levels and budgets
+## The two rows
 
-| Level | What it does | Typical load |
-| --- | --- | --- |
-| **Smooth** | No shells, no strands. The original clay look. | 48–70 meshes |
-| **Soft** | Half the shell layers; koala gets ~45k short strands. | 70–90 meshes |
-| **Plush** | Full shells; koala gets up to 100k strands. | 90–125 meshes |
-| **VFX** | Koala-only dense groom: no decorative shells, dark undercoat, ~133k masked strands and a custom anisotropic shader. | 48–60 meshes |
+| Row | Options | Applies to | Meaning |
+| --- | --- | --- | --- |
+| **Coat** | Smooth / Soft / Plush | all seven animals | base density and quality |
+| **Outer coat** | None / Pelt / Velvet / VFX | koala only | how the visible outer layer is built |
 
-The choice is stored in `state.coat`, persisted, included in presets, and encoded in share links as
-`f=off|soft|plush`. Smooth removes both shells and strands.
+The outer row is hidden and disabled for non-koala animals. The koala keeps the same first row as every
+other pet; the outer layer is additive.
 
-## Two rendering strategies
+## Base coat budgets
 
-### Layered shells (all seven animals)
+| Coat | Shells (fur) | Shells (koala) | Plush strands |
+| --- | --- | --- | --- |
+| Smooth | none | none | none |
+| Soft | 5 | 6 | ~45k |
+| Plush | 10 | 12 | ~100k |
 
-1. `COAT_CONFIG` declares zones by mesh name (`body`, `belly`, `head-mesh`, `ear-left`, `cheek-right`,
-   `tail`), a colour role, a virtual fibre count, and masks.
-2. For each zone the source mesh is cloned N times. Each clone is scaled from `1.004` outward by a
-   fraction of the coat thickness, so the layers sit just above the skin.
-3. Every shell uses a canvas-generated **alpha texture**:
-   - **fur** — 36,000 tiny 2–5 px fibres plus 2,400 longer guard hairs at 512²;
-   - **feather** — 18×14 scalloped barbs at 256² (the original down pattern).
-4. Fur shells also receive a **colour map** (`COAT_PATTERN`) with fine light/dark directional grain,
-   plus a bump map. This is what keeps the front from reading as smooth velvet.
-5. Outer shells have a higher `alphaTest`, so they get sparser and soften the silhouette.
-6. Shell colours follow the active palette role. Inner layers are darker, outer layers slightly
-   lighter, creating depth without per-fiber lights.
+Feather animals use 4 (Soft) or 8 (Plush) shell layers. The 24-layer Velvet setting is separate.
 
-Shell counts:
+## Outer modes
 
-| Animal kind | Soft | Plush |
-| --- | --- | --- |
-| Fur (bear, bunny, shiba, fold) | 5 | 10 |
-| Koala | 6 | 12 |
-| Feather (penguin, conure) | 4 | 8 |
+### None
+Base shells only. No strand layer. This is useful for comparing the shell silhouette.
 
-### GPU strands (koala, Plush)
+### Pelt
+The balanced mode: base shells plus the legacy tapered-ribbon strands. The koala gets a strand layer
+on top of shells. This is the default and the most “cute plush” result.
 
+### Velvet
+The thick, soft undercoat. It is designed to read as **dense plush/velour**, not long fur:
 
-The koala is the long-fur species. It gets a real strand layer on top of its shells:
+- **No micro-strand blizzard.** The surface is a cushion, not a cloud of 1 px dots.
+- A **cushion mesh** for each zone at `1.018×`, parented to the skin, with a velvet material
+  (`sheen: 0.9`, `sheenRoughness: 0.92`, roughness 0.96) and a soft bump.
+- **24 shell layers** in Plush (12 in Soft) at up to `1.14×`, no high-frequency colour map, low
+  `alphaTest` ramp, light inner layers. This produces a thick fuzzy edge rather than painted strands.
+- No guard hairs; the silhouette stays round and soft.
 
-- Up to **100,000 tapered ribbons** in Plush, split across body, belly, head, ears, and tail zones.
-- One `InstancedMesh` per zone, one shared 6-row ribbon geometry (cloned per zone for the optional
-  per-instance normal attribute; the current material uses the ribbon normal).
-- Roots are sampled on a sphere at `surfaceScale = 1.2`, outside the shells.
-- Strands are **opaque** with `depthWrite: true` so they read as solid fibre rather than transparent
-  dust. They are not sorted cards.
-- A direction field projects a downward flow onto the local tangent plane, then blends in the surface
-  normal and a small random tangent. This prevents front strands from pointing into the torso.
-- The vertex shader applies length, curl, clump, two low-frequency wind gusts, and a cursor push.
-- Density changes `InstancedMesh.count`; it never rebuilds geometry. In VFX it also applies to the
-  per-zone meshes; shells are absent.
-- Disposal removes the mesh, material, and per-zone geometry clone.
+Velvet is the “หนานุ่ม” mode: fewer individual fibres, more cushion and sheen.
 
-### VFX groom (koala, VFX)
+### VFX
+The high-density strand groom, for comparison and for a more directional fur look:
 
-VFX is the experimental high-density mode. It replaces decorative shells with:
+- ~133k masked strands from a 190k desktop target (80k on screens under 800 px).
+- Uniform random sphere roots; the earlier Fibonacci loop only covered the northern hemisphere.
+- A custom `ShaderMaterial` with a Kajiya–Kay two-lobe specular, root-to-tip occlusion, fill and rim.
+- **Undercoat/guard split** via a per-instance `aGuard` flag: most strands are short and matte, a
+  minority are longer and glossier.
+- **Clump field** via a per-instance `aClump` vector, so neighbouring strands bend into tufts.
+- A **cream belly role** per instance instead of a body-mask hole.
+- A dark undercoat beneath the strands.
+- No decorative shells.
 
-- one dark undercoat mesh per zone (no alpha cutouts) so gaps read as shadow, not bare clay;
-- **~133k masked strands** from a 190k desktop target (80k on screens narrower than 800 px);
-- uniform random sphere roots (the first version used a Fibonacci loop that only covered the northern
-  hemisphere — the lower body stayed bare);
-- a custom `ShaderMaterial` with a **Kajiya–Kay two-lobe specular**, root-to-tip occlusion, a fill
-  light, a rim term and per-instance tint/seed/role attributes;
-- per-instance **belly role colour** instead of a body-mask hole, so the cream chest is made of cream
-  fibres rather than a cutout;
-- no decorative shells or alpha-map brush texture.
+VFX is intentionally the most expensive mode (~1.6M triangles in six draw calls). It is optional.
 
-VFX is offered only for the koala. Selecting it on another animal is ignored and the Plush shell coat
-is used instead. The mode is intentionally more expensive: roughly 1.6M triangles in six draw calls on
-desktop. It is the “try VFX hair” mode, not the default.
+## Rooted attachment
+
+All three outer modes are attached to the skin, not to an inflated bubble:
+
+- Shells and cushions are children of the **source mesh** (`body`, `belly`, `head-mesh`, `ear-left`,
+  `ear-right`, `tail`). Their local scale is just above 1.0.
+- VFX roots are sampled in the source mesh's local space at `1.008×` and the InstancedMesh is parented
+  to that mesh. Breathing, head tilts, ear wiggles and tail motion carry the coat with the skin.
+- The VFX ribbon starts slightly inside the skin (`y = -0.06` in ribbon space) and rises through it, so
+  the root is hidden rather than sitting on top.
+- Root AO darkens the base of each strand.
+
+Earlier versions used `1.2×` roots and parented the strands to the rig group; that is why the coat
+looked like a floating halo and did not follow the body. Do not reintroduce either.
+
+## Face and belly masks
+
+Object-space masks keep the face and belly clear:
+
+- **Head** — `if (vFurPos.z > 0.58) discard;` keeps the face clear.
+- **Ears** — `if (vFurPos.z > 0.35) discard;` reveals the inner ear.
+- **Body** — an oval window matching the belly patch is discarded for the shell coat. VFX additionally
+  uses a cream `aRole` for the belly region so the chest is made of cream fibres.
 
 ## Uniform contract
 
-`STRAND_UNIFORMS` keys must match the shader declarations **exactly**:
+`STRAND_UNIFORMS` keys must match the shader declarations exactly:
 
 ```js
 const STRAND_UNIFORMS = {
@@ -88,43 +95,23 @@ const STRAND_UNIFORMS = {
 
 Earlier versions declared `uTime`/`uBreeze` in GLSL but stored `time`/`breeze` in the object. Three
 silently left the uniforms at zero, so `transformed.y *= uLength` collapsed every strand into a dot.
-That was the root cause of “the fur looks like brush strokes / dust.” Do not rename one side without
-the other. The browser suite and the in-page self-test now exercise the strand count and the layer
-visibility, but a visual check is still required.
+That was the root cause of “the fur looks like brush strokes / dust.” Do not rename one side without the
+other.
 
-## Face and belly masks
-
-A fur sphere would cover the eyes and the cream belly. Shell materials inject an object-space discard:
-
-- **Head** — `if (vFurPos.z > 0.58) discard;` keeps the face clear.
-- **Ears** — `if (vFurPos.z > 0.35) discard;` reveals the inner ear.
-- **Body** — an oval window matching the belly patch is discarded, so the chest stays cream.
-- Koala ear strands use `maxZ: 0.25` to keep the inner ear visible.
-
-## Wind
-
-There are two wind paths:
-
-1. **Shell wind** — a small displacement (`uWindLocal × uWindSpeed × layer² × gain`). Gain is `0.008`
-   for feathers and `0.025` for fur. Shells are undercoat; large shell motion made the coat look like
-   stretched paint at high breeze.
-2. **Strand wind** — the koala strand shader applies two low-frequency gusts and a curl/ clump bend
-   along the fibre. This is the visible motion.
-
-The fan remains the direction source: `updateShellWind` maps the fan→pet vector into each zone's local
-space. The pointer adds a local radial push. Both paths are cheap, reversible, and stable.
+The VFX shader adds `aNormal`, `aSeed`, `aTint`, `aRole`, `aGuard` and `aClump` instanced attributes.
 
 ## Fur studio controls
 
 | Control | State key | Range | Effect |
 | --- | --- | --- | --- |
-| Length | `fur.length` | 0.4–1.8 | scales koala strand height in the shader |
-| Density | `fur.density` | 0.1–1 | shell layer visibility + koala instance count |
-| Curl | `fur.curl` | 0–1 | adds a sine bend along each koala strand |
-| Clumping | `fur.clump` | 0–1 | adds coherent clump bends |
-| Breeze | `fur.breeze` | 0–1 | shell micro-motion + koala strand wind + cursor push |
+| Length | `fur.length` | 0.4–1.8 | strand height |
+| Density | `fur.density` | 0.1–1 | shell visibility + strand count |
+| Curl | `fur.curl` | 0–1 | sine bend along each strand |
+| Clumping | `fur.clump` | 0–1 | coherent clump bends |
+| Breeze | `fur.breeze` | 0–1 | shell micro-motion + strand wind + cursor push |
 
-All five are persisted, included in presets, and encoded in share links (`u=`).
+`state.coat` and `state.outer` are persisted. Presets include both. Share links use `f=` for the coat and
+`v=` for the outer mode; old `f=vfx` links migrate to `f=plush&v=vfx`.
 
 ## Species recipes
 
@@ -134,32 +121,32 @@ All five are persisted, included in presets, and encoded in share links (`u=`).
 | Bunny | fur shells | fine coat, long ear fringe, fluffy tail |
 | Penguin | feather shells | short down on the dark body, clean white belly |
 | Shiba | fur shells | double coat, cream chest, bushy curled tail |
-| Koala | shells + strands | long silver coat, huge fuzzy ears with cream inner ear |
+| Koala | shells + outer | long silver coat in Pelt, soft cushion in Velvet, high-density groom in VFX |
 | Sun Conure | feather shells | yellow-orange down, white eye patches, green layered wings |
 | Scottish Fold | fur shells | dense silver coat, cream chest, folded flap ears, whiskers |
 
-## Tuning guide
-
-- **Dust instead of fur:** length is too short relative to width, or the shader uniforms are zero.
-  Check that `uLength` is applied and that the strands are outside the base mesh.
-- **Wire wool:** width is too large, opacity is opaque with too much contrast, or the coat is too
-  long. Reduce width/length, not necessarily count.
-- **Bare patches:** raise shell layer count or lower `alphaTest`; for koala, raise density or include
-  another zone.
-- **Fur on the face:** tighten the head mask (`z > 0.52` removes more) or ear `maxZ`.
-- **Coat looks painted:** the alpha texture is too coarse or `texture.repeat` is too low. Use the
-  high-frequency fur texture and repeat ≈1.3.
-- **Coat looks like velvet:** add/raise the fine colour map and bump scale, or add more visible guard
-  hairs. The shell alone is an undercoat.
-- **Colour does not follow the picker:** call `refreshCoatColors(rig)` and `refreshStrandColors(rig)`.
-- **New animal:** add a palette, builder, `COAT_CONFIG` entry, dictionary keys, and a distinct mesh
-  count. Postures and coats both resolve parts by mesh name.
-
 ## Performance
 
-- Strands are koala-only. The other six animals use shells, which keeps mobile GPU cost down.
-- Koala Plush: up to 100k instances × 6 triangles ≈ 600k triangles, in 6 draw calls (one per zone).
-- Shells: 8–12 alpha-tested clones per zone, no shadows, shared geometry, materials disposed on
-  rebuild.
-- Density never rebuilds geometry. Length/curl/clump/breeze are uniforms.
-- Snapshot capture includes the full coat; it uses the same scene at 2048².
+- Pelt Plush: 12 shells per zone + up to 100k strands, ~600k triangles.
+- Velvet Plush: 24 shells per zone + 6 cushions, no micro-strands; heavier on draw calls, lighter on
+  triangles.
+- VFX Plush: ~133k strands × 7 rows ≈ 1.6M triangles, 6 draw calls; 80k on narrow screens.
+- Smooth removes every layer and rebuilds the plain clay body.
+- All modes reuse the renderer, lights and controls; only the coat group is rebuilt.
+
+## Tuning guide
+
+- **Dust instead of fur:** the uniforms are zero, the roots are floating, or the strands are too short.
+- **Wire wool:** width is too large or the coat is too long relative to the body.
+- **Bare patches:** raise density or shells; check the face/belly masks.
+- **Grainy/velvet speckle:** high-frequency bump/colour maps at small scale; prefer the velvet cushion
+  and light shell layers.
+- **Fur ball:** roots are too far out or every strand has the same length. Root at ~1.008 and split
+  undercoat/guard.
+- **Coat detaches when breathing:** the mesh is parented to the group instead of the skin.
+
+## Why not a shadow pass yet
+
+The current VFX mode uses root AO and a dark undercoat instead of a full hair shadow map. A 133k-strand
+depth pass would double the geometry cost, and the static page is already at the GPU budget. A future
+step is a low-resolution guard-hair shadow proxy.

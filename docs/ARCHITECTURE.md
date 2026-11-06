@@ -113,22 +113,24 @@ materials and shared geometries are marked `userData.shared` so `disposeRig` ski
 Fur and feathers are **layered shell meshes** generated after the rig is built:
 
 - `COAT_CONFIG` declares zones by mesh name and colour role.
-- `applyCoat(rig, level)` clones each zone 5/10 (fur), 6/12 (koala), or 4/8 (feather) times, scales the
-  clone outward and assigns a procedural alpha/bump/colour-map material.
+- `applyCoat(rig, level, outer)` clones each zone 5/10 (fur), 6/12 (koala), or 4/8 (feather) times;
+  Velvet uses 12/24 plus a 1.018 cushion. Shells and cushions are **children of the source mesh**, so
+  breathing/ear wiggles carry the coat.
 - Object-space GLSL masks keep the face, inner ears and belly clear.
 - `rig.fluff` holds the shells; `rig.fluffMaterials` maps roles to materials for live recolouring.
-- The koala also gets up to 100k opaque strand ribbons in Plush, or a ~133k-strand VFX groom with a
-  custom Kajiya–Kay shader and dark undercoat.
-- `state.coat` is `off | soft | plush | vfx`, persisted, included in presets and shared as `f=`.
+- The koala outer layer is `none|pelt|velvet|vfx`: Pelt gets up to 100k ribbons, Velvet a thick cushion,
+  VFX a ~133k-strand rooted groom with a custom Kajiya–Kay shader.
+- `state.coat` is `off|soft|plush` (shared as `f=`), `state.outer` is `none|pelt|velvet|vfx` (shared as `v=`).
 
 Full detail and tuning rules are in [COAT.md](COAT.md).
 
 ## Rendering layers
 
 1. Opaque base meshes and eyes.
-2. Opaque alpha-tested coat shells (5/10 fur, 6/12 koala, 4/8 feathers).
-3. Koala-only strand ribbons: Plush up to 100k with vertex-shader wind; VFX ~133k with an anisotropic
-   Kajiya–Kay shader and no decorative shells.
+2. Opaque alpha-tested coat shells (5/10 fur, 6/12 koala, 4/8 feathers) or Velvet cushions/shells, all
+   parented to the source mesh.
+3. Koala-only strand ribbons: Pelt up to 100k with vertex-shader wind; VFX ~133k rooted at 1.008 with an
+   anisotropic Kajiya–Kay shader and no decorative shells.
 4. Transparent sparkles and props.
 
 Strands use `depthWrite: true` and render after shells, so they read as fibre rather than transparent

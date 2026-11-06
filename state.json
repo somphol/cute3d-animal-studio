@@ -1,6 +1,6 @@
 {
   "project": "Cute3D: Procedural Code-Only Animal Studio",
-  "release": "1.3.0",
+  "release": "1.6.0",
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
@@ -38,12 +38,12 @@
       "note": "Initial release: four pets, bilingual UI, audio, snapshot, tests, docs, Pages, skill."
     },
     {
-      "version": "1.3.0",
+      "version": "1.6.0",
       "capturedAt": "2026-11-06T04:52:02.661Z",
       "elapsed": "22h 45m 48s",
       "elapsedSeconds": 81948,
       "totalTokens": 230418929,
-      "note": "Movable wind fan, wind-driven shell fur, cursor disturbance and the long-fur koala pass."
+      "note": "v1.6: two-row FUR studio (Coat + Outer coat), pelt/velvet/vfx outer modes, rooted shells/strands/cushions at ~1.008, velour cushion undercoat."
     }
   ],
   "artifacts": {
@@ -53,10 +53,10 @@
       "script.js"
     ],
     "lineCounts": {
-      "index.html": 419,
-      "style.css": 1771,
-      "script.js": 4586,
-      "total": 6776
+      "index.html": 439,
+      "style.css": 1804,
+      "script.js": 4741,
+      "total": 6984
     },
     "supportingFiles": [
       "README.md",
@@ -113,8 +113,8 @@
     ],
     "tests": {
       "engine": 19,
-      "static": 82,
-      "browser": 25,
+      "static": 84,
+      "browser": 26,
       "inPage": 20
     },
     "animals": {
@@ -167,7 +167,14 @@
       "assets/screenshot-bunny.png",
       "assets/screenshot-penguin.png",
       "assets/screenshot-shiba.png",
+      "assets/screenshot-koala.png",
+      "assets/screenshot-koala-vfx.png",
+      "assets/screenshot-koala-velvet.png",
+      "assets/screenshot-conure.png",
+      "assets/screenshot-fold.png",
       "assets/screenshot-thai.png",
+      "assets/screenshot-sky.png",
+      "assets/screenshot-desk.png",
       "assets/screenshot-mobile.png",
       "assets/snapshot-transparent.png"
     ],

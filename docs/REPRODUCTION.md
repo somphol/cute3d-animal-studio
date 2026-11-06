@@ -175,7 +175,7 @@ read as wire, dust or paper shards. Koala strands are opaque ribbons with `depth
 
 ### Optional VFX groom (koala)
 
-A fourth coat level, `vfx`, replaces decorative shells with a dark undercoat and ~133k masked strands
+The koala-only outer mode `vfx` replaces decorative shells with a dark undercoat and ~133k masked strands
 (190k target desktop, 80k small screens). It uses uniform random sphere roots, per-instance normal /
 seed / tint / role attributes, a custom `ShaderMaterial` with two-lobe Kajiya–Kay specular, root AO,
 fill and rim, and a cream belly role rather than a body-mask hole. VFX is disabled outside the koala and
@@ -225,7 +225,7 @@ After the rig and shells:
 1. **Postures** — adjust body/head/limb transforms per species; store `base.headRotX/Z`, `earBaseX` and
    `feet.baseY`. Bear sits, bunny is alert, penguin leans, shiba sits on haunches, koala reaches up,
    conure perches, fold loafs.
-2. **Koala strands** — sample roots on `mesh.scale * 1.2`; build up to 100k opaque tapered ribbon instances in Plush. Put
+2. **Koala strands** — sample roots in local space at `1.008`; parent the InstancedMesh to the source mesh; build up to 100k opaque ribbons in Pelt. Put
    phase in the vertex shader from the root position, and drive breeze/curl/clump/length/cursor from
    `STRAND_UNIFORMS`. Density changes `InstancedMesh.count`, not geometry.
 3. **Fur UI** — Sliders for length, density, curl, clumping, breeze; state key `fur`, share `u=`.
@@ -241,7 +241,7 @@ Write all four layers before declaring done:
   round-trip, filename safety, size clamp, dictionary parity, coat levels);
 - static: 82 checks (files, HTML shell, i18n coverage, no assets/trackers/trademarks, markers,
   storage namespace, snapshot contract, accessibility, metadata, state.json line counts);
-- browser: 25 checks (canvas, seven rigs, coat levels, expressions, colours, accessories, language, presets,
+- browser: 26 checks (canvas, seven rigs, coat levels, expressions, colours, accessories, language, presets,
   reaction, raycast tap, transparency, download, share, keyboard, reload, mobile sheet, reduced
   motion, in-page self-test, zero console errors);
 - in-page: 20 checks at `/?selftest`.

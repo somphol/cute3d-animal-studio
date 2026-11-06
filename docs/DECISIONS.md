@@ -110,12 +110,21 @@ blush and muzzle grammar.
 
 ## ADR-018 — Shells plus shader strands
 
-**Decision:** Keep the soft shell coat and add a separate koala-only GPU strand layer for Plush (up to 100k ribbons), plus an optional VFX groom for
+**Decision:** Keep the soft shell coat and add a separate koala-only GPU strand layer for Plush (up to 100k ribbons), plus an optional Velvet and VFX outer mode for
 visible fibre and wind/cursor physics. All motion is vertex-shader work; there is no CPU simulation.
 **Why:** Shells alone read as plush but not furry; strands alone read as wire or dust. Together they
 give a soft body and directional fibre at a predictable cost.
-**Do not:** Add per-strand CPU physics, rebuild strand geometry on every density change, or remove the
-shell masks.
+**Do not:** Add per-strand CPU physics, rebuild strand geometry on every density change, parent coats to
+`mesh.parent` instead of the source mesh, or remove the shell masks.
+
+## ADR-020 — Two-row fur studio
+
+**Decision:** Keep `Coat` (Smooth/Soft/Plush) universal and add a koala-only `Outer coat` row
+(None/Pelt/Velvet/VFX). VFX is an outer mode, not a fourth coat level.
+
+**Why:** The koala should not lose its normal coat modes. Pelt is the balanced plush, Velvet is the
+thick soft undercoat, and VFX is the experimental high-density groom. The two axes are independent and
+persist/share separately (`f=` and `v=`).
 
 ## ADR-019 — Species posture is part of the model
 

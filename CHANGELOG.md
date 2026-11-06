@@ -13,6 +13,21 @@ uses semantic versioning.
 - The head face mask is tighter, so cheek/forehead fur matches the ears.
 - Longer body/head VFX strands and a denser belly patch make the whole coat sit like the ears.
 
+## [1.6.0] — 2026-11-05
+
+### Added
+
+- **Two-row FUR studio.** The first row is the universal `Coat` control (Smooth / Soft / Plush); the second is the koala-only `Outer coat` control (None / Pelt / Velvet / VFX).
+- **Velvet** outer mode: a thick, soft cushion undercoat with 24/12 fine shell layers, velvet sheen and a fuzzy edge. No long strands; designed for a dense plush feel.
+- Rooted attachment: shells, VFX strands and cushions are parented to the actual source mesh, with roots in local space at ~1.008, so breathing, head tilts, ear wiggles and tail motion carry the coat.
+- VFX undercoat/guard split, per-instance role/tint/seed attributes and procedural clump offsets; the old body-mask hole is replaced by a cream belly role.
+
+### Changed
+
+- VFX is no longer a coat level; it is an outer mode. Old `f=vfx` links and presets migrate to `coat=plush&outer=vfx`.
+- `state.outer` is persisted and shared as `v=`; presets include it.
+- Docs, tests, screenshots and release metadata synced to 1.6.0.
+
 ## [1.5.0] — 2026-11-05
 
 ### Added

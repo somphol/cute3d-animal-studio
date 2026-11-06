@@ -175,13 +175,21 @@ try {
   await record('VFX groom builds the high-density koala coat', async () => {
     await click('[data-animal="koala"]');
     await sleep(500);
-    await click('[data-coat="vfx"]');
+    await click('[data-coat="plush"]');
+    await sleep(300);
+    await click('[data-outer="vfx"]');
     await sleep(800);
     const vfx = await evaluate('window.__cute3d.strandCount()');
     assert.ok(vfx > 100000, `VFX coat too sparse: ${vfx}`);
     const meshes = await evaluate('window.__cute3d.getRig().strandMeshes.length');
     assert.ok(meshes >= 4, `VFX zones missing: ${meshes}`);
-    await click('[data-coat="plush"]');
+    const outer = await evaluate('window.__cute3d.state.outer');
+    assert.equal(outer, 'vfx');
+    await click('[data-outer="velvet"]');
+    await sleep(600);
+    const velvet = await evaluate('window.__cute3d.getRig().fluffCount');
+    assert.ok(velvet > 10000, `Velvet cushion missing: ${velvet}`);
+    await click('[data-outer="pelt"]');
     await sleep(400);
   });
 
@@ -402,9 +410,11 @@ try {
     assert.equal(parsed.searchParams.get('a'), current.animal);
     assert.ok(parsed.searchParams.get('c').includes('-'));
     assert.ok(['happy', 'sleepy', 'curious', 'wiggle'].includes(parsed.searchParams.get('x')));
+    assert.ok(['none', 'pelt', 'velvet', 'vfx'].includes(parsed.searchParams.get('v')));
     const decoded = await evaluate(`JSON.stringify(window.__cute3d.engine.decodeShareState(${JSON.stringify(parsed.search)}))`);
     const data = JSON.parse(decoded);
     assert.equal(data.animal, current.animal);
+    assert.equal(data.outer, parsed.searchParams.get('v'));
     assert.equal(data.valid, true);
   });
 
