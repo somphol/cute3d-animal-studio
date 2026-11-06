@@ -2728,7 +2728,6 @@ const buildStrands = (instance, level) => {
     );
     const geometry = STRAND_GEO.clone();
     geometry.userData.shared = false;
-    const furNormals = new THREE.InstancedBufferAttribute(new Float32Array(points.length * 3), 3);
     const inst = new THREE.InstancedMesh(geometry, material, points.length);
     inst.name = `strands-${zone.mesh}`;
     inst.castShadow = false;
@@ -2739,7 +2738,6 @@ const buildStrands = (instance, level) => {
     const quat = new THREE.Quaternion();
     for (let i = 0; i < points.length; i += 1) {
       const n = normals[i];
-      furNormals.setXYZ(i, n.x, n.y, n.z);
       const tangent = new THREE.Vector3(rand() * 2 - 1, rand() * 2 - 1, rand() * 2 - 1);
       tangent.addScaledVector(n, -tangent.dot(n));
       if (tangent.lengthSq() < 1e-6) tangent.set(1, 0, 0);
@@ -2773,8 +2771,6 @@ const buildStrands = (instance, level) => {
       inst.setMatrixAt(i, matrix);
     }
     inst.instanceMatrix.needsUpdate = true;
-    furNormals.needsUpdate = true;
-    geometry.setAttribute('aFurNormal', furNormals);
     inst.userData.baseCount = points.length;
     mesh.parent.add(inst);
     instance.strandMeshes.push(inst);
