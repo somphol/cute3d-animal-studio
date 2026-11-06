@@ -193,6 +193,50 @@ try {
     await sleep(400);
   });
 
+  await record('Film mode works on the koala and the Scottish Fold', async () => {
+    for (const animal of ['koala', 'fold']) {
+      await click(`[data-animal="${animal}"]`);
+      await sleep(500);
+      await click('[data-outer="film"]');
+      await sleep(600);
+      const state = await evaluate('({ outer: window.__cute3d.state.outer, fluff: window.__cute3d.getRig().fluffCount, strands: window.__cute3d.getRig().strandCount })');
+      assert.equal(state.outer, 'film', `${animal} did not enter Film`);
+      assert.equal(state.fluff, 0, `${animal} still has shell shells`);
+      assert.equal(state.strands, 0, `${animal} still has strands`);
+      const rims = await evaluate("(() => { let n = 0; window.__cute3d.getRig().group.traverse((o) => { if ((o.name || '').startsWith('film-rim-')) n += 1; }); return n; })()");
+      assert.ok(rims >= 4, `${animal} rim shell missing: ${rims}`);
+      const lights = await evaluate("(() => { let n = 0; window.__cute3d.getRig().group.traverse((o) => { if (o.isLight) n += 1; }); return n; })()");
+      assert.ok(lights >= 2, `${animal} Film lights missing: ${lights}`);
+      const pressed = await evaluate('document.querySelector(\'[data-outer="film"]\').getAttribute("aria-pressed")');
+      assert.equal(pressed, 'true');
+    }
+    await click('[data-outer="pelt"]');
+    await sleep(500);
+    const restored = await evaluate('(() => ({ rough: +window.__cute3d.getRig().materials.main.roughness.toFixed(2), lights: (() => { let n = 0; window.__cute3d.getRig().group.traverse((o) => { if (o.isLight) n += 1; }); return n; })() }))()');
+    assert.ok(restored.rough > 0.7, `material roughness not restored: ${restored.rough}`);
+    assert.equal(restored.lights, 0);
+  });
+
+  await record('walk toggle sends the pet around the stage', async () => {
+    await click('[data-animal="fold"]');
+    await sleep(500);
+    const start = await evaluate('(() => { const r = window.__cute3d.getRig(); return { x: r.group.position.x, z: r.group.position.z }; })()');
+    await click('#walk-toggle');
+    await sleep(1500);
+    const walking = await evaluate('(() => { const r = window.__cute3d.getRig(); return { x: r.group.position.x, z: r.group.position.z, rot: r.group.rotation.y, on: window.__cute3d.walkState().on, pressed: document.querySelector("#walk-toggle").getAttribute("aria-pressed") }; })()');
+    assert.equal(walking.on, true);
+    assert.equal(walking.pressed, 'true');
+    const moved = Math.hypot(walking.x - start.x, walking.z - start.z);
+    assert.ok(moved > 0.25, `pet did not walk: ${moved}`);
+    assert.ok(Math.abs(walking.rot) > 0.15, 'pet did not turn to face the path');
+    await click('#walk-toggle');
+    await sleep(1800);
+    const stopped = await evaluate('(() => { const r = window.__cute3d.getRig(); return { x: r.group.position.x, z: r.group.position.z, rot: r.group.rotation.y, on: window.__cute3d.walkState().on }; })()');
+    assert.equal(stopped.on, false);
+    assert.ok(Math.hypot(stopped.x, stopped.z) < 0.08, `pet did not return to the stage: ${stopped.x}, ${stopped.z}`);
+    assert.ok(Math.abs(stopped.rot) < 0.25, `pet did not face front again: ${stopped.rot}`);
+  });
+
   await record('fur sliders and lighting presets respond', async () => {
     await click('[data-animal="koala"]');
     await sleep(500);
@@ -410,7 +454,7 @@ try {
     assert.equal(parsed.searchParams.get('a'), current.animal);
     assert.ok(parsed.searchParams.get('c').includes('-'));
     assert.ok(['happy', 'sleepy', 'curious', 'wiggle'].includes(parsed.searchParams.get('x')));
-    assert.ok(['none', 'pelt', 'velvet', 'vfx'].includes(parsed.searchParams.get('v')));
+    assert.ok(['none', 'pelt', 'velvet', 'vfx', 'film'].includes(parsed.searchParams.get('v')));
     const decoded = await evaluate(`JSON.stringify(window.__cute3d.engine.decodeShareState(${JSON.stringify(parsed.search)}))`);
     const data = JSON.parse(decoded);
     assert.equal(data.animal, current.animal);

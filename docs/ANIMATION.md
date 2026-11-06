@@ -81,6 +81,28 @@ ignored while active.
 A 22-point additive sparkle burst accompanies the jump. Points start on a ring around y ≈ 1.5 with
 random outward velocity and 0.7–1.1 s life, gravity −1.6, and are disabled under reduced motion.
 
+## Walk loop
+
+A persisted `state.walk` toggle (the **Walk** pill next to **React**) sends the pet around the stage.
+It is a behaviour toggle, not part of the look, so it is not in share links and starts off.
+
+```
+phase += dt * 0.85 * blend                     // blend eases 0→1 over ~0.3s
+x = -0.12 + cos(phase) * 0.92
+z = -0.08 + sin(phase) * 0.58
+heading = atan2(-sin(phase) * 0.92, cos(phase) * 0.58)
+group.rotation.y = spin + heading              // damped, shortest-path
+stride = sin(phase * 6.2) * blend
+foot.rotation.x = baseRotX + stride * 0.32      // alternating per foot
+arm.rotation.x  = baseRotX - stride * 0.30      // opposite phase
+group.y        += abs(stride) * 0.045           // step bob
+```
+
+The ellipse is offset slightly left of centre so the default fan position is not walked through. While
+a reaction is playing or reduced motion is on, `blend` damps to 0 and the pet settles back to the
+centre and faces front. Positions, foot rotations and arm rotations are all recomputed each frame, so
+the snapshot path only has to zero `group.position.x/z` and `rotation.y` for the capture.
+
 ## Audio coupling
 
 | Event | Sound |

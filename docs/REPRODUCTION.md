@@ -175,7 +175,7 @@ read as wire, dust or paper shards. Koala strands are opaque ribbons with `depth
 
 ### Optional VFX groom (koala)
 
-The koala-only outer mode `vfx` replaces decorative shells with a dark undercoat and ~133k masked strands
+The koala/fold outer mode `vfx` replaces decorative shells with a dark undercoat and ~133k masked strands
 (190k target desktop, 80k small screens). It uses uniform random sphere roots, per-instance normal /
 seed / tint / role attributes, a custom `ShaderMaterial` with two-lobe Kajiya–Kay specular, root AO,
 fill and rim, and a cream belly role rather than a body-mask hole. VFX is disabled outside the koala and
@@ -264,7 +264,7 @@ Write all four layers before declaring done:
 1. Run `npm run verify`, then `node scripts/screenshot.mjs`.
 2. Update `state.json` (tokens, elapsed, line counts) and any test counts in README.
 3. Commit, push to `main`, enable Pages (root). Wait for the Pages build.
-4. Run the browser suite against the live URL until 26/26.
+4. Run the browser suite against the live URL until 28/28.
 5. Add the skill to `~/Projects/opencode-skills` and run `node sync.mjs`.
 6. Keep `AGENTS.md` current in the same push.
 

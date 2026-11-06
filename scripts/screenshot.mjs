@@ -80,11 +80,20 @@ await shoot('screenshot-koala-vfx.png');
 await stage('koala', 'happy', false, 'en', 'plush', 'studio', 'velvet');
 await shoot('screenshot-koala-velvet.png');
 
+await stage('koala', 'curious', false, 'en', 'plush', 'studio', 'film');
+await shoot('screenshot-koala-film.png');
+
 await stage('conure', 'curious', true);
 await shoot('screenshot-conure.png');
 
 await stage('fold', 'sleepy', false);
 await shoot('screenshot-fold.png');
+
+await stage('fold', 'happy', false, 'en', 'plush', 'studio', 'film');
+await shoot('screenshot-fold-film.png');
+
+await stage('fold', 'happy', false, 'en', 'plush', 'studio', 'velvet');
+await shoot('screenshot-fold-velvet.png');
 
 await stage('shiba', 'sleepy', true, 'th');
 await shoot('screenshot-thai.png');

@@ -13,6 +13,27 @@ uses semantic versioning.
 - The head face mask is tighter, so cheek/forehead fur matches the ears.
 - Longer body/head VFX strands and a denser belly patch make the whole coat sit like the ears.
 
+## [1.7.0] — 2026-11-05
+
+### Added
+
+- **Film outer mode.** A clean, sculpted feature-film CG coat for the koala and the Scottish Fold: no shells or strands,
+  five fresnel rim shells at `1.006×`, a warm rim and cool fill light pair, and slightly glossier clay
+  materials that are restored when the mode changes.
+- **Walk toggle.** A persisted **Walk** pill next to **React** sends the pet on a slow elliptical stroll
+  with alternating steps, arm swing, a step bob and a damped turn toward the travel direction. The path
+  is offset left of centre so the default fan is not walked through; the pet eases back to the centre
+  and faces front when switched off. Snapshots recentre the rig.
+- Outer coat support for the **Scottish Fold**: None / Pelt / Velvet / VFX / Film, with fold-specific
+  VFX zones (body, belly, head, tail).
+
+### Fixed
+
+- Dark H-shaped seam on the Scottish Fold belly when the coat was removed. The belly sphere moved from
+  `z = 0.58` to `z = 0.62` so the body and belly surfaces are no longer nearly coplanar.
+- `mesh-count` HUD now refreshes after coat and outer-coat changes.
+- Repeated outer-mode switches now dispose Film shader/light objects and restore material roughness.
+
 ## [1.6.0] — 2026-11-05
 
 ### Added

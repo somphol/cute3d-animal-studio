@@ -28,9 +28,12 @@ A static character studio that generates every mesh, every expression and every 
 - **Procedural life** — breathing, floating, blinking (including occasional double blinks), ear
   wiggles, tail wags, penguin waddle and a squash-and-stretch jump-and-spin reaction.
 - **A real fur studio** — Smooth, Soft and Plush coats built from fine procedural shells for all seven
-  pets, with a universal Coat row and a koala-only Outer coat row: **Pelt**, **Velvet** and **VFX** (≈133k
-  masked strands, custom anisotropic specular). Adjust length, density, curl, clumping and wind;
-  the koala’s coat bends and lifts in a vertex shader and leans away from the cursor.
+  pets, with a universal Coat row and an Outer coat row for the koala and the Scottish Fold: **Pelt**,
+  **Velvet**, **VFX** (≈133k masked strands, custom anisotropic specular) and **Film** (a clean, sculpted feature-film CG coat with a warm rim shell and key/fill lights). Adjust length, density, curl,
+  clumping and wind; the coat bends and lifts in a vertex shader and leans away from the cursor.
+- **Walk mode** — a toggle sends the current pet on a slow elliptical stroll around the pedestal with
+  alternating steps, arm swing, body bob and a turn toward the travel direction. It eases back to the
+  centre when switched off.
 - **A movable wind fan** — drag the procedural fan around the stage; wind direction follows it, the
   koala’s fibre coat sways, and the shell silhouettes breathe without stretching into paint strokes.
 - **Three lighting moods** — warm Studio, Cloud Sky with drifting procedural clouds, and Cozy Desk with a
@@ -49,9 +52,13 @@ A static character studio that generates every mesh, every expression and every 
 
 ![The bunny with a bowtie and party hat](assets/screenshot-bunny.png)
 
-| Koala, plush | Sun Conure | Scottish Fold |
-| --- | --- | --- |
-| ![Koala](assets/screenshot-koala.png) | ![Koala Velvet](assets/screenshot-koala-velvet.png) | ![Koala VFX](assets/screenshot-koala-vfx.png) |
+| Koala, plush | Koala Velvet | Koala VFX | Koala Film |
+| --- | --- | --- | --- |
+| ![Koala](assets/screenshot-koala.png) | ![Koala Velvet](assets/screenshot-koala-velvet.png) | ![Koala VFX](assets/screenshot-koala-vfx.png) | ![Koala Film](assets/screenshot-koala-film.png) |
+
+| Scottish Fold | Fold Film | Fold Velvet | Sun Conure |
+| --- | --- | --- | --- |
+| ![Scottish Fold](assets/screenshot-fold.png) | ![Fold Film](assets/screenshot-fold-film.png) | ![Fold Velvet](assets/screenshot-fold-velvet.png) | ![Sun Conure](assets/screenshot-conure.png) |
 
 ![Cloud Sky lighting](assets/screenshot-sky.png)
 ![Cozy Desk lighting](assets/screenshot-desk.png)
@@ -96,15 +103,15 @@ are more reliable over HTTP.
 | Renderer | WebGLRenderer, alpha, antialias, PCFSoftShadowMap, ACESFilmic, sRGB output, DPR capped at 2 |
 | Lighting | Warm key with 2048² shadows, cool fill, white rim, hemisphere sky/ground, contact shadow |
 | Characters | 19–52 meshes each, shared low-segment primitives, per-rig material set |
-| Animation | Damped expression blending, deterministic blink seeds, breathing belly, ear/tail rigs, reaction physics, planted feet |
+| Animation | Damped expression blending, deterministic blink seeds, breathing belly, ear/tail rigs, reaction physics, planted feet, optional walk loop |
 | Customizer | character dropdown + cards · 4 expressions · 3 colours · 5 palettes · 3 accessories · reset |
 | Audio | Six sound patterns, lazy AudioContext, master gain + compressor, persistent mute |
 | i18n | 130 EN keys and 130 TH keys, parity-tested; `<html lang>` and meta description update live |
 | Persistence | Studio state, language, presets (max 10) and sound preference |
 | Export | 2048² transparent PNG; filename `cute3d-<animal>-<YYYY-MM-DD>.png` |
 | Share | `?a=…&c=…&x=…&o=…&l=…&f=…&v=…&g=…&u=…`, sanitized on read |
-| Verification | 19 engine checks, 84 static checks, 26 browser checks, 20 in-page checks |
-| Coats | 3 base levels + 4 outer modes · up to 100k Pelt / ≈133k VFX koala strands · Velvet cushion |
+| Verification | 19 engine checks, 87 static checks, 28 browser checks, 21 in-page checks |
+| Coats | 3 base levels + 5 outer modes (koala + fold) · 100k Pelt / ≈133k VFX strands · Velvet cushion · Film clean CG |
 | Fur studio | Length, density, curl, clumping and breeze sliders; density changes koala instance count and shell layer visibility |
 | Lighting | Studio / Cloud Sky / Cozy Desk: lights, exposure, pedestal, clouds, desk props and CSS backdrop |
 | Postures | Seven species-specific stances, posed before the coat is built |
@@ -114,7 +121,7 @@ are more reliable over HTTP.
 
 ```bash
 npm test              # engine + repository (no browser)
-npm run test:browser  # real headless Chrome, 26 checks
+npm run test:browser  # real headless Chrome, 28 checks
 npm run verify        # everything
 npm run shots         # regenerate assets/ from a live render
 ```
@@ -122,10 +129,10 @@ npm run shots         # regenerate assets/ from a live render
 | Layer | Command | Expected |
 | --- | --- | --- |
 | Pure engine | `node --test tests/engine.test.mjs` | 19/19 |
-| Repository | `node --test tests/static.test.mjs` | 84/84 |
-| Browser | `node tests/browser.test.mjs` | 26/26, zero console errors |
-| In-page | `/?selftest` | 20/20 |
-| Live copy | `TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs` | 26/26 |
+| Repository | `node --test tests/static.test.mjs` | 87/87 |
+| Browser | `node tests/browser.test.mjs` | 28/28, zero console errors |
+| In-page | `/?selftest` | 21/21 |
+| Live copy | `TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs` | 28/28 |
 
 Screenshots are regenerated from the real app, not mocked:
 
@@ -175,7 +182,7 @@ headless tests. The Three.js CDN is required on first load; after that the page 
 
 ## Credits
 
-Built with **OpenCode** and **DeepSeek V4.1 Flash**. v1.0.0 shipped in 30m 15s; the v1.1.0 coat expansion, v1.2.0 fur/lighting/posture pass, v1.4.0 real-fur pass, v1.5.0 VFX groom and v1.5.1 coat-fit pass followed in the same
+Built with **OpenCode** and **DeepSeek V4.1 Flash**. v1.0.0 shipped in 30m 15s; the v1.1.0 coat expansion, v1.2.0 fur/lighting/posture pass, v1.4.0 real-fur pass, v1.5 VFX groom, v1.6 two-row rooted-coat pass and the v1.7 film-look + walk pass followed in the same
 session after pauses, reaching 230.42M cumulative tokens
 (mostly cache reads). Three.js is the only runtime library. The machine-readable record is
 [state.json](state.json); the full breakdown is in [docs/CREDITS.md](docs/CREDITS.md).

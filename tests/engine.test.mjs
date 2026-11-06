@@ -15,7 +15,8 @@ test('seven animals, four expressions, three accessories', () => {
   assert.deepEqual(engine.ACCESSORIES, ['bowtie', 'partyHat', 'glasses']);
   assert.equal(engine.COLOR_KEYS.length, 3);
   assert.deepEqual(engine.COAT_LEVELS, ['off', 'soft', 'plush']);
-  assert.deepEqual(engine.OUTER_LEVELS, ['none', 'pelt', 'velvet', 'vfx']);
+  assert.deepEqual(engine.OUTER_LEVELS, ['none', 'pelt', 'velvet', 'vfx', 'film']);
+  assert.deepEqual(engine.OUTER_ANIMALS, ['koala', 'fold']);
   assert.equal(engine.DEFAULT_OUTER, 'pelt');
   assert.equal(engine.DEFAULT_COAT, 'soft');
   assert.deepEqual(engine.LIGHTING_PRESETS, ['studio', 'sky', 'desk']);

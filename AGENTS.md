@@ -18,7 +18,7 @@ Live: <https://somphol.github.io/cute3d-animal-studio/>
 python3 -m http.server 4173        # or: npm start
 node --test tests/engine.test.mjs  # 19 checks, no browser
 node --test tests/static.test.mjs  # 84 checks, no browser
-node tests/browser.test.mjs        # 26 checks, headless Chrome via CDP
+node tests/browser.test.mjs        # 28 checks, headless Chrome via CDP
 npm run verify                     # engine + static + browser
 node scripts/screenshot.mjs        # regenerate every PNG in assets/
 TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs
@@ -31,7 +31,7 @@ and a temporary profile so macOS never prompts.
 
 Three source files, no build step, no npm runtime dependencies.
 
-1. `index.html` — shell, import map (Three.js pinned to `0.169.0`), 76 translation hooks, panel markup.
+1. `index.html` — shell, import map (Three.js pinned to `0.169.0`), 110 translation hooks, panel markup.
 2. `style.css` — tokens and layout; the 3D canvas is transparent, the pastel backdrop is CSS.
 3. `script.js` — three marked regions:
    - `/* ENGINE:START */ … END */` — pure functions. **No DOM, no THREE, no imports.** Node slices
@@ -45,8 +45,9 @@ state/UI → animation loop → self-test → boot.
 
 Fur/scene contract:
 
-- `state.coat` is `off|soft|plush`; `state.outer` is `none|pelt|velvet|vfx` (outer is koala-only). `state.fur` is `{length,density,curl,clump,breeze}`; `state.lighting`
-  is `studio|sky|desk`.
+- `state.coat` is `off|soft|plush`; `state.outer` is `none|pelt|velvet|vfx|film` and only applies to
+  `OUTER_ANIMALS` (`koala`, `fold`). `state.fur` is `{length,density,curl,clump,breeze}`; `state.lighting`
+  is `studio|sky|desk`; `state.walk` is a persisted boolean behaviour toggle.
 - Coat shells: 5/10 for fur, 6/12 for koala, 4/8 for feathers. Velvet uses 12/24 + a 1.018 cushion.
   Fine alpha + bump + colour maps, object-space face/ear/belly masks.
 - **Attachment:** shells, cushions and strand InstancedMeshes are children of the source mesh. VFX roots
@@ -88,10 +89,18 @@ The model contract is small and strict:
   The only remote dependency is the pinned Three.js CDN in the import map.
 - **Original characters only.** Do not reskin or imitate third-party mascots; `tests/static.test.mjs`
   scans for protected names, but that scan is a guard, not a licence.
-- **Two-row coat.** Row 1 is universal `off|soft|plush`; row 2 is koala-only `none|pelt|velvet|vfx`.
-  Pelt adds strands over shells; Velvet is a thick cushion + many light shells; VFX is a dense rooted
-  groom. Other animals are shell-only. Do not replace this with CPU strand physics, particles or cards
-  without visual proof.
+- **Two-row coat.** Row 1 is universal `off|soft|plush`; row 2 is `none|pelt|velvet|vfx|film` for the
+  koala and the Scottish Fold. Pelt adds strands over shells; Velvet is a thick cushion + many light
+  shells; VFX is a dense rooted groom; Film removes the coat and adds a fresnel rim shell plus a warm
+  key/cool fill pair. Other animals are shell-only. Do not replace this with CPU strand physics,
+  particles or cards without visual proof.
+- **Film is a rendering mode, not geometry.** `buildFilmCoat()` keeps the smooth base meshes, adds
+  five `film-rim-*` fresnel shells at `1.006×` and two point lights, and nudges `main`/`belly`
+  roughness. `disposeFilm()` must restore roughness, remove the lights/shells and dispose the shader.
+  Do not scale the rim shells beyond ~1.01; they become a halo.
+- **Walking is opt-in.** `state.walk` drives `walk.phase` in the loop (ellipse offset left of centre so
+  the default fan is not walked through). It damps to rest when a reaction plays or reduced motion is
+  on, and `captureSnapshot()` zeroes `group.position.x/z` and `rotation.y` for the transparent capture.
 - **The Google prompt is inspiration, not a spec.** We did not add a literal 60k CPU simulation or copy
   its copy; the app keeps its own cozy pastel identity and performance budget.
 - **The fan is the wind source.** `updateShellWind` maps the fan→pet vector into each coat zone; keep
@@ -109,7 +118,7 @@ The model contract is small and strict:
 - **The engine block must stay import-free.** `new Function` cannot resolve `THREE` or `document`.
 - **Three.js is pinned.** Upgrading changes shadow/tone-mapping behaviour; re-run browser tests and
   regenerate screenshots after any bump.
-- **Keep the test counts honest.** Current gates: 19 engine, 84 repository, 26 browser, 20 in-page.
+- **Keep the test counts honest.** Current gates: 19 engine, 87 repository, 28 browser, 21 in-page.
   If a check is removed, update the README table; never edit a claim to match a failing suite.
 
 ## Known issues
@@ -121,13 +130,19 @@ The model contract is small and strict:
   but frequently mistaken for missing content.
 - Safari may require a user gesture before AudioContext starts; the first click does that.
 - Presets are capped at 10 per browser profile and are not synchronized between devices.
-- Koala Pelt adds 12 shells + up to 100k strands. Velvet adds 24 light shells + 6 cushions (more draw
-  calls, fewer triangles). VFX adds ~133k strands (~1.6M triangles) and no shells, with an 80k mobile
-  budget. Measure before raising any.
+- Pelt adds 12 shells + up to 100k strands (Fold 60k). Velvet adds 24 light shells + 6 cushions (more
+  draw calls, fewer triangles). VFX adds ~133k strands (~1.6M triangles) and no shells, with an 80k
+  mobile budget. Film adds no coat geometry. Measure before raising any.
+- The fold belly sits at `z = 0.62` (was `0.58`). At `0.58` the body and belly surfaces were nearly
+  coplanar and produced a dark H-shaped seam on the bare belly whenever the coat was removed (Film).
+  Do not move it back.
 - The koala's chest patch boundary can read as a soft collar; it is the body mask and belly patch, not
   a missing mesh.
 - The koala/conure/fold coats are tuned for the default palettes; extreme custom colours still work but
   the silhouette contrast changes.
+- Film is a clean sculpted read, not a fur render: there is no per-hair shadowing. If it reads too
+  smooth, tune the rim shell/light intensities before adding clumps; surface-anchored sphere clumps
+  read as beads on this model.
 - Lighting presets swap 3D props (clouds/desk) and CSS backgrounds. Snapshot hides them; keep that in
   mind when adding new props.
 - The static test suite expects `state.json` line counts to match the source; regenerate the state file

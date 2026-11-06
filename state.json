@@ -1,6 +1,6 @@
 {
   "project": "Cute3D: Procedural Code-Only Animal Studio",
-  "release": "1.6.0",
+  "release": "1.7.0",
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
@@ -44,6 +44,11 @@
       "elapsedSeconds": 81948,
       "totalTokens": 230418929,
       "note": "v1.6: two-row FUR studio (Coat + Outer coat), pelt/velvet/vfx outer modes, rooted shells/strands/cushions at ~1.008, velour cushion undercoat."
+    },
+    {
+      "version": "1.7.0",
+      "capturedAt": "2026-11-06T06:57:09.000Z",
+      "note": "v1.7: Film outer mode (clean sculpt, fresnel rim, warm/cool film lights) for koala and Scottish Fold, opt-in walk loop, fold belly seam fix, outer row for both pets."
     }
   ],
   "artifacts": {
@@ -53,10 +58,10 @@
       "script.js"
     ],
     "lineCounts": {
-      "index.html": 439,
-      "style.css": 1804,
-      "script.js": 4741,
-      "total": 6984
+      "index.html": 447,
+      "style.css": 1828,
+      "script.js": 4991,
+      "total": 7266
     },
     "supportingFiles": [
       "README.md",
@@ -113,9 +118,9 @@
     ],
     "tests": {
       "engine": 19,
-      "static": 84,
-      "browser": 26,
-      "inPage": 20
+      "static": 87,
+      "browser": 28,
+      "inPage": 21
     },
     "animals": {
       "bear": {
@@ -170,8 +175,11 @@
       "assets/screenshot-koala.png",
       "assets/screenshot-koala-vfx.png",
       "assets/screenshot-koala-velvet.png",
+      "assets/screenshot-koala-film.png",
       "assets/screenshot-conure.png",
       "assets/screenshot-fold.png",
+      "assets/screenshot-fold-film.png",
+      "assets/screenshot-fold-velvet.png",
       "assets/screenshot-thai.png",
       "assets/screenshot-sky.png",
       "assets/screenshot-desk.png",

@@ -118,9 +118,11 @@ Fur and feathers are **layered shell meshes** generated after the rig is built:
   breathing/ear wiggles carry the coat.
 - Object-space GLSL masks keep the face, inner ears and belly clear.
 - `rig.fluff` holds the shells; `rig.fluffMaterials` maps roles to materials for live recolouring.
-- The koala outer layer is `none|pelt|velvet|vfx`: Pelt gets up to 100k ribbons, Velvet a thick cushion,
-  VFX a ~133k-strand rooted groom with a custom Kajiya–Kay shader.
-- `state.coat` is `off|soft|plush` (shared as `f=`), `state.outer` is `none|pelt|velvet|vfx` (shared as `v=`).
+- The koala/fold outer layer is `none|pelt|velvet|vfx|film`: Pelt gets up to 100k ribbons, Velvet a
+  thick cushion, VFX a ~133k-strand rooted groom with a custom Kajiya–Kay shader, and Film a clean
+  smooth base with a fresnel rim shell and a warm key/cool fill pair.
+- `state.coat` is `off|soft|plush` (shared as `f=`), `state.outer` is `none|pelt|velvet|vfx|film`
+  (shared as `v=`). `OUTER_ANIMALS` gates the outer row to `koala` and `fold`.
 
 Full detail and tuning rules are in [COAT.md](COAT.md).
 

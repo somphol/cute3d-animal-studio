@@ -68,8 +68,8 @@ The koala fur layer is GPU-only: one instanced ribbon geometry, at most 100,000 
 a separate groom: 190k target (~133k after masks) on desktop, 80k on screens under 800 px, in 6 draw
 calls (~1.6M triangles) with a custom shader. There is no per-strand CPU simulation; wind, curl,
 clumping, length and cursor push are vertex-shader uniforms. Velvet uses 24 light shells + 6 cushions
-and no micro-strands; VFX uses the 133k groom. The other six animals use shells only, which keeps the
-mobile path cheap.
+and no micro-strands; VFX uses the 133k groom; Film adds five fresnel shells and two point lights with
+no coat geometry. The other five animals use shells only, which keeps the mobile path cheap.
 
 - Build cost: sampling + instancing 100k Plush roots is a one-off ~150–350 ms on desktop; VFX adds
   ~133k more. Switches reuse shaders and only rebuild when the animal or coat level changes.

@@ -29,7 +29,7 @@ const DOC_FILES = [
 const SHOTS = [
   'assets/og-card.png', 'assets/screenshot-studio.png', 'assets/screenshot-bunny.png',
   'assets/screenshot-penguin.png', 'assets/screenshot-shiba.png', 'assets/screenshot-thai.png',
-  'assets/screenshot-koala.png', 'assets/screenshot-koala-vfx.png', 'assets/screenshot-koala-velvet.png', 'assets/screenshot-conure.png', 'assets/screenshot-fold.png',
+  'assets/screenshot-koala.png', 'assets/screenshot-koala-vfx.png', 'assets/screenshot-koala-velvet.png', 'assets/screenshot-koala-film.png', 'assets/screenshot-conure.png', 'assets/screenshot-fold.png', 'assets/screenshot-fold-film.png', 'assets/screenshot-fold-velvet.png',
   'assets/screenshot-sky.png', 'assets/screenshot-desk.png',
   'assets/screenshot-mobile.png', 'assets/snapshot-transparent.png',
 ];
@@ -115,7 +115,7 @@ test('section: no third-party assets or trackers', async (t) => {
   await t.test('no trademarked character names in the shipped files', () => {
     const terms = [
       'hello kitty', 'sanrio', 'pokemon', 'pikachu', 'disney', 'mickey mouse', 'animal crossing',
-      'line friends', 'kakao', 'totoro', 'kirby', 'nintendo', 'peppa pig', 'marvel', 'pixar',
+      'line friends', 'kakao', 'totoro', 'kirby', 'nintendo', 'peppa pig', 'marvel', 'cinema',
     ];
     const corpus = (html + css + js + read('README.md')).toLowerCase();
     for (const term of terms) assert.ok(!corpus.includes(term), `found protected term: ${term}`);

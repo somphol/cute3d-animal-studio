@@ -110,7 +110,7 @@ blush and muzzle grammar.
 
 ## ADR-018 — Shells plus shader strands
 
-**Decision:** Keep the soft shell coat and add a separate koala-only GPU strand layer for Plush (up to 100k ribbons), plus an optional Velvet and VFX outer mode for
+**Decision:** Keep the soft shell coat and add a separate koala-only GPU strand layer for Plush (up to 100k ribbons), plus optional Velvet, VFX and Film outer modes for the koala and the Scottish Fold.
 visible fibre and wind/cursor physics. All motion is vertex-shader work; there is no CPU simulation.
 **Why:** Shells alone read as plush but not furry; strands alone read as wire or dust. Together they
 give a soft body and directional fibre at a predictable cost.
@@ -119,12 +119,13 @@ give a soft body and directional fibre at a predictable cost.
 
 ## ADR-020 — Two-row fur studio
 
-**Decision:** Keep `Coat` (Smooth/Soft/Plush) universal and add a koala-only `Outer coat` row
-(None/Pelt/Velvet/VFX). VFX is an outer mode, not a fourth coat level.
+**Decision:** Keep `Coat` (Smooth/Soft/Plush) universal and add an `Outer coat` row
+(None/Pelt/Velvet/VFX/Film) for the koala and the Scottish Fold. VFX is an outer mode, not a fourth
+coat level.
 
-**Why:** The koala should not lose its normal coat modes. Pelt is the balanced plush, Velvet is the
-thick soft undercoat, and VFX is the experimental high-density groom. The two axes are independent and
-persist/share separately (`f=` and `v=`).
+**Why:** Neither animal should lose its normal coat modes. Pelt is the balanced plush, Velvet is the
+thick soft undercoat, VFX is the experimental high-density groom, and Film is the clean sculpted
+"animated film" read. The two axes are independent and persist/share separately (`f=` and `v=`).
 
 ## ADR-019 — Species posture is part of the model
 
@@ -138,3 +139,15 @@ the limbs, and base rotations feed the idle animation rather than being overwrit
 **Decision:** Four layers, a self-test route, regenerated screenshots and a state file.
 **Why:** A visual toy is easy to break silently. The tests cover the contracts that are hard to see:
 transparency, persistence, i18n parity, accessory parenting and IP hygiene.
+
+## ADR-021 — Walking is an opt-in behaviour
+
+**Decision:** Add a persisted `Walk` toggle that moves the pet on a slow ellipse around the pedestal,
+with alternating foot/arm swing, a step bob and a damped turn toward the path. It is not always-on.
+
+**Why:** Screenshots, presets, share links and the snapshot camera all assume the pet is centred and
+facing front. An always-on walk would make every asset non-deterministic and push the pet out of the
+transparent export frame. Opt-in keeps the default studio still and the walk a deliberate show.
+
+**Do not:** Make walking part of share links, or capture a snapshot without zeroing
+`group.position.x/z` and `group.rotation.y`.

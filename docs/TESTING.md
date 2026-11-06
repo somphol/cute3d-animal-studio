@@ -67,26 +67,30 @@ The suite checks:
 3. all seven characters switch and have distinct mesh counts;
 4. `aria-pressed` follows the active animal;
 5. the coat toggle builds shells, removes them and scales the fibre count;
-6. fur sliders change the strand count and persist; lighting presets switch moods;
-7. sleepy closes the eyes and happy reopens them;
-8. a palette applies all three colours;
-9. a colour-input event recolours the live material and hex label;
-10. all three accessories build and toggle;
-11. the language switch translates names and panel, persists the key;
-12. presets save to `localStorage` and the DOM;
-13. preset apply switches animal and restores the look;
-14. presets clear;
-15. React starts a jump and settles after 0.92 s;
-16. a real mouse tap on the canvas triggers the raycast reaction;
-17. a snapshot is 1024², transparent in the corner, opaque in the centre;
-18. the snapshot button downloads a correctly named file;
-19. the share URL encodes current state and decodes back;
-20. keyboard `2` switches to the bunny;
-21. state survives a reload;
-22. the mobile sheet opens and closes with correct `aria-expanded`;
-23. reduced motion still renders;
-24. the in-page self-test passes 20/20;
-25. there are zero console errors.
+6. the VFX groom builds > 100k strands across ≥ 4 zones and Velvet adds > 10k cushion meshes;
+7. Film builds on both the koala and the fold: no strands, no shells, ≥ 4 fresnel rim shells and ≥ 2
+   lights, and switching back to Pelt restores the material roughness and removes the lights;
+8. the Walk toggle moves the pet > 0.25 units, turns it, then returns it to the centre facing front;
+9. fur sliders change the strand count and persist; lighting presets switch moods;
+10. sleepy closes the eyes and happy reopens them;
+11. a palette applies all three colours;
+12. a colour-input event recolours the live material and hex label;
+13. all three accessories build and toggle;
+14. the language switch translates names and panel, persists the key;
+15. presets save to `localStorage` and the DOM;
+16. preset apply switches animal and restores the look;
+17. presets clear;
+18. React starts a jump and settles after 0.92 s;
+19. a real mouse tap on the canvas triggers the raycast reaction;
+20. a snapshot is 1024², transparent in the corner, opaque in the centre;
+21. the snapshot button downloads a correctly named file;
+22. the share URL encodes current state and decodes back;
+23. keyboard `2` switches to the bunny;
+24. state survives a reload;
+25. the mobile sheet opens and closes with correct `aria-expanded`;
+26. reduced motion still renders;
+27. the in-page self-test passes 21/21;
+28. there are zero console errors.
 
 ### Live run
 
@@ -94,7 +98,7 @@ The suite checks:
 TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs
 ```
 
-The same 26 checks must pass against Pages. Transparent snapshot and download checks work there too.
+The same 28 checks must pass against Pages. Transparent snapshot and download checks work there too.
 
 ## In-page self-test
 

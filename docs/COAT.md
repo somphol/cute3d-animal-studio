@@ -8,10 +8,10 @@ runtime; there are no texture files, model files, or downloaded assets.
 | Row | Options | Applies to | Meaning |
 | --- | --- | --- | --- |
 | **Coat** | Smooth / Soft / Plush | all seven animals | base density and quality |
-| **Outer coat** | None / Pelt / Velvet / VFX | koala only | how the visible outer layer is built |
+| **Outer coat** | None / Pelt / Velvet / VFX / Film | koala + Scottish Fold | how the visible outer layer is built |
 
-The outer row is hidden and disabled for non-koala animals. The koala keeps the same first row as every
-other pet; the outer layer is additive.
+The outer row is hidden and disabled outside `OUTER_ANIMALS` (`koala`, `fold`). Both pets keep the same
+first row as every other animal; the outer layer is additive.
 
 ## Base coat budgets
 
@@ -29,8 +29,8 @@ Feather animals use 4 (Soft) or 8 (Plush) shell layers. The 24-layer Velvet sett
 Base shells only. No strand layer. This is useful for comparing the shell silhouette.
 
 ### Pelt
-The balanced mode: base shells plus the legacy tapered-ribbon strands. The koala gets a strand layer
-on top of shells. This is the default and the most “cute plush” result.
+The balanced mode: base shells plus the legacy tapered-ribbon strands. Koala and Fold get a strand
+layer on top of shells. This is the default and the most “cute plush” result.
 
 ### Velvet
 The thick, soft undercoat. It is designed to read as **dense plush/velour**, not long fur:
@@ -58,6 +58,26 @@ The high-density strand groom, for comparison and for a more directional fur loo
 - No decorative shells.
 
 VFX is intentionally the most expensive mode (~1.6M triangles in six draw calls). It is optional.
+
+### Film
+A clean, sculpted feature-film CG coat — the smooth, filmic read without any trademarked name.
+It removes the shells and strands entirely and treats the base
+model as a smooth character maquette:
+
+- **No shells, no strands, no cushion.** `buildFilmCoat()` leaves the smooth clay meshes.
+- **Warm rim shell.** A six-vertex-shader copy of `body`, `belly`, `head-mesh` and both ears at
+  `1.006×` with an additive fresnel (`pow(1 - dot(N, V), 3.2)`, strength `0.34`). It hugs the
+  silhouette instead of forming a halo.
+- **Two-light film rig.** A warm `#ffd2ab` rim point light behind-left and a cool `#a9c4ff` fill
+  behind-right, added to the rig so they travel with the pet.
+- **Glossier clay.** `main` drops to roughness `0.62`, `belly` to `0.72` while Film is active and is
+  restored on exit.
+- **Fluffy ear scallops (koala only).** Four flattened, surface-anchored lobes per ear at `0.9×`
+  radius: enough to soften the ear rim without reading as beads.
+
+Do **not** parent the rim shells to the rig group or scale them by more than ~1.01; the fresnel shell is
+meant to sit on the skin. The Film material/light changes are tracked in `filmMaterials` and disposed
+in `disposeFilm()`, so switching back to Pelt restores the original roughness and light count.
 
 ## Rooted attachment
 
@@ -111,7 +131,8 @@ The VFX shader adds `aNormal`, `aSeed`, `aTint`, `aRole`, `aGuard` and `aClump` 
 | Breeze | `fur.breeze` | 0–1 | shell micro-motion + strand wind + cursor push |
 
 `state.coat` and `state.outer` are persisted. Presets include both. Share links use `f=` for the coat and
-`v=` for the outer mode; old `f=vfx` links migrate to `f=plush&v=vfx`.
+`v=` for the outer mode; old `f=vfx` links migrate to `f=plush&v=vfx`. `state.walk` is persisted but is
+not part of share links.
 
 ## Species recipes
 
@@ -121,9 +142,9 @@ The VFX shader adds `aNormal`, `aSeed`, `aTint`, `aRole`, `aGuard` and `aClump` 
 | Bunny | fur shells | fine coat, long ear fringe, fluffy tail |
 | Penguin | feather shells | short down on the dark body, clean white belly |
 | Shiba | fur shells | double coat, cream chest, bushy curled tail |
-| Koala | shells + outer | long silver coat in Pelt, soft cushion in Velvet, high-density groom in VFX |
+| Koala | shells + outer | long silver coat in Pelt, soft cushion in Velvet, high-density groom in VFX, clean sculpt in Film |
 | Sun Conure | feather shells | yellow-orange down, white eye patches, green layered wings |
-| Scottish Fold | fur shells | dense silver coat, cream chest, folded flap ears, whiskers |
+| Scottish Fold | shells + outer | dense silver coat; Pelt, Velvet, VFX and Film outer modes |
 
 ## Performance
 
@@ -131,6 +152,7 @@ The VFX shader adds `aNormal`, `aSeed`, `aTint`, `aRole`, `aGuard` and `aClump` 
 - Velvet Plush: 24 shells per zone + 6 cushions, no micro-strands; heavier on draw calls, lighter on
   triangles.
 - VFX Plush: ~133k strands × 7 rows ≈ 1.6M triangles, 6 draw calls; 80k on narrow screens.
+- Film: five fresnel shells + two point lights, no coat geometry; the cheapest non-zero outer mode.
 - Smooth removes every layer and rebuilds the plain clay body.
 - All modes reuse the renderer, lights and controls; only the coat group is rebuilt.
 
@@ -144,6 +166,8 @@ The VFX shader adds `aNormal`, `aSeed`, `aTint`, `aRole`, `aGuard` and `aClump` 
 - **Fur ball:** roots are too far out or every strand has the same length. Root at ~1.008 and split
   undercoat/guard.
 - **Coat detaches when breathing:** the mesh is parented to the group instead of the skin.
+- **Film shell halo:** the fresnel scale is too large or the strength is above ~0.4; keep it at 1.006
+  and 0.34.
 
 ## Why not a shadow pass yet
 
