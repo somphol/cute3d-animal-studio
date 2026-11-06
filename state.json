@@ -1,12 +1,12 @@
 {
   "project": "Cute3D: Procedural Code-Only Animal Studio",
-  "release": "1.5.0",
+  "release": "1.3.0",
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
-    "capturedAt": "2026-11-06T04:41:25.330Z",
-    "elapsedSeconds": 81311,
-    "elapsed": "22h 35m 11s",
+    "capturedAt": "2026-11-06T04:52:02.661Z",
+    "elapsedSeconds": 81948,
+    "elapsed": "22h 45m 48s",
     "note": "The session spans two releases with a long pause between them. v1.0.0 (four pets) was completed in 30m 15s; v1.1.0 added three animals and the procedural coat system; v1.2.0 added the cuteness pass, species postures, GPU strand fur with wind/cursor physics, fur sliders and three lighting moods. Wall-clock elapsed includes the pause; token totals are cumulative and dominated by cache reads (repeated prompt context)."
   },
   "model": {
@@ -19,12 +19,12 @@
     "url": "https://opencode.ai"
   },
   "usage": {
-    "inputTokens": 2692892,
-    "outputTokens": 287561,
-    "reasoningTokens": 255751,
-    "cacheReadTokens": 211863552,
+    "inputTokens": 2950888,
+    "outputTokens": 293410,
+    "reasoningTokens": 262882,
+    "cacheReadTokens": 226910080,
     "cacheWriteTokens": 1669,
-    "totalTokens": 215101425,
+    "totalTokens": 230418929,
     "costUSD": 0,
     "note": "Read from the OpenCode session database (session_v2). totalTokens is the sum of the five counters; cache reads are repeated prompt context and dominate. costUSD is 0 on the flat-rate plan."
   },
@@ -38,12 +38,12 @@
       "note": "Initial release: four pets, bilingual UI, audio, snapshot, tests, docs, Pages, skill."
     },
     {
-      "version": "1.5.0",
-      "capturedAt": "2026-11-06T04:41:25.330Z",
-      "elapsed": "22h 35m 11s",
-      "elapsedSeconds": 81311,
-      "totalTokens": 215101425,
-      "note": "v1.3 movable wind fan and shell wind; v1.4 real-fur pass; v1.5 koala-only VFX groom (133k+ anisotropic strands, belly colour, undercoat) alongside the plush strand coat."
+      "version": "1.3.0",
+      "capturedAt": "2026-11-06T04:52:02.661Z",
+      "elapsed": "22h 45m 48s",
+      "elapsedSeconds": 81948,
+      "totalTokens": 230418929,
+      "note": "Movable wind fan, wind-driven shell fur, cursor disturbance and the long-fur koala pass."
     }
   ],
   "artifacts": {
@@ -55,8 +55,8 @@
     "lineCounts": {
       "index.html": 419,
       "style.css": 1771,
-      "script.js": 4583,
-      "total": 6773
+      "script.js": 4586,
+      "total": 6776
     },
     "supportingFiles": [
       "README.md",
@@ -113,8 +113,8 @@
     ],
     "tests": {
       "engine": 19,
-      "static": 83,
-      "browser": 26,
+      "static": 82,
+      "browser": 25,
       "inPage": 20
     },
     "animals": {
@@ -167,13 +167,7 @@
       "assets/screenshot-bunny.png",
       "assets/screenshot-penguin.png",
       "assets/screenshot-shiba.png",
-      "assets/screenshot-koala.png",
-      "assets/screenshot-koala-vfx.png",
-      "assets/screenshot-conure.png",
-      "assets/screenshot-fold.png",
       "assets/screenshot-thai.png",
-      "assets/screenshot-sky.png",
-      "assets/screenshot-desk.png",
       "assets/screenshot-mobile.png",
       "assets/snapshot-transparent.png"
     ],

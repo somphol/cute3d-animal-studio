@@ -3,6 +3,16 @@
 All notable changes to Cute3D are documented here. The format follows Keep a Changelog and the project
 uses semantic versioning.
 
+## [1.5.1] — 2026-11-05
+
+### Fixed
+
+- VFX koala body strands now use the main coat colour across the whole body instead of a broad
+  belly-coloured front that read like a white cloth.
+- The cream belly is a smaller, cleaner fur patch with a matching tip colour.
+- The head face mask is tighter, so cheek/forehead fur matches the ears.
+- Longer body/head VFX strands and a denser belly patch make the whole coat sit like the ears.
+
 ## [1.5.0] — 2026-11-05
 
 ### Added
