@@ -4,9 +4,9 @@
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
-    "capturedAt": "2026-11-05T17:05:13.897Z",
-    "elapsedSeconds": 39540,
-    "elapsed": "10h 59m 00s",
+    "capturedAt": "2026-11-06T04:41:25.330Z",
+    "elapsedSeconds": 81311,
+    "elapsed": "22h 35m 11s",
     "note": "The session spans two releases with a long pause between them. v1.0.0 (four pets) was completed in 30m 15s; v1.1.0 added three animals and the procedural coat system; v1.2.0 added the cuteness pass, species postures, GPU strand fur with wind/cursor physics, fur sliders and three lighting moods. Wall-clock elapsed includes the pause; token totals are cumulative and dominated by cache reads (repeated prompt context)."
   },
   "model": {
@@ -19,12 +19,12 @@
     "url": "https://opencode.ai"
   },
   "usage": {
-    "inputTokens": 1993039,
-    "outputTokens": 279408,
-    "reasoningTokens": 251131,
-    "cacheReadTokens": 186187648,
+    "inputTokens": 2692892,
+    "outputTokens": 287561,
+    "reasoningTokens": 255751,
+    "cacheReadTokens": 211863552,
     "cacheWriteTokens": 1669,
-    "totalTokens": 188712895,
+    "totalTokens": 215101425,
     "costUSD": 0,
     "note": "Read from the OpenCode session database (session_v2). totalTokens is the sum of the five counters; cache reads are repeated prompt context and dominate. costUSD is 0 on the flat-rate plan."
   },
@@ -39,11 +39,11 @@
     },
     {
       "version": "1.5.0",
-      "capturedAt": "2026-11-05T17:05:13.897Z",
-      "elapsed": "10h 59m 00s",
-      "elapsedSeconds": 39540,
-      "totalTokens": 188712895,
-      "note": "v1.3 movable wind fan and shell wind; v1.4 real-fur pass fixed zeroed strand uniforms; v1.5 adds a koala-only VFX groom (133k+ anisotropic strands, per-instance belly colour, undercoat) alongside the plush strand coat."
+      "capturedAt": "2026-11-06T04:41:25.330Z",
+      "elapsed": "22h 35m 11s",
+      "elapsedSeconds": 81311,
+      "totalTokens": 215101425,
+      "note": "v1.3 movable wind fan and shell wind; v1.4 real-fur pass; v1.5 koala-only VFX groom (133k+ anisotropic strands, belly colour, undercoat) alongside the plush strand coat."
     }
   ],
   "artifacts": {
