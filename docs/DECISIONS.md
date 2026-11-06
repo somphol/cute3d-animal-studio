@@ -110,7 +110,7 @@ blush and muzzle grammar.
 
 ## ADR-018 — Shells plus shader strands
 
-**Decision:** Keep the soft shell coat and add a separate GPU strand layer (up to 60k ribbons) for
+**Decision:** Keep the soft shell coat and add a separate koala-only GPU strand layer (up to 100k ribbons) for
 visible fibre and wind/cursor physics. All motion is vertex-shader work; there is no CPU simulation.
 **Why:** Shells alone read as plush but not furry; strands alone read as wire or dust. Together they
 give a soft body and directional fibre at a predictable cost.

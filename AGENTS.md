@@ -47,11 +47,15 @@ Fur/scene contract:
 
 - `state.coat` is `off|soft|plush`; `state.fur` is `{length,density,curl,clump,breeze}`; `state.lighting`
   is `studio|sky|desk`.
-- Coat shells: 4 (soft) / 8 (plush) layers, alpha+bump textures, object-space face/ear/belly masks.
-- Strands: up to 60k tapered ribbons, one InstancedMesh per zone, `STRAND_UNIFORMS` shared. Density only
-  changes `mesh.count`; never rebuild geometry on slider input.
-- Strands are transparent with `depthWrite:false` and render after shells. Do not turn them opaque; the
-  stipple becomes noise.
+- Coat shells: 5 (soft) / 10 (plush) layers for fur; 6/12 for koala; 4/8 for feathers. Fine alpha +
+  bump + colour maps, object-space face/ear/belly masks.
+- Koala-only strands: up to 100k opaque tapered ribbons, one InstancedMesh per zone, `STRAND_UNIFORMS`
+  shared. Density changes `mesh.count` (and shell layer visibility); never rebuild geometry on slider input.
+- **`STRAND_UNIFORMS` keys must be `uTime`, `uBreeze`, `uLength`, `uCurl`, `uClump`, `uCursor`** to match
+  the GLSL. A mismatch leaves them zero, which collapses every strand into a dot. This was the v1.4 fur bug.
+- Koala strands are opaque with `depthWrite:true`. They are fibre, not transparent cards.
+- Shell wind is deliberately tiny (`0.008` feather, `0.025` fur). Do not raise it; large shell motion
+  stretches the alpha cutouts into paint-like streaks.
 - `applyPosture()` must run before coat generation and must store head/ear/foot base transforms.
 - `applyLighting()` owns lights, exposure, pedestal, clouds and desk visibility; call it after any state
   restore.
@@ -80,8 +84,10 @@ The model contract is small and strict:
   The only remote dependency is the pinned Three.js CDN in the import map.
 - **Original characters only.** Do not reskin or imitate third-party mascots; `tests/static.test.mjs`
   scans for protected names, but that scan is a guard, not a licence.
-- **Coat is shells + GPU strands.** Shells give the plush body; strands give fibre/motion. Do not
-  replace either with CPU strand physics, particles or cards without visual proof.
+- **Shells for all, strands for the koala.** Shells give the plush body and feather down; the koala's
+  long-fur strand layer gives visible fibre and wind. Other animals stay shell-only to keep the plush
+  look and the mobile budget. Do not replace this with CPU strand physics, particles or cards without
+  visual proof.
 - **The Google prompt is inspiration, not a spec.** We did not add a literal 60k CPU simulation or copy
   its copy; the app keeps its own cozy pastel identity and performance budget.
 - **The fan is the wind source.** `updateShellWind` maps the fan→pet vector into each coat zone; keep
@@ -111,12 +117,14 @@ The model contract is small and strict:
   but frequently mistaken for missing content.
 - Safari may require a user gesture before AudioContext starts; the first click does that.
 - Presets are capped at 10 per browser profile and are not synchronized between devices.
-- Plush adds 8 alpha-tested shells per zone and up to 60k transparent strand instances. It is capped
-  for mobile GPU safety; do not raise counts without measuring.
-- Lighting presets swap 3D props (clouds/desk) and CSS backgrounds. Snapshot hides them; keep that in
-  mind when adding new props.
+- Koala Plush adds 12 alpha-tested shells per zone and up to 100k opaque strand instances (≈600k
+  triangles). It is capped for mobile GPU safety; measure before raising it. Other animals use shells only.
+- The koala's chest patch boundary can read as a soft collar; it is the body mask and belly patch, not
+  a missing mesh.
 - The koala/conure/fold coats are tuned for the default palettes; extreme custom colours still work but
   the silhouette contrast changes.
+- Lighting presets swap 3D props (clouds/desk) and CSS backgrounds. Snapshot hides them; keep that in
+  mind when adding new props.
 - The static test suite expects `state.json` line counts to match the source; regenerate the state file
   after editing `index.html`, `style.css` or `script.js`.
 

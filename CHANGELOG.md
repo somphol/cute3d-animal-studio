@@ -3,6 +3,21 @@
 All notable changes to Cute3D are documented here. The format follows Keep a Changelog and the project
 uses semantic versioning.
 
+## [1.4.0] — 2026-11-05
+
+### Fixed
+
+- **Strand fur uniforms now match the GLSL.** `STRAND_UNIFORMS` stored `time/breeze/length/curl/clump/cursor` while the shader declared `uTime/uBreeze/...`, so Three left them at zero and every strand collapsed along Y into a dot. This was the root cause of the brush-stroke / dust look and the wind smearing.
+- Shell wind gain reduced to `0.008` (feather) / `0.025` (fur) so high breeze no longer stretches alpha cutouts into paint-like streaks.
+- Koala inner ears are no longer buried under the coat.
+
+### Changed
+
+- **Real-fur pass.** The koala now uses up to 100,000 opaque, depth-writing strand ribbons with a tangent-plane flow field, root-to-tip shading, and visible wind; its shells use a fine 512² fibre texture plus a colour map and bump.
+- Other six animals use layered plush/feather shells only, keeping the soft toy silhouette and mobile budget.
+- Density now controls shell layer visibility as well as koala strand count.
+- Coat docs, architecture, animation, AGENTS handoff, screenshots and release metadata synced to 1.4.0.
+
 ## [1.3.0] — 2026-11-05
 
 ### Added

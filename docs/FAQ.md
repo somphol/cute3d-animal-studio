@@ -15,7 +15,7 @@ The code is MIT. The character designs are original to this project. You may use
 derivatives; attribution is appreciated but not required. Do not add third-party characters.
 
 **How does the fur work?**
-Layered alpha-tested shells give the plush body; up to 60,000 GPU ribbons add visible fibre. A vertex
+Layered alpha-tested shells give the plush body; the koala adds up to 100,000 opaque GPU ribbons for visible fibre. A vertex
 shader moves the tips with breeze, curl, clumping and the cursor. The five sliders are saved and shared.
 
 **What are the lighting moods?**

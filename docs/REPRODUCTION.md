@@ -154,14 +154,13 @@ Accessories:
 
 ## 5b. Coat system
 
-Fur and feathers are **layered shells**, not strands:
+Fur and feathers are **layered shells for every animal**, with a **strand layer for the koala**:
 
-1. For each coat zone (body, belly, head, ears, cheeks, tail) clone the source mesh 5 (Soft) or 10
-   (Plush) times.
-2. Scale each clone from `1.004` to `1.004 + thickness` (fur 0.085, feathers 0.045).
-3. Give each shell a canvas-generated strand alpha texture (`makeShellAlphaTexture`) and a matching bump
-   map. Three fur variants and two feather variants are generated once and UV-offset per layer.
-4. Raise `alphaTest` on outer layers (0.22 → 0.48) so they thin out into a fuzzy silhouette.
+1. For each coat zone (body, belly, head, ears, cheeks, tail) clone the source mesh 5/10 times for fur,
+   6/12 for koala, or 4/8 for feathers.
+2. Scale each clone from `1.004` to `1.004 + thickness` (fur 0.09, koala 0.08, feathers 0.045).
+3. Give each shell a canvas-generated fine alpha texture (`makeShellAlphaTexture`) plus a colour map and a matching bump map. Three fur variants and two feather variants are generated once and UV-offset per layer.
+4. Raise `alphaTest` on outer layers (fur 0.34 → 0.54, feather 0.42 → 0.54) so they thin out into a fuzzy silhouette.
 5. Inject a GLSL discard mask per zone: face `z > 0.58`, ears `z > 0.35`, body an oval window matching
    the belly patch.
 6. Colour the shells by role and refresh them in `applyColors`.
@@ -171,7 +170,8 @@ disposes materials; shared geometry is never disposed. The UI exposes Smooth / S
 state key is `coat`, shared as `f=`.
 
 Do **not** replace this with solid cone strands, particles or cards — all three were prototyped and
-read as wire, dust or paper shards.
+read as wire, dust or paper shards. Koala strands are opaque ribbons with `depthWrite:true`; their
+`STRAND_UNIFORMS` keys must match the GLSL (`uTime`, `uBreeze`, `uLength`, `uCurl`, `uClump`, `uCursor`).
 
 ## 6. Animation
 
@@ -217,7 +217,7 @@ After the rig and shells:
 1. **Postures** — adjust body/head/limb transforms per species; store `base.headRotX/Z`, `earBaseX` and
    `feet.baseY`. Bear sits, bunny is alert, penguin leans, shiba sits on haunches, koala reaches up,
    conure perches, fold loafs.
-2. **Strands** — sample roots on `mesh.scale * 1.16`; build up to 60k tapered ribbon instances. Put
+2. **Koala strands** — sample roots on `mesh.scale * 1.2`; build up to 100k opaque tapered ribbon instances. Put
    phase in the vertex shader from the root position, and drive breeze/curl/clump/length/cursor from
    `STRAND_UNIFORMS`. Density changes `InstancedMesh.count`, not geometry.
 3. **Fur UI** — Sliders for length, density, curl, clumping, breeze; state key `fur`, share `u=`.

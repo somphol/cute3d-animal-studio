@@ -113,10 +113,11 @@ materials and shared geometries are marked `userData.shared` so `disposeRig` ski
 Fur and feathers are **layered shell meshes** generated after the rig is built:
 
 - `COAT_CONFIG` declares zones by mesh name and colour role.
-- `applyCoat(rig, level)` clones each zone 5 (soft) or 10 (plush) times, scales the clone outward and
-  assigns a procedural alpha/bump material.
+- `applyCoat(rig, level)` clones each zone 5/10 (fur), 6/12 (koala), or 4/8 (feather) times, scales the
+  clone outward and assigns a procedural alpha/bump/colour-map material.
 - Object-space GLSL masks keep the face, inner ears and belly clear.
 - `rig.fluff` holds the shells; `rig.fluffMaterials` maps roles to materials for live recolouring.
+- The koala also gets up to 100k opaque strand ribbons in `rig.strandMeshes`.
 - `state.coat` is `off | soft | plush`, persisted, included in presets and shared as `f=`.
 
 Full detail and tuning rules are in [COAT.md](COAT.md).
@@ -124,12 +125,13 @@ Full detail and tuning rules are in [COAT.md](COAT.md).
 ## Rendering layers
 
 1. Opaque base meshes and eyes.
-2. Opaque alpha-tested coat shells (4 Soft / 8 Plush per zone).
-3. Transparent GPU strand ribbons (up to 60k, one InstancedMesh per zone) with vertex-shader wind.
+2. Opaque alpha-tested coat shells (5/10 fur, 6/12 koala, 4/8 feathers).
+3. Koala-only opaque strand ribbons (up to 100k, one InstancedMesh per zone) with vertex-shader wind.
 4. Transparent sparkles and props.
 
-Strands use `depthWrite: false` and render after shells, so they add fibre over the plush body rather
-than being buried. `STRAND_UNIFORMS` is shared by every strand material.
+Strands use `depthWrite: true` and render after shells, so they read as fibre rather than transparent
+dust. `STRAND_UNIFORMS` is shared and its keys must match the GLSL (`uTime`, `uBreeze`, `uLength`,
+`uCurl`, `uClump`, `uCursor`).
 
 ## Lighting presets
 

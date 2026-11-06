@@ -138,17 +138,19 @@ feet that stay visually on the pedestal/desk, rather than a rigid group sliding 
 
 ## Strand wind
 
-`STRAND_UNIFORMS` is shared by every strand material: `time`, `breeze`, `length`, `curl`, `clump`,
-`cursor`. Each frame updates `time`; pointer moves raycast onto a plane through the character and update
-`cursor`. The vertex shader bends each ribbon by height squared, so roots stay anchored and tips move.
-Reduced motion does not disable the fur entirely; the breeze default is low and the slider can be set
-to zero.
+`STRAND_UNIFORMS` is shared by every strand material and its keys must match the GLSL exactly:
+`uTime`, `uBreeze`, `uLength`, `uCurl`, `uClump`, `uCursor`. Each frame updates `uTime`; pointer moves
+raycast onto a plane through the character and update `uCursor`. The vertex shader bends each ribbon by
+height squared, so roots stay anchored and tips move. A name mismatch leaves the uniforms at zero and
+collapses the strands into dots; that was the v1.4 bug. Reduced motion does not disable the coat
+entirely; the breeze default is low and the slider can be set to zero.
 
 
 ## Fan-driven fur wind
 
 `WIND` uniforms carry time and speed; `updateShellWind` converts the fan→pet world vector into each coat
-zone’s local space. The coat vertex shader displaces shells by `layerNorm²`, adds a gusting sine term,
-flattens windward fur against the body and applies a stiffness/arc correction. Dragging the fan updates
-its angle and direction; the blade assembly spins with the wind slider. Pointer position drives a
-separate radial touch disturbance.
+zone’s local space. The coat vertex shader displaces shells by `layerNorm²` with a deliberately small
+gain (`0.008` feather, `0.025` fur), adds a gusting sine term, and applies a stiffness/arc correction.
+Large shell motion stretches the alpha cutouts into paint-like streaks, so the visible movement lives in
+the koala strand shader. Dragging the fan updates its angle and direction; the blade assembly spins with
+the wind slider. Pointer position drives a separate radial touch disturbance.

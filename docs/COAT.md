@@ -1,150 +1,144 @@
 # Coat system: fur and feathers
 
-The studio ships two coat modes on top of the smooth base models. They are generated at runtime;
-nothing is downloaded and no texture files exist in the repository.
+The studio ships two coat modes on top of the smooth base models. Everything is generated at runtime;
+there are no texture files, model files, or downloaded assets.
 
-## Levels
+## Levels and budgets
 
 | Level | What it does | Typical load |
 | --- | --- | --- |
-| **Smooth** | No shells. The original clay look. | 34–42 meshes |
-| **Soft** | 4 shell layers per coat zone, sparse alpha strands. | 70–90 meshes |
-| **Plush** | 8 layers, thicker offset, denser strand texture, up to 60k strands. | 85–125 meshes |
+| **Smooth** | No shells, no strands. The original clay look. | 48–70 meshes |
+| **Soft** | Half the shell layers; koala gets ~45k short strands. | 70–90 meshes |
+| **Plush** | Full shells; koala gets up to 100k strands. | 90–125 meshes |
 
-The choice is stored in `state.coat`, persisted, included in presets and encoded in share links as
-`f=off|soft|plush`. The self-test asserts that Plush produces more fibres than Soft and that Smooth
-removes the coat entirely.
+The choice is stored in `state.coat`, persisted, included in presets, and encoded in share links as
+`f=off|soft|plush`. Smooth removes both shells and strands.
 
-## How a coat is built
+## Two rendering strategies
 
-1. Each character declares coat zones in `COAT_CONFIG`: a source mesh (`body`, `belly`, `head-mesh`,
-   `ear-left`, `cheek-right`, `tail`), a colour role, a shell count and a face mask.
-2. For each zone, the source mesh is cloned N times. Every clone is scaled from `1.004` to
-   `1.004 + thickness`, so the layers sit just above the skin.
-3. Each shell uses a **procedural alpha texture** generated on a `<canvas>`: thousands of short,
-   tapered strands for fur, and layered scalloped barbs for down feathers.
-4. The same canvas is reused as a **bump map** to give the coat subtle fibre relief.
-5. Outer shells have a higher `alphaTest`, so they become sparser and produce a soft, feathered
-   silhouette instead of a hard rim.
-6. Color comes from the active role (`main`, `belly`, `blush`, `inner`, `accent`) and is refreshed when
-   the colour picker changes. Outer layers are 2–4% lighter for depth.
+### Layered shells (all seven animals)
+
+1. `COAT_CONFIG` declares zones by mesh name (`body`, `belly`, `head-mesh`, `ear-left`, `cheek-right`,
+   `tail`), a colour role, a virtual fibre count, and masks.
+2. For each zone the source mesh is cloned N times. Each clone is scaled from `1.004` outward by a
+   fraction of the coat thickness, so the layers sit just above the skin.
+3. Every shell uses a canvas-generated **alpha texture**:
+   - **fur** — 36,000 tiny 2–5 px fibres plus 2,400 longer guard hairs at 512²;
+   - **feather** — 18×14 scalloped barbs at 256² (the original down pattern).
+4. Fur shells also receive a **colour map** (`COAT_PATTERN`) with fine light/dark directional grain,
+   plus a bump map. This is what keeps the front from reading as smooth velvet.
+5. Outer shells have a higher `alphaTest`, so they get sparser and soften the silhouette.
+6. Shell colours follow the active palette role. Inner layers are darker, outer layers slightly
+   lighter, creating depth without per-fiber lights.
+
+Shell counts:
+
+| Animal kind | Soft | Plush |
+| --- | --- | --- |
+| Fur (bear, bunny, shiba, fold) | 5 | 10 |
+| Koala | 6 | 12 |
+| Feather (penguin, conure) | 4 | 8 |
+
+### GPU strands (koala only)
+
+The koala is the long-fur species. It gets a real strand layer on top of its shells:
+
+- Up to **100,000 tapered ribbons** in Plush, split across body, belly, head, ears, and tail zones.
+- One `InstancedMesh` per zone, one shared 6-row ribbon geometry (cloned per zone for the optional
+  per-instance normal attribute; the current material uses the ribbon normal).
+- Roots are sampled on a sphere at `surfaceScale = 1.2`, outside the shells.
+- Strands are **opaque** with `depthWrite: true` so they read as solid fibre rather than transparent
+  dust. They are not sorted cards.
+- A direction field projects a downward flow onto the local tangent plane, then blends in the surface
+  normal and a small random tangent. This prevents front strands from pointing into the torso.
+- The vertex shader applies length, curl, clump, two low-frequency wind gusts, and a cursor push.
+- Density changes `InstancedMesh.count`; it never rebuilds geometry.
+- Disposal removes the mesh, material, and per-zone geometry clone.
+
+## Uniform contract
+
+`STRAND_UNIFORMS` keys must match the shader declarations **exactly**:
+
+```js
+const STRAND_UNIFORMS = {
+  uTime, uBreeze, uLength, uCurl, uClump, uCursor
+};
+```
+
+Earlier versions declared `uTime`/`uBreeze` in GLSL but stored `time`/`breeze` in the object. Three
+silently left the uniforms at zero, so `transformed.y *= uLength` collapsed every strand into a dot.
+That was the root cause of “the fur looks like brush strokes / dust.” Do not rename one side without
+the other. The browser suite and the in-page self-test now exercise the strand count and the layer
+visibility, but a visual check is still required.
 
 ## Face and belly masks
 
-A fur sphere would otherwise cover the eyes and the cream belly. Shell materials inject a small GLSL
-discard at the top of the fragment shader:
+A fur sphere would cover the eyes and the cream belly. Shell materials inject an object-space discard:
 
 - **Head** — `if (vFurPos.z > 0.58) discard;` keeps the face clear.
-- **Ears** — `if (vFurPos.z > 0.35) discard;` reveals the pink/cream inner ear.
+- **Ears** — `if (vFurPos.z > 0.35) discard;` reveals the inner ear.
 - **Body** — an oval window matching the belly patch is discarded, so the chest stays cream.
-- Other zones are unmasked.
+- Koala ear strands use `maxZ: 0.25` to keep the inner ear visible.
 
-Masks are in object space, so they survive scaling and animation. This is why the head and body are
-cloned rather than re-generated.
+## Wind
+
+There are two wind paths:
+
+1. **Shell wind** — a small displacement (`uWindLocal × uWindSpeed × layer² × gain`). Gain is `0.008`
+   for feathers and `0.025` for fur. Shells are undercoat; large shell motion made the coat look like
+   stretched paint at high breeze.
+2. **Strand wind** — the koala strand shader applies two low-frequency gusts and a curl/ clump bend
+   along the fibre. This is the visible motion.
+
+The fan remains the direction source: `updateShellWind` maps the fan→pet vector into each zone's local
+space. The pointer adds a local radial push. Both paths are cheap, reversible, and stable.
+
+## Fur studio controls
+
+| Control | State key | Range | Effect |
+| --- | --- | --- | --- |
+| Length | `fur.length` | 0.4–1.8 | scales koala strand height in the shader |
+| Density | `fur.density` | 0.1–1 | shell layer visibility + koala instance count |
+| Curl | `fur.curl` | 0–1 | adds a sine bend along each koala strand |
+| Clumping | `fur.clump` | 0–1 | adds coherent clump bends |
+| Breeze | `fur.breeze` | 0–1 | shell micro-motion + koala strand wind + cursor push |
+
+All five are persisted, included in presets, and encoded in share links (`u=`).
 
 ## Species recipes
 
 | Animal | Type | Signature coat |
 | --- | --- | --- |
-| Bear | fur | short dense brown coat, crown and ear fuzz |
-| Bunny | fur | fine coat, long ear fringe, fluffy tail |
-| Penguin | down | short feather down on the dark body, clean white belly |
-| Shiba | fur | double coat, cream chest, bushy curled tail |
-| Koala | plush fur | long silver coat, huge fuzzy ears with cream inner ear |
-| Sun Conure | feathers | yellow-orange down, white eye patches, green layered wings, blue-green tail |
-| Scottish Fold | plush | dense silver coat, cream chest, folded flap ears, whiskers |
+| Bear | fur shells | short dense brown coat, crown and ear fuzz |
+| Bunny | fur shells | fine coat, long ear fringe, fluffy tail |
+| Penguin | feather shells | short down on the dark body, clean white belly |
+| Shiba | fur shells | double coat, cream chest, bushy curled tail |
+| Koala | shells + strands | long silver coat, huge fuzzy ears with cream inner ear |
+| Sun Conure | feather shells | yellow-orange down, white eye patches, green layered wings |
+| Scottish Fold | fur shells | dense silver coat, cream chest, folded flap ears, whiskers |
+
+## Tuning guide
+
+- **Dust instead of fur:** length is too short relative to width, or the shader uniforms are zero.
+  Check that `uLength` is applied and that the strands are outside the base mesh.
+- **Wire wool:** width is too large, opacity is opaque with too much contrast, or the coat is too
+  long. Reduce width/length, not necessarily count.
+- **Bare patches:** raise shell layer count or lower `alphaTest`; for koala, raise density or include
+  another zone.
+- **Fur on the face:** tighten the head mask (`z > 0.52` removes more) or ear `maxZ`.
+- **Coat looks painted:** the alpha texture is too coarse or `texture.repeat` is too low. Use the
+  high-frequency fur texture and repeat ≈1.3.
+- **Coat looks like velvet:** add/raise the fine colour map and bump scale, or add more visible guard
+  hairs. The shell alone is an undercoat.
+- **Colour does not follow the picker:** call `refreshCoatColors(rig)` and `refreshStrandColors(rig)`.
+- **New animal:** add a palette, builder, `COAT_CONFIG` entry, dictionary keys, and a distinct mesh
+  count. Postures and coats both resolve parts by mesh name.
 
 ## Performance
 
-- Shells are **opaque with alpha test**, not transparent, so they sort correctly and avoid blending
-  cost.
-- Each shell is a clone of an existing low-poly mesh; the geometry is shared and only the material is
-  new.
-- Plush adds up to ~50 shell draw calls. The renderer stays inside a 16 ms frame on desktop and a
-  mid-range phone; shells do not cast shadows.
-- Switching coat levels disposes the old shell materials. Shared geometry is never disposed.
-- Snapshot capture includes the coat; it is the same scene rendered at 2048².
-
-## Tuning guide
-
-- **Too spiky / wire-like:** increase `alphaTest` contrast, use softer strand textures, or lower
-  `thickness`. Avoid adding solid cone strands; the shell approach exists because they read as wire.
-- **Bare patches:** increase shell count, raise the base scale from `1.004`, or lower `alphaTest` on
-  inner layers.
-- **Fur on the face:** tighten the head mask (`z > 0.52` removes more).
-- **Colour does not follow the picker:** call `refreshCoatColors(rig)` after changing materials; the
-  coat stores role materials in `rig.fluffMaterials`.
-- **New animal:** add a palette, a builder, a `COAT_CONFIG` entry, dictionary keys and a distinct base
-  mesh count. The shell generator works from mesh names, so name the ears, cheeks and tail clearly.
-
-## GPU strand layer
-
-On top of the shells, the studio builds a real strand layer:
-
-- **Up to 60,000 tapered ribbon strands** per character (30,000 on Soft), split by coat zone and parented
-  to the same head/body pivots so they follow every animation.
-- Strands start on a slightly inflated surface (`mesh.scale * 1.16`) so they sit outside the shells.
-- A single shared four-row ribbon geometry is instanced per zone; each zone gets one material tinted by
-  its colour role.
-- A vertex shader (`strandMaterial`) applies breeze, curl, clumping, a length multiplier and a cursor
-  push. The cursor is raycast onto a plane through the character on pointer move.
-- Density is handled by `InstancedMesh.count`, so the slider never rebuilds geometry.
-
-The final coat is therefore **shells for the plush body + strands for visible fibre and motion**.
-Smooth hides both; Soft and Plush enable both at different budgets.
-
-### Fur studio controls
-
-| Control | State key | Range | Effect |
-| --- | --- | --- | --- |
-| Length | `fur.length` | 0.4–1.8 | scales strand height in the shader |
-| Density | `fur.density` | 0.1–1 | sets the visible instance count |
-| Curl | `fur.curl` | 0–1 | adds a sine bend along each strand |
-| Clumping | `fur.clump` | 0–1 | adds coherent clump bends |
-| Breeze | `fur.breeze` | 0–1 | wind amplitude + cursor push strength |
-
-All five are persisted, included in presets and encoded in share links (`u=`).
-
-## Lighting moods
-
-`state.lighting` selects `studio`, `sky` or `desk`:
-
-- **Studio** — warm key, cream/lilac backdrop, pedestal.
-- **Cloud Sky** — cool sky gradient, four drifting cloud clusters, cooler fill and a blue-tinted pedestal.
-- **Cozy Desk** — wooden round table, mug, plant, stacked books, warm exposure and amber backdrop.
-
-`applyLighting` updates the hemisphere/key/fill/rim colours, tone-mapping exposure, pedestal and prop
-visibility. The same choices are in presets (`lighting`) and share links (`g=`).
-
-## Tuning guide
-
-- **Too spiky / wire-like:** lower strand width/length, soften contrast, or rely more on shells.
-- **Bare patches:** raise the shell base scale from `1.004`, add shell layers, or increase density.
-- **Fur on the face:** tighten the head mask (`z > 0.58`).
-- **Strands hidden by shells:** increase `surfaceScale` (currently 1.16) or reduce shell `thickness`.
-- **Colour does not follow the picker:** call `refreshCoatColors(rig)` and `refreshStrandColors(rig)`.
-- **New animal:** add a palette, a builder, a `COAT_CONFIG` entry, dictionary keys and a distinct base
-  mesh count. Posture and coat both resolve parts by mesh name.
-
-## Why shells + strands
-
-Solid cone strands alone read as wire; camera-facing particles read as dust; small alpha cards
-fragmented. Layered shells with a procedural strand alpha give the soft silhouette, while the shader
-strand layer adds directional fibre and wind motion. Together they survive the transparent PNG export
-without sorting artifacts.
-
-
-## Wind fan and shell displacement
-
-A procedural pedestal fan sits on the stage. Drag it around the pet; the wind direction is recomputed as
-the vector from the fan head to the character centre. The koala’s long-fur shell materials receive a
-per-zone local wind vector (world direction rotated into the shell’s object space).
-
-- Outer shell layers displace most: `h = layerNorm²`.
-- Turbulence adds a low-frequency gust; the wind slider sets the base speed.
-- Arc preservation pulls displaced tips back toward the skin, so the coat bends instead of stretching.
-- Pointer movement supplies a local radial disturbance to the fur.
-- The fan is hidden in transparent snapshots; the fur remains.
-
-This is a shell-based wind response, not per-strand CPU physics: stable, reversible and cheap enough for
-a static page.
+- Strands are koala-only. The other six animals use shells, which keeps mobile GPU cost down.
+- Koala Plush: up to 100k instances × 6 triangles ≈ 600k triangles, in 6 draw calls (one per zone).
+- Shells: 8–12 alpha-tested clones per zone, no shadows, shared geometry, materials disposed on
+  rebuild.
+- Density never rebuilds geometry. Length/curl/clump/breeze are uniforms.
+- Snapshot capture includes the full coat; it uses the same scene at 2048².

@@ -1,6 +1,6 @@
 {
   "project": "Cute3D: Procedural Code-Only Animal Studio",
-  "release": "1.3.0",
+  "release": "1.4.0",
   "session": {
     "id": "ses_e55af5b0bffejTt8i56ugdjBHf",
     "startedAt": "2026-11-05T06:06:14.304Z",
@@ -38,12 +38,12 @@
       "note": "Initial release: four pets, bilingual UI, audio, snapshot, tests, docs, Pages, skill."
     },
     {
-      "version": "1.3.0",
+      "version": "1.4.0",
       "capturedAt": "2026-11-05T17:05:13.897Z",
       "elapsed": "10h 59m 00s",
       "elapsedSeconds": 39540,
       "totalTokens": 188712895,
-      "note": "Movable wind fan, wind-driven shell fur, cursor disturbance and the long-fur koala pass."
+      "note": "v1.3 movable wind fan and shell wind; v1.4 real-fur pass: fixed the zeroed strand uniforms, added koala-only 100k opaque strands with tangent flow, fine shell texture/maps, and reduced shell wind."
     }
   ],
   "artifacts": {
@@ -55,8 +55,8 @@
     "lineCounts": {
       "index.html": 415,
       "style.css": 1771,
-      "script.js": 4204,
-      "total": 6390
+      "script.js": 4284,
+      "total": 6470
     },
     "supportingFiles": [
       "README.md",
