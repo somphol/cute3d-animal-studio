@@ -4,7 +4,8 @@ Read this before changing anything. It is the one-minute handoff.
 
 ## What it is
 
-A static, zero-asset Three.js character studio. Seven original animals — including a koala, sun conure and Scottish Fold — are assembled at runtime from
+A static, zero-asset Three.js character studio. Eight original animals — including a koala, baby hippo,
+sun conure and Scottish Fold — are assembled at runtime from
 spheres, capsules, cones and torus arcs; every sound is synthesized with Web Audio. It ships an
 English/Thai UI, live colour/accessory customization, local presets, share links and a transparent
 2048 px PNG export. It is **not** a model viewer, a game, or a backend product — there is no server,
@@ -37,10 +38,10 @@ Three source files, no build step, no npm runtime dependencies.
    - `/* ENGINE:START */ … END */` — pure functions. **No DOM, no THREE, no imports.** Node slices
      this block with `new Function` (in tests only).
    - `/* I18N:START */ … END */` — EN/TH dictionaries, parity-tested.
-   - `/* APP:START */ … END */` — imports Three.js, builds the scene, seven rigs, coat shells, loop and UI.
+   - `/* APP:START */ … END */` — imports Three.js, builds the scene, eight rigs, coat shells, loop and UI.
 
 Construction order in `APP`: state store → i18n helpers → audio → renderer/scene/camera/controls →
-lights/pedestal/props → materials/helpers → accessories → seven builders → coat shells → rig helpers → resize → app
+lights/pedestal/props → materials/helpers → accessories → eight builders → coat shells → rig helpers → resize → app
 state/UI → animation loop → self-test → boot.
 
 Fur/scene contract:
@@ -118,7 +119,7 @@ The model contract is small and strict:
 - **The engine block must stay import-free.** `new Function` cannot resolve `THREE` or `document`.
 - **Three.js is pinned.** Upgrading changes shadow/tone-mapping behaviour; re-run browser tests and
   regenerate screenshots after any bump.
-- **Keep the test counts honest.** Current gates: 19 engine, 87 repository, 28 browser, 21 in-page.
+- **Keep the test counts honest.** Current gates: 19 engine, 88 repository, 28 browser, 21 in-page.
   If a check is removed, update the README table; never edit a claim to match a failing suite.
 
 ## Known issues

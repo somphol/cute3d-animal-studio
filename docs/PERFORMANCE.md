@@ -12,7 +12,7 @@
 | Meshes per rig | 19–52 | bear 25 | — |
 | Frame budget | 16.6 ms | 2–4 ms GPU/CPU | 5–8 ms |
 | Snapshot | < 400 ms at 2048² | 120–220 ms | 250–500 ms |
-| Memory after seven switches | no growth | flat after disposal | flat |
+| Memory after eight switches | no growth | flat after disposal | flat |
 
 The only network requests after HTML/CSS/JS are Three.js and the OrbitControls addon from jsDelivr.
 

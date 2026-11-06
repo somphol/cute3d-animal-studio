@@ -28,7 +28,7 @@ const DOC_FILES = [
 ];
 const SHOTS = [
   'assets/og-card.png', 'assets/screenshot-studio.png', 'assets/screenshot-bunny.png',
-  'assets/screenshot-penguin.png', 'assets/screenshot-shiba.png', 'assets/screenshot-thai.png',
+  'assets/screenshot-penguin.png', 'assets/screenshot-shiba.png', 'assets/screenshot-hippo.png', 'assets/screenshot-thai.png',
   'assets/screenshot-koala.png', 'assets/screenshot-koala-vfx.png', 'assets/screenshot-koala-velvet.png', 'assets/screenshot-koala-film.png', 'assets/screenshot-conure.png', 'assets/screenshot-fold.png', 'assets/screenshot-fold-film.png', 'assets/screenshot-fold-velvet.png',
   'assets/screenshot-sky.png', 'assets/screenshot-desk.png',
   'assets/screenshot-mobile.png', 'assets/snapshot-transparent.png',

@@ -1,9 +1,9 @@
 {
   "name": "cute3d-animal-studio",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "private": true,
   "type": "module",
-  "description": "Seven original procedural 3D animals with plush fur and layered feathers, built entirely from Three.js primitives. Bilingual studio with GPU strand fur, species postures, three lighting moods, live colours, procedural audio and transparent PNG snapshots.",
+  "description": "Eight original procedural 3D animals with plush fur and layered feathers, built entirely from Three.js primitives. Bilingual studio with GPU strand fur, species postures, three lighting moods, live colours, procedural audio and transparent PNG snapshots.",
   "license": "MIT",
   "author": "Somphol Boonjing",
   "homepage": "https://somphol.github.io/cute3d-animal-studio/",

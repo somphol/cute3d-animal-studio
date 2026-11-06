@@ -116,9 +116,9 @@ try {
     assert.match(label, /Mochi/);
   });
 
-  await record('all seven characters switch from the panel', async () => {
+  await record('all eight characters switch from the panel', async () => {
     const counts = [];
-    for (const animal of ['bear', 'bunny', 'penguin', 'shiba', 'koala', 'conure', 'fold']) {
+    for (const animal of ['bear', 'bunny', 'penguin', 'shiba', 'koala', 'hippo', 'conure', 'fold']) {
       await click(`[data-animal="${animal}"]`);
       const data = await snapshotState();
       assert.equal(data.animal, animal);

@@ -13,6 +13,22 @@ uses semantic versioning.
 - The head face mask is tighter, so cheek/forehead fur matches the ears.
 - Longer body/head VFX strands and a denser belly patch make the whole coat sit like the ears.
 
+## [1.8.0] — 2026-11-06
+
+### Added
+
+- **Momo the Baby Hippo**, the eighth original rig: a chunky lilac body, wide cream muzzle with two
+  nostrils, a tiny smile with two teeth, round ears, stubby arms and planted feet. It ships with its
+  own palette, EN/TH name and tagline, fur zones, posture, emoji and screenshot.
+- The character selector, presets, share links and self-test now cover all eight animals.
+
+### Changed
+
+- The "N originals" counter in the panel is now derived from `ANIMALS.length` instead of a hard-coded
+  number, so adding a pet cannot desync it.
+- Meta descriptions, README, docs, `state.json` and the test counts were resynced for 1.8.0
+  (19 engine, 88 repository, 28 browser, 21 in-page).
+
 ## [1.7.0] — 2026-11-05
 
 ### Added

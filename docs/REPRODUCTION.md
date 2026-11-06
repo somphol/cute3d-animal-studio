@@ -7,7 +7,7 @@ are the same ones used for the original build.
 ## 0. Brief
 
 Build a static 3D web app called **Cute3D: Procedural Code-Only Animal Studio** with vanilla HTML,
-CSS, ES modules and Three.js from a CDN. Seven original animals are assembled from primitives. The app
+CSS, ES modules and Three.js from a CDN. Eight original animals are assembled from primitives. The app
 must include idle animations, click reactions, expressions, live colours, three accessories,
 synthesized audio, EN/TH UI, localStorage presets, share links and transparent PNG snapshots. No
 downloaded 3D models, textures, audio files, fonts or icon packs.
@@ -241,7 +241,7 @@ Write all four layers before declaring done:
   round-trip, filename safety, size clamp, dictionary parity, coat levels);
 - static: 82 checks (files, HTML shell, i18n coverage, no assets/trackers/trademarks, markers,
   storage namespace, snapshot contract, accessibility, metadata, state.json line counts);
-- browser: 26 checks (canvas, seven rigs, coat levels, expressions, colours, accessories, language, presets,
+- browser: 26 checks (canvas, eight rigs, coat levels, expressions, colours, accessories, language, presets,
   reaction, raycast tap, transparency, download, share, keyboard, reload, mobile sheet, reduced
   motion, in-page self-test, zero console errors);
 - in-page: 20 checks at `/?selftest`.

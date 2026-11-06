@@ -1,6 +1,6 @@
 # Cute3D — Procedural Code-Only Animal Studio
 
-**Seven original 3D pets, built at runtime from spheres, capsules, cones, torus arcs and procedural fur/feather shells. No model files, no textures, no audio files — just Three.js and vanilla JavaScript.**
+**Eight original 3D pets, built at runtime from spheres, capsules, cones, torus arcs and procedural fur/feather shells. No model files, no textures, no audio files — just Three.js and vanilla JavaScript.**
 
 [![Live studio](https://img.shields.io/badge/live-somphol.github.io%2Fcute3d--animal--studio-ff8fae)](https://somphol.github.io/cute3d-animal-studio/)
 [![No dependencies](https://img.shields.io/badge/runtime%20deps-Three.js%20CDN%20only-b9a5e8)](https://threejs.org)
@@ -20,17 +20,18 @@ lives in the customizer panel.
 
 A static character studio that generates every mesh, every expression and every sound in the browser:
 
-- **Seven original characters** — Mochi the Bear, Pip the Bunny, Pebble the Penguin, Sunny the Shiba,
-  Kumo the Koala, Sol the Sun Conure and Biscuit the Scottish Fold. Every proportion and face is designed
-  from first principles. No third-party mascots, licensed characters or copied designs.
+- **Eight original characters** — Mochi the Bear, Pip the Bunny, Pebble the Penguin, Sunny the Shiba,
+  Kumo the Koala, Momo the Baby Hippo, Sol the Sun Conure and Biscuit the Scottish Fold. Every
+  proportion and face is designed from first principles. No third-party mascots, licensed characters or copied designs.
 - **A real 3D studio** — PCF soft shadows, hemisphere + key + fill + rim lighting, ACES tone mapping,
   a pastel clay pedestal and damped orbit controls.
 - **Procedural life** — breathing, floating, blinking (including occasional double blinks), ear
   wiggles, tail wags, penguin waddle and a squash-and-stretch jump-and-spin reaction.
-- **A real fur studio** — Smooth, Soft and Plush coats built from fine procedural shells for all seven
+- **A real fur studio** — Smooth, Soft and Plush coats built from fine procedural shells for all eight
   pets, with a universal Coat row and an Outer coat row for the koala and the Scottish Fold: **Pelt**,
-  **Velvet**, **VFX** (≈133k masked strands, custom anisotropic specular) and **Film** (a clean, sculpted feature-film CG coat with a warm rim shell and key/fill lights). Adjust length, density, curl,
-  clumping and wind; the coat bends and lifts in a vertex shader and leans away from the cursor.
+  **Velvet**, **VFX** (≈133k masked strands, custom anisotropic specular) and **Film** (a clean,
+  sculpted feature-film CG coat with a warm rim shell and key/fill lights). Adjust length, density,
+  curl, clumping and wind; the coat bends and lifts in a vertex shader and leans away from the cursor.
 - **Walk mode** — a toggle sends the current pet on a slow elliptical stroll around the pedestal with
   alternating steps, arm swing, body bob and a turn toward the travel direction. It eases back to the
   centre when switched off.
@@ -39,8 +40,9 @@ A static character studio that generates every mesh, every expression and every 
 - **Three lighting moods** — warm Studio, Cloud Sky with drifting procedural clouds, and Cozy Desk with a
   wooden table, mug, plant, books and golden light.
 - **Species postures** — bear sitting, bunny alert, penguin leaning into a waddle, shiba seated with
-  haunches, koala reaching up, conure on a perch, and a Scottish Fold loaf.
-- **A full customizer** — seven characters, four expressions, three live colour pickers, five curated
+  haunches, koala reaching up, baby hippo planted on stubby legs, conure on a perch, and a Scottish
+  Fold loaf.
+- **A full customizer** — eight characters, four expressions, three live colour pickers, five curated
   palettes, three code-built accessories.
 - **Synthesized audio** — Web Audio oscillators produce boings, chimes, pops and soft blink ticks.
   Zero `.mp3` or `.wav` files.
@@ -59,6 +61,8 @@ A static character studio that generates every mesh, every expression and every 
 | Scottish Fold | Fold Film | Fold Velvet | Sun Conure |
 | --- | --- | --- | --- |
 | ![Scottish Fold](assets/screenshot-fold.png) | ![Fold Film](assets/screenshot-fold-film.png) | ![Fold Velvet](assets/screenshot-fold-velvet.png) | ![Sun Conure](assets/screenshot-conure.png) |
+
+![Momo the Baby Hippo](assets/screenshot-hippo.png)
 
 ![Cloud Sky lighting](assets/screenshot-sky.png)
 ![Cozy Desk lighting](assets/screenshot-desk.png)
@@ -110,11 +114,11 @@ are more reliable over HTTP.
 | Persistence | Studio state, language, presets (max 10) and sound preference |
 | Export | 2048² transparent PNG; filename `cute3d-<animal>-<YYYY-MM-DD>.png` |
 | Share | `?a=…&c=…&x=…&o=…&l=…&f=…&v=…&g=…&u=…`, sanitized on read |
-| Verification | 19 engine checks, 87 static checks, 28 browser checks, 21 in-page checks |
+| Verification | 19 engine checks, 88 static checks, 28 browser checks, 21 in-page checks |
 | Coats | 3 base levels + 5 outer modes (koala + fold) · 100k Pelt / ≈133k VFX strands · Velvet cushion · Film clean CG |
 | Fur studio | Length, density, curl, clumping and breeze sliders; density changes koala instance count and shell layer visibility |
 | Lighting | Studio / Cloud Sky / Cozy Desk: lights, exposure, pedestal, clouds, desk props and CSS backdrop |
-| Postures | Seven species-specific stances, posed before the coat is built |
+| Postures | Eight species-specific stances, posed before the coat is built |
 | Accessibility | Skip link, focus rings, aria-pressed toggles, reduced-motion mode, keyboard shortcuts |
 
 ## Verification
@@ -129,7 +133,7 @@ npm run shots         # regenerate assets/ from a live render
 | Layer | Command | Expected |
 | --- | --- | --- |
 | Pure engine | `node --test tests/engine.test.mjs` | 19/19 |
-| Repository | `node --test tests/static.test.mjs` | 87/87 |
+| Repository | `node --test tests/static.test.mjs` | 88/88 |
 | Browser | `node tests/browser.test.mjs` | 28/28, zero console errors |
 | In-page | `/?selftest` | 21/21 |
 | Live copy | `TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs` | 28/28 |
@@ -146,7 +150,7 @@ Screenshots are regenerated from the real app, not mocked:
 .
 ├── index.html                 # shell, import map, panel markup (76 i18n hooks)
 ├── style.css                  # design tokens, glass panel, HUD, responsive sheet
-├── script.js                  # ENGINE + I18N blocks, seven rigs, coat shells, animation, audio, UI
+├── script.js                  # ENGINE + I18N blocks, eight rigs, coat shells, animation, audio, UI
 ├── manifest.webmanifest       # installable metadata
 ├── assets/                    # SVG icon, fourteen generated PNGs (OG card + stills)
 ├── docs/                      # architecture, reproduction, design, testing, release…

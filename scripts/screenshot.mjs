@@ -71,6 +71,9 @@ await shoot('screenshot-penguin.png');
 await stage('shiba', 'happy', false);
 await shoot('screenshot-shiba.png');
 
+await stage('hippo', 'happy', false);
+await shoot('screenshot-hippo.png');
+
 await stage('koala', 'happy', false);
 await shoot('screenshot-koala.png');
 

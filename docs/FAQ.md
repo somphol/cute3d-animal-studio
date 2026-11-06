@@ -22,9 +22,10 @@ shader moves the tips with breeze, curl, clumping and the cursor. The five slide
 Studio, Cloud Sky (drifting clouds) and Cozy Desk (table, mug, plant, books, warm light). Each changes
 lights, exposure, 3D props and the CSS backdrop together.
 
-**Why seven animals and not more?**
-Seven gives a broad selector without diluting the craft: four classics plus a koala, a sun conure and
-a Scottish Fold. Adding another requires a builder, a palette, coat zones, dictionary entries, a mesh
+**Why eight animals and not more?**
+Eight gives a broad selector without diluting the craft: four classics, a koala, a baby hippo, a sun
+conure and a Scottish Fold. Each one has a different silhouette and posture, and the hippo was added
+to prove the builder contract still scales without touching the engine. Adding another requires a builder, a palette, coat zones, dictionary entries, a mesh
 count and a test update; the pattern is documented in [REPRODUCTION.md](REPRODUCTION.md).
 
 **Does it work offline?**

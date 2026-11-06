@@ -100,7 +100,7 @@ give a soft silhouette with opaque, sortable draw calls and no external textures
 **Do not:** Reintroduce cone strands as the primary coat. Add new species through `COAT_CONFIG`, not by
 hard-coding hair in a builder.
 
-## ADR-016 — Seven characters, one primitive language
+## ADR-016 — Eight characters, one primitive language
 
 **Decision:** Add Koala, Sun Conure and Scottish Fold by extending the same rig contract and palette
 system rather than adding special-case scene code.

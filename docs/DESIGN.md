@@ -66,7 +66,7 @@ runtime, so the no-asset rule still holds. See [COAT.md](COAT.md).
 
 ## Character design
 
-All seven are built from the same primitive vocabulary, which makes them feel like one family:
+All eight are built from the same primitive vocabulary, which makes them feel like one family:
 
 | Cue | Bear | Bunny | Penguin | Shiba | Koala | Sun Conure | Scottish Fold |
 | --- | --- | --- | --- | --- | --- | --- | --- |

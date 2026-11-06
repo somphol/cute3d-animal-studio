@@ -9,8 +9,8 @@ import { loadEngine, loadI18n } from './lib/fixtures.mjs';
 const engine = loadEngine();
 const i18n = loadI18n();
 
-test('seven animals, four expressions, three accessories', () => {
-  assert.deepEqual(engine.ANIMALS, ['bear', 'bunny', 'penguin', 'shiba', 'koala', 'conure', 'fold']);
+test('eight animals, four expressions, three accessories', () => {
+  assert.deepEqual(engine.ANIMALS, ['bear', 'bunny', 'penguin', 'shiba', 'koala', 'hippo', 'conure', 'fold']);
   assert.equal(engine.EXPRESSIONS.length, 4);
   assert.deepEqual(engine.ACCESSORIES, ['bowtie', 'partyHat', 'glasses']);
   assert.equal(engine.COLOR_KEYS.length, 3);

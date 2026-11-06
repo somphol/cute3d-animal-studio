@@ -7,7 +7,7 @@ runtime; there are no texture files, model files, or downloaded assets.
 
 | Row | Options | Applies to | Meaning |
 | --- | --- | --- | --- |
-| **Coat** | Smooth / Soft / Plush | all seven animals | base density and quality |
+| **Coat** | Smooth / Soft / Plush | all eight animals | base density and quality |
 | **Outer coat** | None / Pelt / Velvet / VFX / Film | koala + Scottish Fold | how the visible outer layer is built |
 
 The outer row is hidden and disabled outside `OUTER_ANIMALS` (`koala`, `fold`). Both pets keep the same
@@ -145,6 +145,7 @@ not part of share links.
 | Koala | shells + outer | long silver coat in Pelt, soft cushion in Velvet, high-density groom in VFX, clean sculpt in Film |
 | Sun Conure | feather shells | yellow-orange down, white eye patches, green layered wings |
 | Scottish Fold | shells + outer | dense silver coat; Pelt, Velvet, VFX and Film outer modes |
+| Baby Hippo | fur shells | short lilac coat, bare cream muzzle, wide nostrils and two tiny teeth |
 
 ## Performance
 

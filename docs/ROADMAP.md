@@ -2,7 +2,7 @@
 
 ## Shipped — 1.2.0
 
-- Seven original procedural animals with distinct silhouettes (bear, bunny, penguin, shiba, koala, conure, fold)
+- Eight original procedural animals with distinct silhouettes (bear, bunny, penguin, shiba, koala, baby hippo, conure, fold)
 - Procedural fur/feather shell system with Smooth / Soft / Plush levels, masks and bump relief
 - PCF soft-shadow studio, pedestal and decorative props
 - Idle breathing, float, blink (incl. double blink), ear/tail motion, penguin waddle
@@ -14,7 +14,7 @@
 - Full EN/TH UI, parity-tested, persisted
 - Local presets (max 10), share links, 2048² transparent PNG
 - Reduced motion, keyboard shortcuts, skip link, aria states
-- 19 engine + 87 static + 28 browser + 21 in-page checks
+- 19 engine + 88 static + 28 browser + 21 in-page checks
 - GPU strand fur with wind/cursor physics, five fur sliders, three lighting moods, species postures
 - Docs, screenshots, OG card, GitHub Pages deployment
 

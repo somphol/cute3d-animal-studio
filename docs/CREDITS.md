@@ -53,7 +53,7 @@ Noto Sans Thai / Sukhumvit Set / Thonburi for Thai. Nothing is downloaded.
 
 ## Design originality
 
-All seven characters, their names, proportions, palettes, accessories and the studio art direction were
+All eight characters, their names, proportions, palettes, accessories and the studio art direction were
 created for this project. The design language — button eyes, blush, rounded muzzles, a pastel clay
 studio — is generic toy vocabulary, not a reference to any existing mascot or franchise. The static
 test suite includes a blocklist for protected character names as a guard.

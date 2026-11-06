@@ -35,7 +35,7 @@ state (localStorage + defaults + URL share)
   → lights, pedestal, shadow disc, decorative props
   → materials + geometry helpers
   → accessory builders
-  → seven animal builders
+  → eight animal builders
   → rig helpers (buildAnimal, applyColors, applyAccessories, disposeRig)
   → ResizeObserver + camera framing
   → UI sync + event wiring

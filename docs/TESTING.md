@@ -6,7 +6,7 @@ Four independent layers, all runnable offline except the CDN fetch Three.js need
 | --- | --- | --- | --- |
 | Engine | `node --test tests/engine.test.mjs` | 19 | Math, palettes, validation, share format, dictionary parity |
 | Repository | `node --test tests/static.test.mjs` | 84 checks | Files, HTML shell, i18n coverage, IP hygiene, metadata, state |
-| Browser | `node tests/browser.test.mjs` | 25 | Real WebGL, seven rigs, coats/fur, lighting moods, interaction, persistence, export, mobile |
+| Browser | `node tests/browser.test.mjs` | 28 | Real WebGL, eight rigs, coats/fur, lighting moods, interaction, persistence, export, mobile |
 | In-page | `/?selftest` | 20 | The deployed build can inspect itself |
 
 Run everything:
@@ -64,7 +64,7 @@ The suite checks:
 
 1. canvas exists with a sensible size, loading overlay gone;
 2. default bear with > 25 meshes;
-3. all seven characters switch and have distinct mesh counts;
+3. all eight characters switch and have distinct mesh counts;
 4. `aria-pressed` follows the active animal;
 5. the coat toggle builds shells, removes them and scales the fibre count;
 6. the VFX groom builds > 100k strands across ≥ 4 zones and Velvet adds > 10k cushion meshes;
@@ -102,7 +102,7 @@ The same 28 checks must pass against Pages. Transparent snapshot and download ch
 
 ## In-page self-test
 
-`/?selftest` builds all seven rigs, renders a 512² snapshot, validates dictionary parity, sanitisation
+`/?selftest` builds all eight rigs, renders a 512² snapshot, validates dictionary parity, sanitisation
 and share round-trips, then prints a 20-row report and sets `window.__selftest`.
 
 ```
