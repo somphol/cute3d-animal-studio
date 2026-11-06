@@ -124,6 +124,9 @@ The model contract is small and strict:
 
 ## Known issues
 
+- The GitHub Actions `verify` workflow fails on the hosted runner (the browser step cannot start a
+  WebGL Chrome there). Local `npm run verify` and the live Pages suite are the source of truth; do not
+  weaken the local gates to make CI green.
 - The Three.js CDN must load on first visit; there is no bundled copy or service worker.
 - Snapshot capture temporarily resizes the drawing buffer to 2048², so expect a ~150 ms hitch on
   low-end phones.
