@@ -5,7 +5,7 @@ Four independent layers, all runnable offline except the CDN fetch Three.js need
 | Layer | Command | Count | What it proves |
 | --- | --- | --- | --- |
 | Engine | `node --test tests/engine.test.mjs` | 19 | Math, palettes, validation, share format, dictionary parity |
-| Repository | `node --test tests/static.test.mjs` | 82 checks | Files, HTML shell, i18n coverage, IP hygiene, metadata, state |
+| Repository | `node --test tests/static.test.mjs` | 83 checks | Files, HTML shell, i18n coverage, IP hygiene, metadata, state |
 | Browser | `node tests/browser.test.mjs` | 25 | Real WebGL, seven rigs, coats/fur, lighting moods, interaction, persistence, export, mobile |
 | In-page | `/?selftest` | 20 | The deployed build can inspect itself |
 

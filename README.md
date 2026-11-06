@@ -5,7 +5,7 @@
 [![Live studio](https://img.shields.io/badge/live-somphol.github.io%2Fcute3d--animal--studio-ff8fae)](https://somphol.github.io/cute3d-animal-studio/)
 [![No dependencies](https://img.shields.io/badge/runtime%20deps-Three.js%20CDN%20only-b9a5e8)](https://threejs.org)
 [![License](https://img.shields.io/badge/license-MIT-8fd3bf)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-19%20engine%20%C2%B7%2082%20static%20%C2%B7%2025%20browser-6bc4a6)](docs/TESTING.md)
+[![Tests](https://img.shields.io/badge/tests-19%20engine%20%C2%B7%2083%20static%20%C2%B7%2026%20browser-6bc4a6)](docs/TESTING.md)
 
 ![Cute3D studio with the Chibi Bear](assets/screenshot-studio.png)
 
@@ -28,8 +28,9 @@ A static character studio that generates every mesh, every expression and every 
 - **Procedural life** — breathing, floating, blinking (including occasional double blinks), ear
   wiggles, tail wags, penguin waddle and a squash-and-stretch jump-and-spin reaction.
 - **A real fur studio** — Smooth, Soft and Plush coats built from fine procedural shells for all seven
-  pets, plus up to 100,000 directional GPU strands on the koala. Adjust length, density, curl, clumping
-  and wind; the koala’s coat bends and lifts in a vertex shader and leans away from the cursor.
+  pets, plus up to 100,000 directional GPU strands on the koala in Plush and a dedicated **VFX** groom
+  (≈133k masked strands, custom anisotropic specular). Adjust length, density, curl, clumping and wind;
+  the koala’s coat bends and lifts in a vertex shader and leans away from the cursor.
 - **A movable wind fan** — drag the procedural fan around the stage; wind direction follows it, the
   koala’s fibre coat sways, and the shell silhouettes breathe without stretching into paint strokes.
 - **Three lighting moods** — warm Studio, Cloud Sky with drifting procedural clouds, and Cozy Desk with a
@@ -50,7 +51,7 @@ A static character studio that generates every mesh, every expression and every 
 
 | Koala, plush | Sun Conure | Scottish Fold |
 | --- | --- | --- |
-| ![Koala](assets/screenshot-koala.png) | ![Sun Conure](assets/screenshot-conure.png) | ![Scottish Fold](assets/screenshot-fold.png) |
+| ![Koala](assets/screenshot-koala.png) | ![Koala VFX](assets/screenshot-koala-vfx.png) | ![Sun Conure](assets/screenshot-conure.png) |
 
 ![Cloud Sky lighting](assets/screenshot-sky.png)
 ![Cozy Desk lighting](assets/screenshot-desk.png)
@@ -102,8 +103,8 @@ are more reliable over HTTP.
 | Persistence | Studio state, language, presets (max 10) and sound preference |
 | Export | 2048² transparent PNG; filename `cute3d-<animal>-<YYYY-MM-DD>.png` |
 | Share | `?a=…&c=…&x=…&o=…&l=…`, sanitized on read |
-| Verification | 19 engine checks, 82 static checks, 25 browser checks, 20 in-page checks |
-| Coats | 3 levels · 5–12 shell layers · up to 100k koala GPU strands · curl/clump/breeze · zero assets |
+| Verification | 19 engine checks, 83 static checks, 26 browser checks, 20 in-page checks |
+| Coats | 4 levels · 5–12 shell layers · up to 100k Plush / ≈133k VFX koala strands · curl/clump/breeze |
 | Fur studio | Length, density, curl, clumping and breeze sliders; density changes koala instance count and shell layer visibility |
 | Lighting | Studio / Cloud Sky / Cozy Desk: lights, exposure, pedestal, clouds, desk props and CSS backdrop |
 | Postures | Seven species-specific stances, posed before the coat is built |
@@ -121,10 +122,10 @@ npm run shots         # regenerate assets/ from a live render
 | Layer | Command | Expected |
 | --- | --- | --- |
 | Pure engine | `node --test tests/engine.test.mjs` | 19/19 |
-| Repository | `node --test tests/static.test.mjs` | 82/82 |
-| Browser | `node tests/browser.test.mjs` | 25/25, zero console errors |
+| Repository | `node --test tests/static.test.mjs` | 83/83 |
+| Browser | `node tests/browser.test.mjs` | 26/26, zero console errors |
 | In-page | `/?selftest` | 20/20 |
-| Live copy | `TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs` | 25/25 |
+| Live copy | `TEST_URL=https://somphol.github.io/cute3d-animal-studio/ node tests/browser.test.mjs` | 26/26 |
 
 Screenshots are regenerated from the real app, not mocked:
 
@@ -174,7 +175,7 @@ headless tests. The Three.js CDN is required on first load; after that the page 
 
 ## Credits
 
-Built with **OpenCode** and **DeepSeek V4.1 Flash**. v1.0.0 shipped in 30m 15s; the v1.1.0 coat expansion, v1.2.0 fur/lighting/posture pass, and v1.4.0 real-fur pass followed in the same
+Built with **OpenCode** and **DeepSeek V4.1 Flash**. v1.0.0 shipped in 30m 15s; the v1.1.0 coat expansion, v1.2.0 fur/lighting/posture pass, v1.4.0 real-fur pass and v1.5.0 VFX groom followed in the same
 session after pauses, reaching 188.71M cumulative tokens
 (mostly cache reads). Three.js is the only runtime library. The machine-readable record is
 [state.json](state.json); the full breakdown is in [docs/CREDITS.md](docs/CREDITS.md).

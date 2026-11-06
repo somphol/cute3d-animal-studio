@@ -14,7 +14,7 @@
 - Full EN/TH UI, parity-tested, persisted
 - Local presets (max 10), share links, 2048² transparent PNG
 - Reduced motion, keyboard shortcuts, skip link, aria states
-- 19 engine + 82 static + 25 browser + 20 in-page checks
+- 19 engine + 83 static + 26 browser + 20 in-page checks
 - GPU strand fur with wind/cursor physics, five fur sliders, three lighting moods, species postures
 - Docs, screenshots, OG card, GitHub Pages deployment
 

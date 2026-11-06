@@ -3,6 +3,24 @@
 All notable changes to Cute3D are documented here. The format follows Keep a Changelog and the project
 uses semantic versioning.
 
+## [1.5.0] — 2026-11-05
+
+### Added
+
+- **VFX coat mode (koala only).** A fourth coat level builds a high-density strand groom (~133k strands after masks, 190k target on desktop, 80k on small phones) with:
+  - tangent-plane flow and per-strand seed/tint/role attributes;
+  - a custom Kajiya–Kay two-lobe specular shader with root-to-tip occlusion, fill light and rim;
+  - a per-instance cream belly role instead of a hard body-mask hole;
+  - a dark undercoat shell, no brush-stroke shells.
+- The existing Plush mode remains the balanced strand + shell coat; Soft remains the light version.
+- VFX is disabled for non-koala animals and falls back to Plush.
+- New `assets/screenshot-koala-vfx.png` release asset.
+
+### Changed
+
+- Sampling for the VFX groom uses uniform random sphere roots; the previous Fibonacci loop only covered the northern hemisphere, leaving the lower body bare.
+- Release metadata, docs, AGENTS handoff, screenshots and test counts synced to 1.5.0.
+
 ## [1.4.0] — 2026-11-05
 
 ### Fixed

@@ -14,7 +14,7 @@ test('seven animals, four expressions, three accessories', () => {
   assert.equal(engine.EXPRESSIONS.length, 4);
   assert.deepEqual(engine.ACCESSORIES, ['bowtie', 'partyHat', 'glasses']);
   assert.equal(engine.COLOR_KEYS.length, 3);
-  assert.deepEqual(engine.COAT_LEVELS, ['off', 'soft', 'plush']);
+  assert.deepEqual(engine.COAT_LEVELS, ['off', 'soft', 'plush', 'vfx']);
   assert.equal(engine.DEFAULT_COAT, 'soft');
   assert.deepEqual(engine.LIGHTING_PRESETS, ['studio', 'sky', 'desk']);
   assert.equal(engine.DEFAULT_LIGHTING, 'studio');

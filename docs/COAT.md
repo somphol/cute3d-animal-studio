@@ -10,6 +10,7 @@ there are no texture files, model files, or downloaded assets.
 | **Smooth** | No shells, no strands. The original clay look. | 48–70 meshes |
 | **Soft** | Half the shell layers; koala gets ~45k short strands. | 70–90 meshes |
 | **Plush** | Full shells; koala gets up to 100k strands. | 90–125 meshes |
+| **VFX** | Koala-only dense groom: no decorative shells, dark undercoat, ~133k masked strands and a custom anisotropic shader. | 48–60 meshes |
 
 The choice is stored in `state.coat`, persisted, included in presets, and encoded in share links as
 `f=off|soft|plush`. Smooth removes both shells and strands.
@@ -39,7 +40,8 @@ Shell counts:
 | Koala | 6 | 12 |
 | Feather (penguin, conure) | 4 | 8 |
 
-### GPU strands (koala only)
+### GPU strands (koala, Plush)
+
 
 The koala is the long-fur species. It gets a real strand layer on top of its shells:
 
@@ -52,8 +54,27 @@ The koala is the long-fur species. It gets a real strand layer on top of its she
 - A direction field projects a downward flow onto the local tangent plane, then blends in the surface
   normal and a small random tangent. This prevents front strands from pointing into the torso.
 - The vertex shader applies length, curl, clump, two low-frequency wind gusts, and a cursor push.
-- Density changes `InstancedMesh.count`; it never rebuilds geometry.
+- Density changes `InstancedMesh.count`; it never rebuilds geometry. In VFX it also applies to the
+  per-zone meshes; shells are absent.
 - Disposal removes the mesh, material, and per-zone geometry clone.
+
+### VFX groom (koala, VFX)
+
+VFX is the experimental high-density mode. It replaces decorative shells with:
+
+- one dark undercoat mesh per zone (no alpha cutouts) so gaps read as shadow, not bare clay;
+- **~133k masked strands** from a 190k desktop target (80k on screens narrower than 800 px);
+- uniform random sphere roots (the first version used a Fibonacci loop that only covered the northern
+  hemisphere — the lower body stayed bare);
+- a custom `ShaderMaterial` with a **Kajiya–Kay two-lobe specular**, root-to-tip occlusion, a fill
+  light, a rim term and per-instance tint/seed/role attributes;
+- per-instance **belly role colour** instead of a body-mask hole, so the cream chest is made of cream
+  fibres rather than a cutout;
+- no decorative shells or alpha-map brush texture.
+
+VFX is offered only for the koala. Selecting it on another animal is ignored and the Plush shell coat
+is used instead. The mode is intentionally more expensive: roughly 1.6M triangles in six draw calls on
+desktop. It is the “try VFX hair” mode, not the default.
 
 ## Uniform contract
 

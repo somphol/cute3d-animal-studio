@@ -73,6 +73,9 @@ await shoot('screenshot-shiba.png');
 await stage('koala', 'happy', false);
 await shoot('screenshot-koala.png');
 
+await stage('koala', 'happy', false, 'en', 'vfx');
+await shoot('screenshot-koala-vfx.png');
+
 await stage('conure', 'curious', true);
 await shoot('screenshot-conure.png');
 

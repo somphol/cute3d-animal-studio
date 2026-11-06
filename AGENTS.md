@@ -17,7 +17,7 @@ Live: <https://somphol.github.io/cute3d-animal-studio/>
 ```bash
 python3 -m http.server 4173        # or: npm start
 node --test tests/engine.test.mjs  # 19 checks, no browser
-node --test tests/static.test.mjs  # 82 checks, no browser
+node --test tests/static.test.mjs  # 83 checks, no browser
 node tests/browser.test.mjs        # 25 checks, headless Chrome via CDP
 npm run verify                     # engine + static + browser
 node scripts/screenshot.mjs        # regenerate every PNG in assets/
@@ -45,12 +45,13 @@ state/UI → animation loop → self-test → boot.
 
 Fur/scene contract:
 
-- `state.coat` is `off|soft|plush`; `state.fur` is `{length,density,curl,clump,breeze}`; `state.lighting`
+- `state.coat` is `off|soft|plush|vfx`; `state.fur` is `{length,density,curl,clump,breeze}`; `state.lighting`
   is `studio|sky|desk`.
 - Coat shells: 5 (soft) / 10 (plush) layers for fur; 6/12 for koala; 4/8 for feathers. Fine alpha +
   bump + colour maps, object-space face/ear/belly masks.
-- Koala-only strands: up to 100k opaque tapered ribbons, one InstancedMesh per zone, `STRAND_UNIFORMS`
-  shared. Density changes `mesh.count` (and shell layer visibility); never rebuild geometry on slider input.
+- Koala-only strands: Plush up to 100k opaque tapered ribbons; VFX ~133k with a custom Kajiya–Kay shader
+  and per-instance role/tint/seed attributes. One InstancedMesh per zone; density changes `mesh.count`
+  (and shell layer visibility); never rebuild geometry on slider input.
 - **`STRAND_UNIFORMS` keys must be `uTime`, `uBreeze`, `uLength`, `uCurl`, `uClump`, `uCursor`** to match
   the GLSL. A mismatch leaves them zero, which collapses every strand into a dot. This was the v1.4 fur bug.
 - Koala strands are opaque with `depthWrite:true`. They are fibre, not transparent cards.
@@ -84,9 +85,9 @@ The model contract is small and strict:
   The only remote dependency is the pinned Three.js CDN in the import map.
 - **Original characters only.** Do not reskin or imitate third-party mascots; `tests/static.test.mjs`
   scans for protected names, but that scan is a guard, not a licence.
-- **Shells for all, strands for the koala.** Shells give the plush body and feather down; the koala's
-  long-fur strand layer gives visible fibre and wind. Other animals stay shell-only to keep the plush
-  look and the mobile budget. Do not replace this with CPU strand physics, particles or cards without
+- **Shells for all, strands for the koala.** Plush adds a strand layer over shells; VFX replaces the
+  shells with a dense anisotropic groom and dark undercoat. Other animals stay shell-only to keep the
+  plush look and the mobile budget. VFX is disabled outside the koala. Do not replace this with CPU strand physics, particles or cards without
   visual proof.
 - **The Google prompt is inspiration, not a spec.** We did not add a literal 60k CPU simulation or copy
   its copy; the app keeps its own cozy pastel identity and performance budget.
@@ -105,7 +106,7 @@ The model contract is small and strict:
 - **The engine block must stay import-free.** `new Function` cannot resolve `THREE` or `document`.
 - **Three.js is pinned.** Upgrading changes shadow/tone-mapping behaviour; re-run browser tests and
   regenerate screenshots after any bump.
-- **Keep the test counts honest.** Current gates: 19 engine, 82 repository, 25 browser, 20 in-page.
+- **Keep the test counts honest.** Current gates: 19 engine, 83 repository, 26 browser, 20 in-page.
   If a check is removed, update the README table; never edit a claim to match a failing suite.
 
 ## Known issues
@@ -117,8 +118,9 @@ The model contract is small and strict:
   but frequently mistaken for missing content.
 - Safari may require a user gesture before AudioContext starts; the first click does that.
 - Presets are capped at 10 per browser profile and are not synchronized between devices.
-- Koala Plush adds 12 alpha-tested shells per zone and up to 100k opaque strand instances (≈600k
-  triangles). It is capped for mobile GPU safety; measure before raising it. Other animals use shells only.
+- Koala Plush adds 12 alpha-tested shells per zone and up to 100k opaque strand instances. VFX adds
+  ~133k masked strands in 6 draw calls (~1.6M triangles) and no decorative shells, with a lower mobile
+  budget (80k). Measure before raising either.
 - The koala's chest patch boundary can read as a soft collar; it is the body mask and belly patch, not
   a missing mesh.
 - The koala/conure/fold coats are tuned for the default palettes; extreme custom colours still work but

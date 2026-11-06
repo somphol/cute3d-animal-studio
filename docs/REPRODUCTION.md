@@ -173,6 +173,14 @@ Do **not** replace this with solid cone strands, particles or cards — all thre
 read as wire, dust or paper shards. Koala strands are opaque ribbons with `depthWrite:true`; their
 `STRAND_UNIFORMS` keys must match the GLSL (`uTime`, `uBreeze`, `uLength`, `uCurl`, `uClump`, `uCursor`).
 
+### Optional VFX groom (koala)
+
+A fourth coat level, `vfx`, replaces decorative shells with a dark undercoat and ~133k masked strands
+(190k target desktop, 80k small screens). It uses uniform random sphere roots, per-instance normal /
+seed / tint / role attributes, a custom `ShaderMaterial` with two-lobe Kajiya–Kay specular, root AO,
+fill and rim, and a cream belly role rather than a body-mask hole. VFX is disabled outside the koala and
+falls back to Plush. Do not enable it on every animal; the triangle budget is ~1.6M.
+
 ## 6. Animation
 
 Write the loop exactly as described in [ANIMATION.md](ANIMATION.md). The non-obvious parts:
@@ -217,7 +225,7 @@ After the rig and shells:
 1. **Postures** — adjust body/head/limb transforms per species; store `base.headRotX/Z`, `earBaseX` and
    `feet.baseY`. Bear sits, bunny is alert, penguin leans, shiba sits on haunches, koala reaches up,
    conure perches, fold loafs.
-2. **Koala strands** — sample roots on `mesh.scale * 1.2`; build up to 100k opaque tapered ribbon instances. Put
+2. **Koala strands** — sample roots on `mesh.scale * 1.2`; build up to 100k opaque tapered ribbon instances in Plush. Put
    phase in the vertex shader from the root position, and drive breeze/curl/clump/length/cursor from
    `STRAND_UNIFORMS`. Density changes `InstancedMesh.count`, not geometry.
 3. **Fur UI** — Sliders for length, density, curl, clumping, breeze; state key `fur`, share `u=`.
@@ -256,7 +264,7 @@ Write all four layers before declaring done:
 1. Run `npm run verify`, then `node scripts/screenshot.mjs`.
 2. Update `state.json` (tokens, elapsed, line counts) and any test counts in README.
 3. Commit, push to `main`, enable Pages (root). Wait for the Pages build.
-4. Run the browser suite against the live URL until 25/25.
+4. Run the browser suite against the live URL until 26/26.
 5. Add the skill to `~/Projects/opencode-skills` and run `node sync.mjs`.
 6. Keep `AGENTS.md` current in the same push.
 

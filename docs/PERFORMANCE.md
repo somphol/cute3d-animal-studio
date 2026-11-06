@@ -63,13 +63,15 @@ interaction is required.
 
 ## Strand budget
 
-The koala fur layer is GPU-only: one instanced ribbon geometry, at most 100,000 instances (about 45,000
-on Soft), split into ~6 draw calls. There is no per-strand CPU simulation; wind, curl, clumping, length
-and cursor push are vertex-shader uniforms. Default density is 70%, ~70k koala strands at Plush. The
-other six animals use shells only, which keeps the mobile path cheap.
+The koala fur layer is GPU-only: one instanced ribbon geometry, at most 100,000 instances in Plush
+(about 45,000 on Soft), split into ~6 draw calls. Plush default density is 70%, ~70k strands. VFX adds
+a separate groom: 190k target (~133k after masks) on desktop, 80k on screens under 800 px, in 6 draw
+calls (~1.6M triangles) with a custom shader. There is no per-strand CPU simulation; wind, curl,
+clumping, length and cursor push are vertex-shader uniforms. The other six animals use shells only,
+which keeps the mobile path cheap.
 
-- Build cost: sampling + instancing 100k koala roots is a one-off ~150–350 ms on desktop; switches reuse
-  the same geometry and only rebuild when the animal or coat level changes.
+- Build cost: sampling + instancing 100k Plush roots is a one-off ~150–350 ms on desktop; VFX adds
+  ~133k more. Switches reuse shaders and only rebuild when the animal or coat level changes.
 - Frame cost: one extra draw call per coat zone, no per-frame matrix updates.
 - Memory: ~6.4 MB of instance matrices at full density.
 - Reducing density updates `InstancedMesh.count`; it does not rebuild.

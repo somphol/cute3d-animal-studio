@@ -117,8 +117,9 @@ Fur and feathers are **layered shell meshes** generated after the rig is built:
   clone outward and assigns a procedural alpha/bump/colour-map material.
 - Object-space GLSL masks keep the face, inner ears and belly clear.
 - `rig.fluff` holds the shells; `rig.fluffMaterials` maps roles to materials for live recolouring.
-- The koala also gets up to 100k opaque strand ribbons in `rig.strandMeshes`.
-- `state.coat` is `off | soft | plush`, persisted, included in presets and shared as `f=`.
+- The koala also gets up to 100k opaque strand ribbons in Plush, or a ~133k-strand VFX groom with a
+  custom Kajiya–Kay shader and dark undercoat.
+- `state.coat` is `off | soft | plush | vfx`, persisted, included in presets and shared as `f=`.
 
 Full detail and tuning rules are in [COAT.md](COAT.md).
 
@@ -126,7 +127,8 @@ Full detail and tuning rules are in [COAT.md](COAT.md).
 
 1. Opaque base meshes and eyes.
 2. Opaque alpha-tested coat shells (5/10 fur, 6/12 koala, 4/8 feathers).
-3. Koala-only opaque strand ribbons (up to 100k, one InstancedMesh per zone) with vertex-shader wind.
+3. Koala-only strand ribbons: Plush up to 100k with vertex-shader wind; VFX ~133k with an anisotropic
+   Kajiya–Kay shader and no decorative shells.
 4. Transparent sparkles and props.
 
 Strands use `depthWrite: true` and render after shells, so they read as fibre rather than transparent

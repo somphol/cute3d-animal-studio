@@ -172,6 +172,19 @@ try {
     assert.ok(soft > 0 && soft < plush, `soft ${soft} vs plush ${plush}`);
   });
 
+  await record('VFX groom builds the high-density koala coat', async () => {
+    await click('[data-animal="koala"]');
+    await sleep(500);
+    await click('[data-coat="vfx"]');
+    await sleep(800);
+    const vfx = await evaluate('window.__cute3d.strandCount()');
+    assert.ok(vfx > 100000, `VFX coat too sparse: ${vfx}`);
+    const meshes = await evaluate('window.__cute3d.getRig().strandMeshes.length');
+    assert.ok(meshes >= 4, `VFX zones missing: ${meshes}`);
+    await click('[data-coat="plush"]');
+    await sleep(400);
+  });
+
   await record('fur sliders and lighting presets respond', async () => {
     await click('[data-animal="koala"]');
     await sleep(500);
